@@ -2,12 +2,16 @@ package com.ylfin.spider;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.ylfin.spider.utils.CSVTools;
 import com.ylfin.spider.vo.TaobaoVO;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SeleniumSpider extends BaseSpider {
     private static String keyword = "刺客信条 起源 ps4";
@@ -52,18 +56,28 @@ public class SeleniumSpider extends BaseSpider {
     public void jsonHandle(String keyword) {
         int pageSize = 44;
         int curPage = 0;
+        int total =9;
+        List<TaobaoVO> totals =new ArrayList<>();
+        String name =keyword + "-"+LocalDate.now() + ".csv";
         while (true) {
-            String url = "https://s.taobao.com/search?data-key=s&data-value=" + (curPage * pageSize) + "&ajax=true&_ksTS=1510048516809_1374&callback=jsonp1514&initiative_id=staobaoz_20171107&q=" + keyword + "&sort=sale-desc&bcoffset=0&p4ppushleft=%2C44&s=44";
+
+            String url = "https://s.taobao.com/search?data-key=s&data-value=" + ( curPage++ * pageSize) + "&ajax=true&_ksTS=1510048516809_1374&callback=jsonp1514&initiative_id=staobaoz_20171107&q=" + keyword + "&sort=sale-desc&bcoffset=0&p4ppushleft=%2C44&s=44";
             driver.get(url);
-            String content = driver.getPageSource();
+            String content =driver.findElement(By.tagName("pre")).getText();
             int length =content.indexOf("({");
             String json = content.substring(length + 1);
-            json = json.substring(json.length()-2);
+            json = json.substring(0,json.length()-2);
             JSONArray items = JSON.parseObject(json).getJSONObject("mods").getJSONObject("itemlist").getJSONObject("data").getJSONArray("auctions");
            List<TaobaoVO>  taobaoVOS =JSON.parseArray(items.toJSONString(), TaobaoVO.class);
-            if(taobaoVOS.size()==0)
+            totals.addAll(taobaoVOS);
+            if(taobaoVOS.size()==0||curPage>=total){
                 break;
+            }
+
         }
+
+        String allstr =JSON.toJSONString(totals);
+        CSVTools.write(JSON.parseArray(allstr, Map.class),name);
 
     }
 

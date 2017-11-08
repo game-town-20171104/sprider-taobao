@@ -45,6 +45,9 @@ public class CSVTools {
     }
 
 
+    public static void writeObject(List<Object> list ,String fileName){
+
+    }
     public static void main(String[] args) {
         List list = new ArrayList();
         Map<String,String > m = new HashMap<String, String>();

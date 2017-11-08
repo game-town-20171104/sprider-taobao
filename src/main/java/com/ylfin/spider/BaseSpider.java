@@ -16,7 +16,7 @@ public class BaseSpider {
     public void init() {
         System.setProperty("webdriver.chrome.driver", getDriverPath());
         ChromeOptions chromeOptions = new ChromeOptions();
-//        chromeOptions.addArguments("--headless");
+        chromeOptions.addArguments("--headless");
         chromeOptions.addArguments("--window-size=1920,1080");
          driver = new ChromeDriver(chromeOptions);
     }

@@ -20,7 +20,6 @@ public class test {
 
         List<TaobaoVO> vos = new ArrayList<>();
         TaobaoVO t = new TaobaoVO();
-        t.setNick("cc");
         t.setArea("北京");
         vos.add(t);
         String str ="{\n" +

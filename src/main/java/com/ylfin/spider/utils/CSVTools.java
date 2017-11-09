@@ -11,8 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CSVTools {
-    private
-    static  final  String NEW_LINE_SEPARATOR = "\n";
+    private  static  final  String NEW_LINE_SEPARATOR = "\n";
     public static void write(List<Map> list,String fileName) {
         FileWriter fileWriter = null;
         CSVPrinter csvFilePrinter = null;

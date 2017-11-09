@@ -4,7 +4,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 
 public class TaobaoVO {
 
-    @JSONField(name = "raw_title")
+    @JSONField(name = "nick")
     private String shop;
     @JSONField(name = "view_price")
     private String viewPrice;
@@ -18,8 +18,8 @@ public class TaobaoVO {
     private String rawTitle;
     @JSONField(name = "comment_count")
     private String commentCount;
-    @JSONField(name = "nick")
-    private String nick;
+    @JSONField(name = "detail_url")
+    private String detailUrl;
 
     public String getShop() {
         return shop;
@@ -77,11 +77,11 @@ public class TaobaoVO {
         this.commentCount = commentCount;
     }
 
-    public String getNick() {
-        return nick;
+    public String getDetailUrl() {
+        return detailUrl;
     }
 
-    public void setNick(String nick) {
-        this.nick = nick;
+    public void setDetailUrl(String detailUrl) {
+        this.detailUrl = detailUrl;
     }
 }

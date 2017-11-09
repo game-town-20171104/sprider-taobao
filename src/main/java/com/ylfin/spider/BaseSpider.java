@@ -56,11 +56,14 @@ public class BaseSpider {
         String basePath =this.getClass().getClassLoader().getResource("driver").getPath();
         switch (OS.getPlatform()){
             case MAC:
-                basePath = basePath+"\\chromedriver_mac32\\chromedriver";
+                basePath = basePath+"/chromedriver_mac32/chromedriver";
+                break;
             case LINUX:
-                basePath = basePath+"\\chromedriver_linux64\\chromedriver";
+                basePath = basePath+"/chromedriver_linux64/chromedriver";
+                break;
             case WINDOWS:
                 basePath = basePath+"\\chromedriver_win32\\chromedriver.exe";
+                break;
         }
         return   basePath;
     }

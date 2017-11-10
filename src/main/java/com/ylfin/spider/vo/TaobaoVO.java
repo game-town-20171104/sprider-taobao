@@ -3,7 +3,7 @@ package com.ylfin.spider.vo;
 import com.alibaba.fastjson.annotation.JSONField;
 
 public class TaobaoVO {
-
+    private  long keywordId ;
     @JSONField(name = "nick")
     private String shop;
     @JSONField(name = "view_price")
@@ -20,6 +20,14 @@ public class TaobaoVO {
     private String commentCount;
     @JSONField(name = "detail_url")
     private String detailUrl;
+
+    public long getKeywordId() {
+        return keywordId;
+    }
+
+    public void setKeywordId(long keywordId) {
+        this.keywordId = keywordId;
+    }
 
     public String getShop() {
         return shop;
@@ -83,5 +91,21 @@ public class TaobaoVO {
 
     public void setDetailUrl(String detailUrl) {
         this.detailUrl = detailUrl;
+    }
+
+
+    @Override
+    public String toString() {
+        return "TaobaoVO{" +
+                "keywordId=" + keywordId +
+                ", shop='" + shop + '\'' +
+                ", viewPrice='" + viewPrice + '\'' +
+                ", viewFee='" + viewFee + '\'' +
+                ", area='" + area + '\'' +
+                ", viewSales='" + viewSales + '\'' +
+                ", rawTitle='" + rawTitle + '\'' +
+                ", commentCount='" + commentCount + '\'' +
+                ", detailUrl='" + detailUrl + '\'' +
+                '}';
     }
 }

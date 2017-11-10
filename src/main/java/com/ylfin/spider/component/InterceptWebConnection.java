@@ -1,4 +1,4 @@
-package com.ylfin.spider;
+package com.ylfin.spider.component;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.WebRequest;

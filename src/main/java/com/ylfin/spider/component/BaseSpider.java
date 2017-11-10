@@ -1,4 +1,4 @@
-package com.ylfin.spider;
+package com.ylfin.spider.component;
 
 import com.ylfin.spider.enums.OS;
 import org.openqa.selenium.By;
@@ -18,17 +18,17 @@ public class BaseSpider {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--headless");
         chromeOptions.addArguments("--window-size=1920,1080");
-         driver = new ChromeDriver(chromeOptions);
+         driver = (WebDriver) new ChromeDriver(chromeOptions);
     }
 
 
-    protected void quit(){
+    public void quit(){
        if(driver!=null){
            driver.quit();
        }
     }
 
-    protected void simpleWaite() {
+    public void simpleWaite() {
         try {
             Thread.sleep(2 * 1000);
         } catch (InterruptedException e) {
@@ -36,17 +36,17 @@ public class BaseSpider {
         }
     }
 
-    protected  void waiteTitleCondition(String  keyword){
+    public  void waiteTitleCondition(String  keyword){
         (new WebDriverWait(driver, 10)).until(new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver d) {
                 return d.getTitle().toLowerCase().startsWith(keyword);
             }
         });
     }
-    protected  void waitBy(By by){
+    public  void waitBy(By by){
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(by));
     }
-    protected  void waitAndClick(WebElement element){
+    public  void waitAndClick(WebElement element){
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(element));
         element.click();
     }

@@ -1,18 +1,20 @@
 package com.ylfin.spider.vo;
 
+import com.ylfin.spider.vo.bean.KeyWords;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class KeywordsQueue {
-    private List<String > keywords = new ArrayList<>();
+    private List<KeyWords> keywords = new ArrayList<>();
     private int  current =0 ;
 
-    public void addKeyword(String keyword){
-        keywords.add(keyword);
+    public void addKeyword(KeyWords keyWords){
+        keywords.add(keyWords);
     }
 
 
-    public synchronized String getKeyword(){
+    public synchronized KeyWords getKeyword(){
         if(current==keywords.size()){
             return  null;
         }

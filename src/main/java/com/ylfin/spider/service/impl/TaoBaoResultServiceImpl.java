@@ -36,20 +36,23 @@ public class TaoBaoResultServiceImpl implements TaoBaoResultService {
     @Override
     public void batchSave(List<TaobaoVO> taoBaoResultList) {
 
-        String dataStr = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-        List<Object[]> objects = new ArrayList<>();
-        for (TaobaoVO taobaoVO:taoBaoResultList){
-            System.out.println(taobaoVO);
-            Object[] ob =new Object[]{
-                    taobaoVO.getKeywordId(),taobaoVO.getCommentCount(),dataStr,taobaoVO.getDetailUrl(),
-                    taobaoVO.getViewPrice(),taobaoVO.getShop(),taobaoVO.getViewSales(),
-                    taobaoVO.getRawTitle(),taobaoVO.getArea()};
+        try {
+            String dataStr = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+            List<Object[]> objects = new ArrayList<>();
+            for (TaobaoVO taobaoVO:taoBaoResultList){
+                Object[] ob =new Object[]{
+                        taobaoVO.getKeywordId(),taobaoVO.getCommentCount(),dataStr,taobaoVO.getDetailUrl(),
+                        taobaoVO.getViewPrice(),taobaoVO.getShop(),taobaoVO.getViewSales(),
+                        taobaoVO.getRawTitle(),taobaoVO.getArea()};
 
-            objects.add(ob);
+                objects.add(ob);
+            }
+
+            jdbcTemplate.batchUpdate("insert into taobao_result (keywords_id,comment_count," +
+                    "data_str,detail_url,price,shop_name,num,title,location) values(?,?,?,?,?,?,?,?,?)",objects );
+        } catch (Exception e){
+            logger.error("保存数据库失败",e);
         }
-
-        jdbcTemplate.batchUpdate("insert into taobao_result (keywords_id,comment_count," +
-                "data_str,detail_url,price,shop_name,num,title,location) values(?,?,?,?,?,?,?,?,?)",objects );
     }
 
 

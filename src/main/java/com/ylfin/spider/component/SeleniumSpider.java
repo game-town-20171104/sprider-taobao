@@ -10,6 +10,8 @@ import com.ylfin.spider.vo.bean.KeyWords;
 import org.openqa.selenium.By;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -18,11 +20,16 @@ import java.util.Map;
 
 public class SeleniumSpider extends BaseSpider {
     Logger logger = LoggerFactory.getLogger(getClass());
+    private int total =9;
 
     private TaoBaoResultService taoBaoResultService;
 
     public SeleniumSpider(TaoBaoResultService taoBaoResultService) {
         this.taoBaoResultService = taoBaoResultService;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
     }
 
     public static void main(String[] args) {
@@ -44,7 +51,6 @@ public class SeleniumSpider extends BaseSpider {
     public void jsonHandle(KeyWords keyword) {
         int pageSize = 44;//不可编辑
         int curPage = 0;
-        int total = 9;//爬取总页数
 //        List<TaobaoVO> totals = new ArrayList<>();
         String name = keyword + "-" + LocalDate.now() + ".csv";
         while (true) {
@@ -67,7 +73,8 @@ public class SeleniumSpider extends BaseSpider {
                 logger.error("转换出错",e);
             }
 //            totals.addAll(taobaoVOS);
-            if (taobaoVOS.size() == 0 ) {
+            if (CollectionUtils.isEmpty(taobaoVOS)) {
+                logger.info("本页数据为空");
                 break;
             }
 
@@ -75,6 +82,9 @@ public class SeleniumSpider extends BaseSpider {
                 taobaoVO.setKeywordId(keyword.getId());
                 String num =getNum(taobaoVO.getViewSales());
                 taobaoVO.setViewSales(num);
+                if(StringUtils.isEmpty(taobaoVO.getCommentCount())){
+                    taobaoVO.setCommentCount("0");
+                }
             }
 
             if(taobaoVOS!=null&&taoBaoResultService!=null){

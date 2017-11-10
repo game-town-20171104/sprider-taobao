@@ -15,14 +15,6 @@ public class SpiderClient {
     public static void main(String[] args) {
 
         SpringApplication.run(SpiderClient.class, args);
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                while (true){
-//
-//                }
-//            }
-//        }).start();
     }
 
 

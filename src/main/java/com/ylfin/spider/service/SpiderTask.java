@@ -4,6 +4,7 @@ import com.ylfin.spider.component.SeleniumSpider;
 import com.ylfin.spider.vo.KeywordsQueue;
 import com.ylfin.spider.vo.bean.KeyWords;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +21,13 @@ public class SpiderTask {
 
     @Autowired
     TaoBaoResultService taoBaoResultService;
+    @Value("${page.size}")
+    private int page ;
+    @Value("${thread.size}")
+    private int threadSize;
 
     @PostConstruct
     public void start() {
-        int threadSize = 2;
         KeywordsQueue queue = new KeywordsQueue();
         List<KeyWords> keyWords = keyWordsService.query();
         for (KeyWords word : keyWords) {
@@ -35,13 +39,16 @@ public class SpiderTask {
 
         ThreadPoolExecutor es = (ThreadPoolExecutor) Executors.newFixedThreadPool(threadSize);
         for (int i = 0; i < threadSize; i++) {
-            es.submit(new InnerThread(queue,taoBaoResultService));
+            InnerThread innerThread =new InnerThread(queue,taoBaoResultService);
+            innerThread.setPages(page);
+            es.submit(innerThread);
         }
-//        es.shutdown();
+        es.shutdown();
     }
 
     static class InnerThread implements Runnable {
         private KeywordsQueue queue;
+        private int pages ;
         TaoBaoResultService taoBaoResultService;
         public InnerThread(KeywordsQueue queue, TaoBaoResultService taoBaoResultService) {
             this.queue = queue;
@@ -52,6 +59,9 @@ public class SpiderTask {
         public void run() {
             System.out.println(Thread.currentThread() + "==start==" + Thread.activeCount());
             SeleniumSpider spider = new SeleniumSpider(taoBaoResultService);
+            if(pages>0){
+                spider.setTotal(pages);
+            }
             spider.init();
             while (true) {
                 KeyWords keyword = queue.getKeyword();
@@ -66,6 +76,10 @@ public class SpiderTask {
 
             spider.quit();
             System.out.println(Thread.currentThread() + "==end==" + Thread.activeCount());
+        }
+
+        public void setPages(int pages) {
+            this.pages = pages;
         }
     }
 }

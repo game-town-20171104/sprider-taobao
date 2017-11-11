@@ -13,7 +13,7 @@ CREATE TABLE `taobao_result` (
   `detail_url` text COMMENT '店铺URL',
   `price` double DEFAULT NULL COMMENT '价格',
   `shop_name` varchar(255) DEFAULT NULL COMMENT '店铺名',
-  `num` int(11) DEFAULT '0' COMMENT '销量',
+  `num` varchar(255) DEFAULT '0' COMMENT '销量',
   `title` varchar(255) DEFAULT NULL COMMENT '标题',
   `location` varchar(255) DEFAULT NULL COMMENT '地区',
   PRIMARY KEY (`id`)

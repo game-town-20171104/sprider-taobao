@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -62,15 +64,17 @@ public class SpiderTask {
             if(pages>0){
                 spider.setTotal(pages);
             }
+
             spider.init();
             while (true) {
                 KeyWords keyword = queue.getKeyword();
+
                 if (keyword == null) {
                     System.out.println("消费结束，准备退出……");
                     break;
                 }
                 System.out.println("开始消费：" + keyword);
-
+                spider.setStartDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
                 spider.jsonHandle(keyword);
 
             }

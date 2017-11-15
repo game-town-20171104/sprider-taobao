@@ -20,6 +20,15 @@ public class TaobaoVO {
     private String commentCount;
     @JSONField(name = "detail_url")
     private String detailUrl;
+    private String startDate ;
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
 
     public long getKeywordId() {
         return keywordId;

@@ -21,8 +21,16 @@ import java.util.Map;
 public class SeleniumSpider extends BaseSpider {
     Logger logger = LoggerFactory.getLogger(getClass());
     private int total =9;
-
     private TaoBaoResultService taoBaoResultService;
+    private String startDate ;
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
 
     public SeleniumSpider(TaoBaoResultService taoBaoResultService) {
         this.taoBaoResultService = taoBaoResultService;
@@ -83,6 +91,7 @@ public class SeleniumSpider extends BaseSpider {
                 taobaoVO.setKeywordId(keyword.getId());
                 String num =getNum(taobaoVO.getViewSales());
                 taobaoVO.setViewSales(num);
+                taobaoVO.setStartDate(startDate);
                 if(StringUtils.isEmpty(taobaoVO.getCommentCount())){
                     taobaoVO.setCommentCount("0");
                 }

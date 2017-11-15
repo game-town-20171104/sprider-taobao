@@ -37,11 +37,11 @@ public class TaoBaoResultServiceImpl implements TaoBaoResultService {
     public void batchSave(List<TaobaoVO> taoBaoResultList) {
 
         try {
-            String dataStr = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+//            String dataStr = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
             List<Object[]> objects = new ArrayList<>();
             for (TaobaoVO taobaoVO:taoBaoResultList){
                 Object[] ob =new Object[]{
-                        taobaoVO.getKeywordId(),taobaoVO.getCommentCount(),dataStr,taobaoVO.getDetailUrl(),
+                        taobaoVO.getKeywordId(),taobaoVO.getCommentCount(),taobaoVO.getStartDate(),taobaoVO.getDetailUrl(),
                         taobaoVO.getViewPrice(),taobaoVO.getShop(),taobaoVO.getViewSales(),
                         taobaoVO.getRawTitle(),taobaoVO.getArea()};
 

@@ -57,7 +57,8 @@ public class SeleniumSpider extends BaseSpider {
            if(curPage >= total){
                break;
            }
-            String url = "https://s.taobao.com/search?data-key=s&data-value=" + (curPage++ * pageSize) + "&ajax=true&_ksTS=1510048516809_1374&callback=jsonp1514&initiative_id=staobaoz_20171107&q=" + keyword + "&sort=sale-desc&bcoffset=0&p4ppushleft=%2C44&s=44";
+            String url = "https://s.taobao.com/search?data-key=s&data-value=" + (curPage++ * pageSize) + "&ajax=true&_ksTS=1510048516809_1374&callback=jsonp1514&initiative_id=staobaoz_20171107&q=" + keyword.getTitle() + "&sort=sale-desc&bcoffset=0&p4ppushleft=%2C44&s=44";
+            logger.info(url);
             driver.get(url);
             String content = driver.findElement(By.tagName("pre")).getText();
             String json = unwarpJSONP(content);
@@ -98,8 +99,8 @@ public class SeleniumSpider extends BaseSpider {
 
     }
     private String  getNum(String  viewNum){
-
-        return viewNum.replaceAll("人付款","").replaceAll("人收货","");
+        String temp = viewNum.replaceAll("人付款","").replaceAll("人收货","");
+        return viewNum.replaceAll("[^0-9]", "");
     }
 
     private String unwarpJSONP(String jsonp) {

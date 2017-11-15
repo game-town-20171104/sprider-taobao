@@ -70,6 +70,7 @@ public class SpiderTask {
                     break;
                 }
                 System.out.println("开始消费：" + keyword);
+
                 spider.jsonHandle(keyword);
 
             }

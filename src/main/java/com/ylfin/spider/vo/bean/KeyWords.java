@@ -1,37 +1,23 @@
 package com.ylfin.spider.vo.bean;
 
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotations.TableName;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
+import java.io.Serializable;
+@Data
+@AllArgsConstructor
+@TableName("keywords")
 public class KeyWords implements Serializable{
     private Long id ;
     private String title;
+    private Boolean active;
+
 
     public KeyWords(Long id, String title) {
         this.id = id;
         this.title = title;
     }
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    @Override
-    public String toString() {
-        return "KeyWords{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                '}';
-    }
 }

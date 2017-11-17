@@ -1,0 +1,661 @@
+{
+  "pageName": "mainsrp",
+  "mods": {
+    "shopcombotip": {
+      "status": "hide"
+    },
+    "phonenav": {
+      "status": "hide"
+    },
+    "debugbar": {
+      "status": "hide"
+    },
+    "shopcombo": {
+      "status": "hide"
+    },
+    "bottomsearch": {
+      "status": "show",
+      "data": {
+        "query": "ps4 星球大战前传 前线2 租",
+        "showSearchBox": true
+      }
+    },
+    "itemlist": {
+      "status": "hide"
+    },
+    "tips": {
+      "status": "hide"
+    },
+    "feedback": {
+      "status": "show",
+      "data": {
+        "render": true,
+        "useOld": true,
+        "showType": "internet",
+        "pingce": "https://qince.taobao.com/index.htm?q\u003dps4%2520%E6%98%9F%E7%90%83%E5%A4%A7%E6%88%98%E5%89%8D%E4%BC%A0%2520%E5%89%8D%E7%BA%BF2%2520%E7%A7%9F"
+      }
+    },
+    "navtabtags": {
+      "status": "hide"
+    },
+    "sc": {
+      "status": "hide"
+    },
+    "bgshopstar": {
+      "status": "hide"
+    },
+    "spuseries": {
+      "status": "hide"
+    },
+    "related": {
+      "status": "show",
+      "data": {
+        "words": [
+          {
+            "text": "潮流前线",
+            "isHighlight": false,
+            "href": "/search?q\u003d%E6%BD%AE%E6%B5%81%E5%89%8D%E7%BA%BF\u0026rs\u003dup\u0026rsclick\u003d1\u0026preq\u003dps4+%E6%98%9F%E7%90%83%E5%A4%A7%E6%88%98%E5%89%8D%E4%BC%A0+%E5%89%8D%E7%BA%BF2+%E7%A7%9F"
+          },
+          {
+            "text": "少女前线",
+            "isHighlight": false,
+            "href": "/search?q\u003d%E5%B0%91%E5%A5%B3%E5%89%8D%E7%BA%BF\u0026rs\u003dup\u0026rsclick\u003d2\u0026preq\u003dps4+%E6%98%9F%E7%90%83%E5%A4%A7%E6%88%98%E5%89%8D%E4%BC%A0+%E5%89%8D%E7%BA%BF2+%E7%A7%9F"
+          },
+          {
+            "text": "潮流前线官方旗舰店",
+            "isHighlight": false,
+            "href": "/search?q\u003d%E6%BD%AE%E6%B5%81%E5%89%8D%E7%BA%BF%E5%AE%98%E6%96%B9%E6%97%97%E8%88%B0%E5%BA%97\u0026rs\u003dup\u0026rsclick\u003d3\u0026preq\u003dps4+%E6%98%9F%E7%90%83%E5%A4%A7%E6%88%98%E5%89%8D%E4%BC%A0+%E5%89%8D%E7%BA%BF2+%E7%A7%9F"
+          },
+          {
+            "text": "少女前线初始",
+            "isHighlight": false,
+            "href": "/search?q\u003d%E5%B0%91%E5%A5%B3%E5%89%8D%E7%BA%BF%E5%88%9D%E5%A7%8B\u0026rs\u003dup\u0026rsclick\u003d4\u0026preq\u003dps4+%E6%98%9F%E7%90%83%E5%A4%A7%E6%88%98%E5%89%8D%E4%BC%A0+%E5%89%8D%E7%BA%BF2+%E7%A7%9F"
+          },
+          {
+            "text": "少女前线手办",
+            "isHighlight": false,
+            "href": "/search?q\u003d%E5%B0%91%E5%A5%B3%E5%89%8D%E7%BA%BF+%E6%89%8B%E5%8A%9E\u0026rs\u003dup\u0026rsclick\u003d5\u0026preq\u003dps4+%E6%98%9F%E7%90%83%E5%A4%A7%E6%88%98%E5%89%8D%E4%BC%A0+%E5%89%8D%E7%BA%BF2+%E7%A7%9F"
+          },
+          {
+            "text": "少女前线cos",
+            "isHighlight": false,
+            "href": "/search?q\u003d%E5%B0%91%E5%A5%B3%E5%89%8D%E7%BA%BFcos\u0026rs\u003dup\u0026rsclick\u003d6\u0026preq\u003dps4+%E6%98%9F%E7%90%83%E5%A4%A7%E6%88%98%E5%89%8D%E4%BC%A0+%E5%89%8D%E7%BA%BF2+%E7%A7%9F"
+          },
+          {
+            "text": "少女前线账号",
+            "isHighlight": false,
+            "href": "/search?q\u003d%E5%B0%91%E5%A5%B3%E5%89%8D%E7%BA%BF%E8%B4%A6%E5%8F%B7\u0026rs\u003dup\u0026rsclick\u003d7\u0026preq\u003dps4+%E6%98%9F%E7%90%83%E5%A4%A7%E6%88%98%E5%89%8D%E4%BC%A0+%E5%89%8D%E7%BA%BF2+%E7%A7%9F"
+          },
+          {
+            "text": "少女前线礼包",
+            "isHighlight": false,
+            "href": "/search?q\u003d%E5%B0%91%E5%A5%B3%E5%89%8D%E7%BA%BF%E7%A4%BC%E5%8C%85\u0026rs\u003dup\u0026rsclick\u003d8\u0026preq\u003dps4+%E6%98%9F%E7%90%83%E5%A4%A7%E6%88%98%E5%89%8D%E4%BC%A0+%E5%89%8D%E7%BA%BF2+%E7%A7%9F"
+          },
+          {
+            "text": "星战前线2",
+            "isHighlight": false,
+            "href": "/search?q\u003d%E6%98%9F%E6%88%98%E5%89%8D%E7%BA%BF2\u0026rs\u003dup\u0026rsclick\u003d9\u0026preq\u003dps4+%E6%98%9F%E7%90%83%E5%A4%A7%E6%88%98%E5%89%8D%E4%BC%A0+%E5%89%8D%E7%BA%BF2+%E7%A7%9F"
+          },
+          {
+            "text": "连云港渔乐前线俱乐部",
+            "isHighlight": false,
+            "href": "/search?q\u003d%E8%BF%9E%E4%BA%91%E6%B8%AF%E6%B8%94%E4%B9%90%E5%89%8D%E7%BA%BF%E4%BF%B1%E4%B9%90%E9%83%A8\u0026rs\u003dup\u0026rsclick\u003d10\u0026preq\u003dps4+%E6%98%9F%E7%90%83%E5%A4%A7%E6%88%98%E5%89%8D%E4%BC%A0+%E5%89%8D%E7%BA%BF2+%E7%A7%9F"
+          },
+          {
+            "text": "潮流前线官方旗舰店男",
+            "isHighlight": false,
+            "href": "/search?q\u003d%E6%BD%AE%E6%B5%81%E5%89%8D%E7%BA%BF%E5%AE%98%E6%96%B9%E6%97%97%E8%88%B0%E5%BA%97%E7%94%B7\u0026rs\u003dup\u0026rsclick\u003d11\u0026preq\u003dps4+%E6%98%9F%E7%90%83%E5%A4%A7%E6%88%98%E5%89%8D%E4%BC%A0+%E5%89%8D%E7%BA%BF2+%E7%A7%9F"
+          },
+          {
+            "text": "少女前线周边",
+            "isHighlight": false,
+            "href": "/search?q\u003d%E5%B0%91%E5%A5%B3%E5%89%8D%E7%BA%BF%E5%91%A8%E8%BE%B9\u0026rs\u003dup\u0026rsclick\u003d12\u0026preq\u003dps4+%E6%98%9F%E7%90%83%E5%A4%A7%E6%88%98%E5%89%8D%E4%BC%A0+%E5%89%8D%E7%BA%BF2+%E7%A7%9F"
+          },
+          {
+            "text": "战争前线",
+            "isHighlight": false,
+            "href": "/search?q\u003d%E6%88%98%E4%BA%89%E5%89%8D%E7%BA%BF\u0026rs\u003dup\u0026rsclick\u003d13\u0026preq\u003dps4+%E6%98%9F%E7%90%83%E5%A4%A7%E6%88%98%E5%89%8D%E4%BC%A0+%E5%89%8D%E7%BA%BF2+%E7%A7%9F"
+          },
+          {
+            "text": "动漫前线",
+            "isHighlight": false,
+            "href": "/search?q\u003d%E5%8A%A8%E6%BC%AB%E5%89%8D%E7%BA%BF\u0026rs\u003dup\u0026rsclick\u003d14\u0026preq\u003dps4+%E6%98%9F%E7%90%83%E5%A4%A7%E6%88%98%E5%89%8D%E4%BC%A0+%E5%89%8D%E7%BA%BF2+%E7%A7%9F"
+          }
+        ]
+      }
+    },
+    "tab": {
+      "status": "show",
+      "data": {
+        "tabs": [
+          {
+            "type": "all",
+            "weight": 10,
+            "name": "all",
+            "id": "tabFilterAll",
+            "trace": "tabClickCommon",
+            "href": "//s.taobao.com/search?initiative_id\u003dstaobaoz_20171107\u0026q\u003dps4+%E6%98%9F%E7%90%83%E5%A4%A7%E6%88%98%E5%89%8D%E4%BC%A0+%E5%89%8D%E7%BA%BF2+%E7%A7%9F\u0026bcoffset\u003d0\u0026p4ppushleft\u003d%2C44\u0026tab\u003dall",
+            "text": "所有宝贝",
+            "isActive": true,
+            "spmId": ""
+          },
+          {
+            "type": "all",
+            "weight": 20,
+            "name": "mall",
+            "id": "tabFilterMall",
+            "trace": "tabClickCommon",
+            "href": "//s.taobao.com/search?initiative_id\u003dstaobaoz_20171107\u0026q\u003dps4+%E6%98%9F%E7%90%83%E5%A4%A7%E6%88%98%E5%89%8D%E4%BC%A0+%E5%89%8D%E7%BA%BF2+%E7%A7%9F\u0026bcoffset\u003d0\u0026p4ppushleft\u003d%2C44\u0026tab\u003dmall",
+            "text": "天猫",
+            "isActive": false,
+            "spmId": "d4919860"
+          },
+          {
+            "type": "all",
+            "weight": 30,
+            "name": "old",
+            "id": "tabFilterOld",
+            "trace": "tabClickCommon",
+            "href": "//s.taobao.com/search?initiative_id\u003dstaobaoz_20171107\u0026q\u003dps4+%E6%98%9F%E7%90%83%E5%A4%A7%E6%88%98%E5%89%8D%E4%BC%A0+%E5%89%8D%E7%BA%BF2+%E7%A7%9F\u0026bcoffset\u003d0\u0026p4ppushleft\u003d%2C44\u0026tab\u003dold",
+            "text": "二手",
+            "isActive": false,
+            "spmId": ""
+          },
+          {
+            "type": "all",
+            "weight": 50,
+            "name": "vsearch",
+            "id": "tabFilterVsearch",
+            "trace": "tabClickCommon",
+            "href": "//s.taobao.com/search?initiative_id\u003dstaobaoz_20171107\u0026q\u003dps4+%E6%98%9F%E7%90%83%E5%A4%A7%E6%88%98%E5%89%8D%E4%BC%A0+%E5%89%8D%E7%BA%BF2+%E7%A7%9F\u0026bcoffset\u003d0\u0026p4ppushleft\u003d%2C44\u0026tab\u003dvsearch\u0026sort\u003drenqi-desc",
+            "text": "今日发现",
+            "isActive": false,
+            "spmId": ""
+          }
+        ],
+        "spmModId": "1998181369"
+      }
+    },
+    "pager": {
+      "status": "hide"
+    },
+    "apasstips": {
+      "status": "hide"
+    },
+    "tbcode": {
+      "status": "hide"
+    },
+    "vbaby": {
+      "status": "hide"
+    },
+    "hongbao": {
+      "status": "hide"
+    },
+    "nav": {
+      "status": "show",
+      "data": {
+        "breadcrumbs": {
+          "catpath": [
+            {
+              "catid": "0",
+              "name": "所有分类"
+            }
+          ],
+          "propSelected": []
+        },
+        "hidenav": true
+      }
+    },
+    "sortbar": {
+      "status": "show",
+      "data": {
+        "sortList": [
+          {
+            "name": "综合",
+            "tip": "综合排序",
+            "trace": "sortDefault",
+            "isActive": false,
+            "value": "default",
+            "key": "sort"
+          },
+          {
+            "name": "人气",
+            "tip": "人气从高到低",
+            "trace": "sortRenqiDesc",
+            "isActive": false,
+            "value": "renqi-desc",
+            "key": "sort"
+          },
+          {
+            "name": "销量",
+            "tip": "销量从高到低",
+            "trace": "sortSaleDesc",
+            "isActive": true,
+            "value": "sale-desc",
+            "key": "sort"
+          },
+          {
+            "name": "信用",
+            "tip": "信用从高到低",
+            "trace": "sortCreditDesc",
+            "isActive": false,
+            "value": "credit-desc",
+            "key": "sort"
+          },
+          {
+            "name": "价格",
+            "tip": "价格从低到高",
+            "trace": "sortPrice",
+            "isActive": false,
+            "value": "price-asc",
+            "key": "sort",
+            "dropdownList": [
+              {
+                "name": "价格",
+                "tip": "价格从低到高",
+                "value": "price-asc",
+                "trace": "sortPrice"
+              },
+              {
+                "name": "价格",
+                "tip": "价格从高到低",
+                "value": "price-desc",
+                "trace": "sortPrice"
+              },
+              {
+                "name": "总价",
+                "tip": "总价从低到高",
+                "value": "total-asc",
+                "trace": "sortPrice"
+              },
+              {
+                "name": "总价",
+                "tip": "总价从高到低",
+                "value": "total-desc",
+                "trace": "sortPrice"
+              }
+            ]
+          }
+        ],
+        "pager": {
+          "pageSize": 44,
+          "totalPage": 4,
+          "currentPage": 4,
+          "totalCount": 149
+        },
+        "price": {},
+        "filter": [
+          {
+            "isActive": false,
+            "value": "1",
+            "title": "包邮",
+            "key": "baoyou",
+            "trace": "filterbox",
+            "traceData": {
+              "filterid": "filter_baoyou"
+            },
+            "isHighlight": false,
+            "pos": 0,
+            "dom_id": "filter_baoyou"
+          },
+          {
+            "isActive": false,
+            "value": "385",
+            "title": "赠送退货运费险",
+            "key": "auction_tag[]",
+            "trace": "filterbox",
+            "traceData": {
+              "filterid": "filterYunFeiXian"
+            },
+            "isHighlight": false,
+            "pos": 0,
+            "dom_id": "filterYunFeiXian"
+          },
+          {
+            "isActive": false,
+            "value": "1",
+            "title": "货到付款",
+            "key": "support_cod",
+            "trace": "filterbox",
+            "traceData": {
+              "filterid": "filterServiceCOD"
+            },
+            "isHighlight": false,
+            "pos": 0,
+            "dom_id": "filterServiceCOD"
+          },
+          {
+            "isActive": false,
+            "value": "1",
+            "title": "海外商品",
+            "key": "globalbuy",
+            "trace": "filterbox",
+            "traceData": {
+              "filterid": "filterServiceOversea"
+            },
+            "isHighlight": false,
+            "pos": 0,
+            "dom_id": "filterServiceOversea"
+          },
+          {
+            "isActive": false,
+            "value": "1",
+            "title": "二手",
+            "key": "filterFineness",
+            "trace": "filterbox",
+            "traceData": {
+              "filterid": "filter_ershou"
+            },
+            "isHighlight": false,
+            "pos": 0,
+            "dom_id": "filter_ershou"
+          },
+          {
+            "isActive": false,
+            "value": "tmall",
+            "title": "天猫",
+            "key": "filter_tianmao",
+            "trace": "filterbox",
+            "traceData": {
+              "filterid": "filter_tianmao"
+            },
+            "isHighlight": false,
+            "pos": 0,
+            "dom_id": "filter_tianmao"
+          },
+          {
+            "isActive": false,
+            "value": "1",
+            "title": "正品保障",
+            "key": "user_type",
+            "trace": "filterbox",
+            "traceData": {
+              "filterid": "filterProtectionQuality"
+            },
+            "isHighlight": false,
+            "pos": 0,
+            "dom_id": "filterProtectionQuality"
+          },
+          {
+            "isActive": false,
+            "value": "4806",
+            "title": "7+天内退货",
+            "key": "auction_tag[]",
+            "trace": "filterbox",
+            "traceData": {
+              "filterid": "tuihuochengnuo"
+            },
+            "isHighlight": false,
+            "pos": 0,
+            "dom_id": "tuihuochengnuo"
+          }
+        ],
+        "location": {
+          "active": "",
+          "guessLoc": "宁波",
+          "usualLoc": []
+        },
+        "style": "grid"
+      }
+    },
+    "d11filterbar": {
+      "status": "hide"
+    },
+    "personalbar": {
+      "status": "hide"
+    },
+    "p4p": {
+      "status": "show",
+      "data": {
+        "baobeiExtraClass": "",
+        "etaoAds": true,
+        "p4pconfig": {
+          "keyword": "ps4+%E6%98%9F%E7%90%83%E5%A4%A7%E6%88%98%E5%89%8D%E4%BC%A0+%E5%89%8D%E7%BA%BF2+%E7%A7%9F",
+          "keywordGBK": "ps4+%D0%C7%C7%F2%B4%F3%D5%BD%C7%B0%B4%AB+%C7%B0%CF%DF2+%D7%E2",
+          "catid": "",
+          "propertyid": "",
+          "ip": "183.131.243.186",
+          "loc": "",
+          "gprice": "",
+          "sort": "",
+          "sbid": "14,276,6193,6384,4547,371,4763,10769,287,8921,5194",
+          "q2cused": 0,
+          "pageNum": 4,
+          "p4pbottom_up": false,
+          "b2b_show": false,
+          "etao_wanke": false,
+          "etao_effect": false,
+          "offset": 0,
+          "refpid": "",
+          "source": "",
+          "xmatch": 0,
+          "rn": "f4d267ca2737c654f324d33915f350e7",
+          "ismall": "",
+          "srp": "mainsrp",
+          "tags": "",
+          "p4p_btsinfo": "p4p_bts2",
+          "auction_tag": "",
+          "has_sku_pic": false,
+          "firstpage_auction_num": "44",
+          "auction_num": {
+            "search": 0
+          },
+          "time": "1510883883",
+          "tianmu_type": "0",
+          "refinfo": ""
+        }
+      }
+    },
+    "choosecar": {
+      "status": "hide"
+    },
+    "shopstar": {
+      "status": "hide"
+    },
+    "header": {
+      "status": "show",
+      "data": {
+        "q": "ps4 星球大战前传 前线2 租",
+        "tabParams": {
+          "js": "1",
+          "stats_click": "search_radio_all:1",
+          "initiative_id": "staobaoz_20171117",
+          "ie": "utf8"
+        },
+        "dropdown": [
+          {
+            "url": "/search",
+            "text": "宝贝",
+            "type": "item",
+            "isActive": true
+          },
+          {
+            "url": "//shopsearch.taobao.com/search",
+            "text": "店铺",
+            "type": "shop",
+            "isActive": false
+          }
+        ],
+        "imgBtn": true,
+        "uploadUrl": "/image",
+        "hb": false,
+        "hb_v": "1.7.0"
+      }
+    },
+    "spucombo": {
+      "status": "hide"
+    },
+    "supertab": {
+      "status": "hide"
+    },
+    "navtablink": {
+      "status": "show",
+      "data": {
+        "df": {
+          "active": true,
+          "pbUrl": "//s.taobao.com/search?initiative_id\u003dstaobaoz_20171107\u0026q\u003dps4+%E6%98%9F%E7%90%83%E5%A4%A7%E6%88%98%E5%89%8D%E4%BC%A0+%E5%89%8D%E7%BA%BF2+%E7%A7%9F\u0026sort\u003dsale-desc\u0026bcoffset\u003d0\u0026p4ppushleft\u003d%2C44\u0026s\u003d176\u0026pb\u003dfalse"
+        }
+      }
+    },
+    "noresult": {
+      "status": "show",
+      "data": {
+        "noResultCode": 2,
+        "queryShow": "ps4 星球大战前传 前线2 租",
+        "render": true,
+        "isSimilar": false
+      }
+    }
+  },
+  "mainInfo": {
+    "currentUrl": "//s.taobao.com/search?initiative_id\u003dstaobaoz_20171107\u0026q\u003dps4+%E6%98%9F%E7%90%83%E5%A4%A7%E6%88%98%E5%89%8D%E4%BC%A0+%E5%89%8D%E7%BA%BF2+%E7%A7%9F\u0026sort\u003dsale-desc\u0026bcoffset\u003d-6\u0026p4ppushleft\u003d%2C44\u0026s\u003d176\u0026ntoffset\u003d-6",
+    "modLinks": {
+      "filter": "//s.taobao.com/search?initiative_id\u003dstaobaoz_20171107\u0026q\u003dps4+%E6%98%9F%E7%90%83%E5%A4%A7%E6%88%98%E5%89%8D%E4%BC%A0+%E5%89%8D%E7%BA%BF2+%E7%A7%9F\u0026sort\u003dsale-desc\u0026bcoffset\u003d0\u0026p4ppushleft\u003d%2C44\u0026fs\u003d1",
+      "default": "//s.taobao.com/search?initiative_id\u003dstaobaoz_20171107\u0026q\u003dps4+%E6%98%9F%E7%90%83%E5%A4%A7%E6%88%98%E5%89%8D%E4%BC%A0+%E5%89%8D%E7%BA%BF2+%E7%A7%9F\u0026sort\u003dsale-desc\u0026bcoffset\u003d0\u0026p4ppushleft\u003d%2C44\u0026s\u003d176",
+      "nav": "//s.taobao.com/search?initiative_id\u003dstaobaoz_20171107\u0026q\u003dps4+%E6%98%9F%E7%90%83%E5%A4%A7%E6%88%98%E5%89%8D%E4%BC%A0+%E5%89%8D%E7%BA%BF2+%E7%A7%9F\u0026sort\u003dsale-desc\u0026bcoffset\u003d0\u0026p4ppushleft\u003d%2C44\u0026cps\u003dyes",
+      "breadcrumb": "//s.taobao.com/search?initiative_id\u003dstaobaoz_20171107\u0026q\u003dps4+%E6%98%9F%E7%90%83%E5%A4%A7%E6%88%98%E5%89%8D%E4%BC%A0+%E5%89%8D%E7%BA%BF2+%E7%A7%9F\u0026sort\u003dsale-desc\u0026bcoffset\u003d0\u0026p4ppushleft\u003d%2C44",
+      "pager": "//s.taobao.com/search?initiative_id\u003dstaobaoz_20171107\u0026q\u003dps4+%E6%98%9F%E7%90%83%E5%A4%A7%E6%88%98%E5%89%8D%E4%BC%A0+%E5%89%8D%E7%BA%BF2+%E7%A7%9F\u0026sort\u003dsale-desc\u0026bcoffset\u003d0\u0026p4ppushleft\u003d%2C44\u0026s\u003d176",
+      "tab": "//s.taobao.com/search?initiative_id\u003dstaobaoz_20171107\u0026q\u003dps4+%E6%98%9F%E7%90%83%E5%A4%A7%E6%88%98%E5%89%8D%E4%BC%A0+%E5%89%8D%E7%BA%BF2+%E7%A7%9F\u0026bcoffset\u003d0\u0026p4ppushleft\u003d%2C44",
+      "sortbar": "//s.taobao.com/search?initiative_id\u003dstaobaoz_20171107\u0026q\u003dps4+%E6%98%9F%E7%90%83%E5%A4%A7%E6%88%98%E5%89%8D%E4%BC%A0+%E5%89%8D%E7%BA%BF2+%E7%A7%9F\u0026sort\u003dsale-desc\u0026bcoffset\u003d0\u0026p4ppushleft\u003d%2C44"
+    },
+    "srpGlobal": {
+      "q": "ps4 星球大战前传 前线2 租",
+      "encode_q": "ps4+%D0%C7%C7%F2%B4%F3%D5%BD%C7%B0%B4%AB+%C7%B0%CF%DF2+%D7%E2",
+      "utf8_q": "ps4+%E6%98%9F%E7%90%83%E5%A4%A7%E6%88%98%E5%89%8D%E4%BC%A0+%E5%89%8D%E7%BA%BF2+%E7%A7%9F",
+      "cat": "",
+      "s": 4,
+      "bucketid": 16,
+      "multi_bucket": "16_14_7_0_0_0_0_0",
+      "style": "grid",
+      "initiative_id": "staobaoz_20171107",
+      "machine": "1-hippo",
+      "buckets": "main_alg%3A276%3Bzhutisoufe%3A6193%3Bpc_topic_sort%3A6384%3Bmain_fe_extend%3A4547%3Bpfourp_test%3A371%3Bpfourp_mbox%3A4763%3Bpc_to_wireless_suggest_fix%3A10769%3Bmain_fe%3A287%3Bpricefixbts%3A8921%3Btoufang_taobao%3A5194",
+      "sp_url": "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\u003d\u003d",
+      "srpName": "mainsrp"
+    },
+    "traceInfo": {
+      "pvStat": "vers\u003dj\u0026list_model\u003dgrid\u0026searchurl\u003d1\u0026cat\u003d\u0026direct_cat\u003d\u0026at_lflog\u003d4-0-0-0-2-0-0-sale_desc|\u0026at_bucketid\u003d14\u0026multi_bucket\u003d16_14_7_0_0_0_0_0\u0026at_colo\u003det2\u0026at_host\u003dhippo.11.187.225.94.et2\u0026alitrackid\u003d\u0026at_alitrackid\u003d\u0026last_alitrackid\u003d\u0026stats_show\u003drs%3Apv%3Buser_group%3AClusterMergeInfo%3Aexcellent%3A0.41%3Blunbo%3A0.59%3Bmd_QueryIntentionType%3A%3Bs%3Amainsearch%3Beval%3A1%3Bbandit%3AGongYingLianDists%253AEAST%2BHD%2BQDHEWL-0002%2BQDHEWL-0019%2BSTORE_12005465%2BSXHD%2B0%3Bqinfo%3A1%2C10%2C24%2C30%2C43%2C50%2C61%2C73%2C83%2C86%2C89%2C90%2C104%2C118%2C120%2C130%2C144%2C150%2C171%2C204%2C618%2C1116%2C1000000000%3Bzf_sort%3A4%3Bhas_p4p%3A0%3Bapass%3A0%3Bhas_sku_pic%3A0%3Btab_type%3Aall%3Bsn_hide%3A0%3B\u0026rn\u003df4d267ca2737c654f324d33915f350e7\u0026nick\u003d\u0026multivariate\u003dmain_alg%3A276%3Bzhutisoufe%3A6193%3Bpc_topic_sort%3A6384%3Bmain_fe_extend%3A4547%3Bpfourp_test%3A371%3Bpfourp_mbox%3A4763%3Bpc_to_wireless_suggest_fix%3A10769%3Bmain_fe%3A287%3Bpricefixbts%3A8921%3Btoufang_taobao%3A5194\u0026srppage\u003d1\u0026s_query\u003dps4+%D0%C7%C7%F2%B4%F3%D5%BD%C7%B0%B4%AB+%C7%B0%CF%DF2+%D7%E2",
+      "traceData": {
+        "catdirect": "",
+        "remoteip": "183.131.243.186",
+        "tabType": "tab_type:all",
+        "is_rs": "1",
+        "catpredict_bury": "",
+        "hostname": "hippo.11.187.225.94.et2",
+        "activityClick": [],
+        "lastAlitrackid": "",
+        "at_lflog": "4-0-0-0-2-0-0-sale_desc|",
+        "list_model": "grid",
+        "rsPositions": [
+          "rs:1;rs_query:%B3%B1%C1%F7%C7%B0%CF%DF",
+          "rs:2;rs_query:%C9%D9%C5%AE%C7%B0%CF%DF",
+          "rs:3;rs_query:%B3%B1%C1%F7%C7%B0%CF%DF%B9%D9%B7%BD%C6%EC%BD%A2%B5%EA",
+          "rs:4;rs_query:%C9%D9%C5%AE%C7%B0%CF%DF%B3%F5%CA%BC",
+          "rs:5;rs_query:%C9%D9%C5%AE%C7%B0%CF%DF+%CA%D6%B0%EC",
+          "rs:6;rs_query:%C9%D9%C5%AE%C7%B0%CF%DFcos",
+          "rs:7;rs_query:%C9%D9%C5%AE%C7%B0%CF%DF%D5%CB%BA%C5",
+          "rs:8;rs_query:%C9%D9%C5%AE%C7%B0%CF%DF%C0%F1%B0%FC",
+          "rs:9;rs_query:%D0%C7%D5%BD%C7%B0%CF%DF2",
+          "rs:10;rs_query:%C1%AC%D4%C6%B8%DB%D3%E6%C0%D6%C7%B0%CF%DF%BE%E3%C0%D6%B2%BF",
+          "rs:11;rs_query:%B3%B1%C1%F7%C7%B0%CF%DF%B9%D9%B7%BD%C6%EC%BD%A2%B5%EA%C4%D0",
+          "rs:12;rs_query:%C9%D9%C5%AE%C7%B0%CF%DF%D6%DC%B1%DF",
+          "rs:13;rs_query:%D5%BD%D5%F9%C7%B0%CF%DF",
+          "rs:14;rs_query:%B6%AF%C2%FE%C7%B0%CF%DF"
+        ],
+        "if_tank": "0",
+        "rsshop": "",
+        "alitrackid": "",
+        "query": "ps4+%D0%C7%C7%F2%B4%F3%D5%BD%C7%B0%B4%AB+%C7%B0%CF%DF2+%D7%E2",
+        "price_rank": "0",
+        "sort": "sale_desc",
+        "catLevelOne": "",
+        "auctionNids": [],
+        "ifDoufuAuction": [],
+        "at_host": "hippo.11.187.225.94.et2",
+        "querytype_bury": "",
+        "relateHotTrace": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "auctionIconServices": [],
+        "rn": "f4d267ca2737c654f324d33915f350e7",
+        "isp4p": [],
+        "rs": "rs:pv",
+        "colo": "et2",
+        "show_compass": "4",
+        "auctionPrices": [],
+        "auctionReturnNum": "0",
+        "multivariate": "main_alg%3A276%3Bzhutisoufe%3A6193%3Bpc_topic_sort%3A6384%3Bmain_fe_extend%3A4547%3Bpfourp_test%3A371%3Bpfourp_mbox%3A4763%3Bpc_to_wireless_suggest_fix%3A10769%3Bmain_fe%3A287%3Bpricefixbts%3A8921%3Btoufang_taobao%3A5194",
+        "p4pDelTraceInfo": [],
+        "bucketId": "14",
+        "rewrite_bury": "",
+        "priceSorts": [
+          "price-asc",
+          "price-desc",
+          "total-asc",
+          "total-desc"
+        ],
+        "at_bucketid": "14",
+        "srppage": "1",
+        "if_rs": "0",
+        "cat": "",
+        "spUrl": "http://11.251.163.158:30117/bin/sp?regioncode\u003d330212\u0026ss_bucket\u003d14\u0026buyerloc\u003d%E6%B5%99%E6%B1%9F%E7%9C%81+%E5%AE%81%E6%B3%A2%E5%B8%82\u0026dl\u003dsrp\u0026level_shuffle\u003dtrue\u0026setting\u003domit_retry:on;service_label:off;relate_search:on\u0026tab\u003dall\u0026tagkv\u003doriginal_zk_tag%3A0\u0026buyernick\u003dsaif2005\u0026rank_src\u003dpc\u0026zk_filter_field_coupon\u003dcoupon_business_id\u0026rank_service\u003don\u0026introspector\u003dservice\u0026qp\u003dip:183.131.243.186;areaid:330200;bucket:14;acookie:pQLuERXRPxUCAbeD87rZgX30;zf_sort:4\u0026app\u003dmini\u0026bts\u003d%7B%22main_alg%22%3A%7B%22bucket%22%3A%7B%22id%22%3A276%2C%22name%22%3A%22apollo2%22%2C%22groups%22%3A%7B%22srp%22%3A%22%22%2C%22qp4main%22%3A%22%22%2C%22qrs4main%22%3A%22%22%2C%22qrs4excellent%22%3A%22%22%2C%22sp%22%3A%22lunbo%5Cu003don%22%2C%22setting%22%3A%22user_personal_mini_rank%5Cu003don%22%7D%7D%7D%2C%22zhutisoufe%22%3A%7B%22bucket%22%3A%7B%22id%22%3A6193%2C%22name%22%3A%22open%22%2C%22groups%22%3A%7B%22srp%22%3A%22%22%7D%7D%7D%2C%22pc_topic_sort%22%3A%7B%22bucket%22%3A%7B%22id%22%3A6384%2C%22name%22%3A%229%22%2C%22groups%22%3A%7B%22ha34graph%22%3A%22%22%2C%22qp4main%22%3A%22%22%2C%22srp%22%3A%22%22%2C%22sp%22%3A%22%22%7D%7D%7D%2C%22main_fe_extend%22%3A%7B%22bucket%22%3A%7B%22id%22%3A4547%2C%22name%22%3A%22%22%2C%22groups%22%3A%7B%22srp%22%3A%22test1%22%7D%7D%7D%2C%22pfourp_test%22%3A%7B%22bucket%22%3A%7B%22id%22%3A371%2C%22name%22%3A%22p4p_bts2%22%2C%22groups%22%3A%7B%22lsrp%22%3A%22%22%2C%22srp%22%3A%22%22%7D%7D%7D%2C%22pfourp_mbox%22%3A%7B%22bucket%22%3A%7B%22id%22%3A4763%2C%22name%22%3A%22%22%2C%22groups%22%3A%7B%22lsrp%22%3A%22%22%2C%22srp%22%3A%22%22%7D%7D%7D%2C%22pc_to_wireless_suggest_fix%22%3A%7B%22bucket%22%3A%7B%22id%22%3A10769%2C%22name%22%3A%22base%22%2C%22groups%22%3A%7B%22srp%22%3A%22%22%2C%22lsrp%22%3A%22%22%2C%22setting%22%3A%22query_history%5Cu003doff%22%7D%7D%7D%2C%22main_fe%22%3A%7B%22bucket%22%3A%7B%22id%22%3A287%2C%22name%22%3A%22%22%2C%22groups%22%3A%7B%22srp%22%3A%22%22%7D%7D%7D%2C%22pricefixbts%22%3A%7B%22bucket%22%3A%7B%22id%22%3A8921%2C%22name%22%3A%22hit%22%2C%22groups%22%3A%7B%22srp%22%3A%22%22%7D%7D%7D%2C%22toufang_taobao%22%3A%7B%22bucket%22%3A%7B%22id%22%3A5194%2C%22name%22%3A%22%22%2C%22groups%22%3A%7B%22qrs4main%22%3A%22%22%2C%22srp%22%3A%22%22%7D%7D%7D%7D\u0026alg_bts\u003d14\u0026stat\u003darrive_day,type:cus,args:(0+1);auction_tag,type:cus,args:(100017370+88642)\u0026compr\u003dhttpgzip\u0026src\u003dss-srp-hippo.11.187.225.94.et2\u0026zf_sort\u003d4\u0026sp_bts\u003d7\u0026sort\u003ddeal:des\u0026_ocg_area_limit\u003d156\u0026n\u003d44\u0026outfmt\u003djson\u0026itemloc\u003d\u0026zk_filter_value_coupon\u003d1000246001\u0026q\u003dps4%20%E6%98%9F%E7%90%83%E5%A4%A7%E6%88%98%E5%89%8D%E4%BC%A0%20%E5%89%8D%E7%BA%BF2%20%E7%A7%9F\u0026s\u003d176\u0026_cat\u003d50023878\u0026rn\u003df4d267ca2737c654f324d33915f350e7\u0026hpsort\u003dmainsearch",
+        "newRewriteType": "rewrite:0",
+        "sort2": "",
+        "qp_bury": "",
+        "doufuAuctionNum": "0",
+        "at_colo": "et2",
+        "bandit": "GongYingLianDists:EAST HD QDHEWL-0002 QDHEWL-0019 STORE_12005465 SXHD 0",
+        "rs_count": "14",
+        "has_sku_pic": "has_sku_pic:0",
+        "from_pos": "",
+        "omit_rewrite": "omit_rewrite:1",
+        "statsClick": "s%3Amainsearch%3Buser_group%3AClusterMergeInfo%3Aexcellent%3A0.41%3Blunbo%3A0.59%3Bmd_QueryIntentionType%3A%3Bs%3Amainsearch%3Bbandit%3AGongYingLianDists%253AEAST%2BHD%2BQDHEWL-0002%2BQDHEWL-0019%2BSTORE_12005465%2BSXHD%2B0%3Bqinfo%3A1%2C10%2C24%2C30%2C43%2C50%2C61%2C73%2C83%2C86%2C89%2C90%2C104%2C118%2C120%2C130%2C144%2C150%2C171%2C204%2C618%2C1116%2C1000000000%3Bzf_sort%3A4%3Bapass%3A0%3Bhas_sku_pic%3A0%3Btab_type%3Aall%3Bsn_hide%3A0%3Blist_model%3Agrid%3B",
+        "rsKeywords": [
+          "潮流前线",
+          "少女前线",
+          "潮流前线官方旗舰店",
+          "少女前线初始",
+          "少女前线 手办",
+          "少女前线cos",
+          "少女前线账号",
+          "少女前线礼包",
+          "星战前线2",
+          "连云港渔乐前线俱乐部",
+          "潮流前线官方旗舰店男",
+          "少女前线周边",
+          "战争前线",
+          "动漫前线"
+        ],
+        "auctionNicks": [],
+        "sp_seller_types": [],
+        "catdirectForMaidian": "",
+        "qinfo": "qinfo:1,10,24,30,43,50,61,73,83,86,89,90,104,118,120,130,144,150,171,204,618,1116,1000000000",
+        "noResultCode": "-3",
+        "apass": "apass:0",
+        "spu_combo": "",
+        "noresult": "0",
+        "multi_bucket": "16_14_7_0_0_0_0_0",
+        "navStatus": "4"
+      }
+    },
+    "remainMods": []
+  },
+  "feature": {
+    "webpOff": false,
+    "retinaOff": false,
+    "shopcardOff": false
+  }
+}

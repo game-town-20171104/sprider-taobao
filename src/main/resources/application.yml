@@ -1,0 +1,56 @@
+liquibase:
+    change-log: classpath:db/changelog/changelog.sql
+server:
+    port: 8011
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/spider?useUnicode=true&characterEncoding=UTF-8
+    username: spider
+    password: spider
+    driver-class-name: com.mysql.jdbc.Driver
+    ax-idle: 10
+    ax-wait: 10000
+    in-idle: 5
+    nitial-size: 5
+    alidation-query: SELECT 1
+    est-on-borrow: false
+    est-while-idle: true
+    ime-between-eviction-runs-millis: 18800
+    jdbc-interceptors=ConnectionState: SlowQueryReport(threshold=0)
+
+
+page:
+  size: 9
+thread:
+  size: 2
+
+
+#mybatis
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.ylfin.vo.bean
+  global-config:
+    #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+    id-type: 2
+    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+    field-strategy: 2
+    #驼峰下划线转换
+    db-column-underline: true
+    #刷新mapper 调试神器
+    refresh-mapper: true
+    #数据库大写下划线转换
+    #capital-mode: true
+    #序列接口实现类配置
+    #key-generator: com.baomidou.springboot.xxx
+    #逻辑删除配置
+    logic-delete-value: 0
+    logic-not-delete-value: 1
+    #自定义填充策略接口实现
+    #meta-object-handler: com.baomidou.springboot.xxx
+    #自定义SQL注入器
+    #sql-injector: com.baomidou.springboot.xxx
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+#logging

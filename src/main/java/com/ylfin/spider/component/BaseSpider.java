@@ -29,13 +29,16 @@ public class BaseSpider {
     }
 
     public void simpleWaite() {
+        this.simpleWaite(2*1000L);
+    }
+
+    public void simpleWaite(Long time ){
         try {
-            Thread.sleep(2 * 1000);
+            Thread.sleep(time);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
-
     public  void waiteTitleCondition(String  keyword){
         (new WebDriverWait(driver, 10)).until(new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver d) {
@@ -50,7 +53,10 @@ public class BaseSpider {
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(element));
         element.click();
     }
-
+    public  WebElement waitFindElement(By by){
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(by));
+        return driver.findElement(by);
+    }
 
     private String getDriverPath() {
         String basePath =this.getClass().getClassLoader().getResource("driver").getPath();

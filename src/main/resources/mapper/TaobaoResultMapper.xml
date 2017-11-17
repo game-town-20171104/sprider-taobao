@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ylfin.spider.mapper.TaoBaoResultDao">
+
+    <insert id="batchInsert" useGeneratedKeys="true" parameterType="java.util.List">
+      insert into taobao_result
+        (keywords_id,comment_count, spider_date,detail_url,price,shop_name,num,title,location)values
+        <foreach collection="list" item="item" index="index" separator="," >
+         (#{item.keywordsId},#{item.commentCount},#{item.spiderDate},#{item.detailUrl},#{item.price},#{item.shopName},#{item.num},#{item.title},#{item.location})
+        </foreach>
+
+
+    </insert>
+</mapper>

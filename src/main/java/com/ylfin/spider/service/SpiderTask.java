@@ -3,10 +3,13 @@ package com.ylfin.spider.service;
 import com.ylfin.spider.component.SeleniumSpider;
 import com.ylfin.spider.vo.KeywordsQueue;
 import com.ylfin.spider.vo.bean.KeyWords;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
 import java.text.SimpleDateFormat;
@@ -17,6 +20,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 @Component
 public class SpiderTask {
+   static final Logger logger = LoggerFactory.getLogger(SpiderTask.class);
 
     @Autowired
     KeyWordsService keyWordsService;
@@ -31,7 +35,11 @@ public class SpiderTask {
     @PostConstruct
     public void start() {
         KeywordsQueue queue = new KeywordsQueue();
-        List<KeyWords> keyWords = keyWordsService.query();
+        List<KeyWords> keyWords = keyWordsService.findActive();
+        if(CollectionUtils.isEmpty(keyWords)){
+            logger.warn("关键词为空，请配置！");
+            return;
+        }
         for (KeyWords word : keyWords) {
             queue.addKeyword(word);
         }
@@ -75,7 +83,11 @@ public class SpiderTask {
                 }
                 System.out.println("开始消费：" + keyword);
                 spider.setStartDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-                spider.jsonHandle(keyword);
+                try {
+                    spider.jsonHandle(keyword);
+                } catch (Exception e) {
+                    logger.error(keyword+"爬虫脚本出错了",e);
+                }
 
             }
 

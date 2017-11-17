@@ -7,4 +7,6 @@ import java.util.List;
 public interface KeyWordsService {
 
      List<KeyWords> query();
+
+     List<KeyWords> findActive();
 }

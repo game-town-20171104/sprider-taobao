@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.ylfin.spider.service.TaoBaoResultService;
 import com.ylfin.spider.utils.CSVTools;
+import com.ylfin.spider.utils.DateUtils;
 import com.ylfin.spider.vo.TaobaoVO;
 import com.ylfin.spider.vo.bean.KeyWords;
 import org.openqa.selenium.By;
@@ -71,7 +72,8 @@ public class SeleniumSpider extends BaseSpider {
                 break;
             }
             List<TaobaoVO> taobaoVOS = null;
-            String url = "https://s.taobao.com/search?data-key=s&data-value=" + (curPage++ * pageSize) + "&ajax=true&_ksTS=1510048516809_1374&callback=jsonp1514&initiative_id=staobaoz_20171107&q=" + keyword.getTitle() + "&sort=sale-desc&bcoffset=0&p4ppushleft=%2C44&s=44";
+            String initative_id="staobaoz_"+ DateUtils.format("yyyyMMdd");
+            String url = "https://s.taobao.com/search?data-key=s&data-value=" + (curPage++ * pageSize) + "&ajax=true&_ksTS=1510048516809_1374&callback=jsonp1514&initiative_id="+initative_id+"&q=" + keyword.getTitle() + "&sort=sale-desc&bcoffset=0&p4ppushleft=%2C44&s=44";
             logger.info(url);
             String json = this.loadPage(url,0L);
             if (StringUtils.isEmpty(json)) {
@@ -101,11 +103,11 @@ public class SeleniumSpider extends BaseSpider {
             } catch (Exception e) {
                 logger.error(keyword + "转换出错", e);
                 logger.info("出错json：{}", json);
-                break;
+                continue;
             }
             if (CollectionUtils.isEmpty(taobaoVOS)) {
                 logger.info("本页数据为空");
-                break;
+                continue;
             }
 
             for (TaobaoVO taobaoVO : taobaoVOS) {
@@ -141,7 +143,6 @@ public class SeleniumSpider extends BaseSpider {
     }
 
     private String unwarpJSONP(String jsonp) {
-        System.out.println("*************************" + jsonp);
         int length = jsonp.indexOf("(");
         String json = jsonp.substring(length + 1);
         int end = json.lastIndexOf(")");

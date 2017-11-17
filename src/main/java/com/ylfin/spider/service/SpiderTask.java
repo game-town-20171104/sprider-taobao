@@ -1,6 +1,7 @@
 package com.ylfin.spider.service;
 
 import com.ylfin.spider.component.SeleniumSpider;
+import com.ylfin.spider.utils.DateUtils;
 import com.ylfin.spider.vo.KeywordsQueue;
 import com.ylfin.spider.vo.bean.KeyWords;
 import org.slf4j.Logger;
@@ -74,6 +75,7 @@ public class SpiderTask {
             }
 
             spider.init();
+            spider.setStartDate(DateUtils.format());
             while (true) {
                 KeyWords keyword = queue.getKeyword();
 
@@ -82,7 +84,6 @@ public class SpiderTask {
                     break;
                 }
                 System.out.println("开始消费：" + keyword);
-                spider.setStartDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
                 try {
                     spider.jsonHandle(keyword);
                 } catch (Exception e) {

@@ -46,8 +46,8 @@ public class TaoBaoResultServiceImpl implements TaoBaoResultService {
             throw  new IllegalArgumentException("taoBaoResultList 不能为空");
         try {
             List<TaoBaoResult> taoBaoResults = new ArrayList<>();
-            TaoBaoResult taoBaoResult = new TaoBaoResult();
             for (TaobaoVO taobaoVO:taoBaoResultList){
+                TaoBaoResult taoBaoResult = new TaoBaoResult();
                 taoBaoResult.setKeywordsId(taobaoVO.getKeywordId());
                 taoBaoResult.setShopName(taobaoVO.getShop());
                 if(taobaoVO.getCommentCount()!=null)
@@ -58,7 +58,8 @@ public class TaoBaoResultServiceImpl implements TaoBaoResultService {
                 if(taobaoVO.getViewSales()!=null)
                    taoBaoResult.setNum(Integer.valueOf(taobaoVO.getViewSales()));
                 taoBaoResult.setTitle(taobaoVO.getRawTitle());
-                taoBaoResult.setPrice(taoBaoResult.getPrice());
+                if(taobaoVO.getViewPrice()!=null)
+                taoBaoResult.setPrice(Double.valueOf(taobaoVO.getViewPrice()));
                 taoBaoResults.add(taoBaoResult);
             }
 

@@ -87,8 +87,7 @@ public class SeleniumSpider extends BaseSpider {
                     if (page.containsKey("data")) {
                         totalPage = page.getJSONObject("data").getInteger("totalPage");
                     } else {
-                        logger.info("{},该关键词无查询结果", keyword);
-                        break;
+                        totalPage =1;
                     }
 
                 }

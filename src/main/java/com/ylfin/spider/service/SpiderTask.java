@@ -38,26 +38,26 @@ public class SpiderTask implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments applicationArguments) throws Exception {
-//        KeywordsQueue queue = new KeywordsQueue();
-//        List<KeyWords> keyWords = keyWordsService.findActive();
-//        if(CollectionUtils.isEmpty(keyWords)){
-//            logger.warn("关键词为空，请配置！");
-//            return;
-//        }
-//        for (KeyWords word : keyWords) {
-//            queue.addKeyword(word);
-//        }
-//
-//
-//        threadSize = Math.min(threadSize, queue.getSize());
-//
-//        ThreadPoolExecutor es = (ThreadPoolExecutor) Executors.newFixedThreadPool(threadSize);
-//        for (int i = 0; i < threadSize; i++) {
-//            InnerThread innerThread =new InnerThread(queue,taoBaoResultService);
-//            innerThread.setPages(page);
-//            es.submit(innerThread);
-//        }
-//        es.shutdown();
+        KeywordsQueue queue = new KeywordsQueue();
+        List<KeyWords> keyWords = keyWordsService.findActive();
+        if(CollectionUtils.isEmpty(keyWords)){
+            logger.warn("关键词为空，请配置！");
+            return;
+        }
+        for (KeyWords word : keyWords) {
+            queue.addKeyword(word);
+        }
+
+
+        threadSize = Math.min(threadSize, queue.getSize());
+
+        ThreadPoolExecutor es = (ThreadPoolExecutor) Executors.newFixedThreadPool(threadSize);
+        for (int i = 0; i < threadSize; i++) {
+            InnerThread innerThread =new InnerThread(queue,taoBaoResultService);
+            innerThread.setPages(page);
+            es.submit(innerThread);
+        }
+        es.shutdown();
     }
 
     static class InnerThread implements Runnable {

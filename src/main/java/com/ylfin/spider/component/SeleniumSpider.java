@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.ylfin.spider.service.TaoBaoResultService;
 import com.ylfin.spider.utils.CSVTools;
 import com.ylfin.spider.utils.DateUtils;
+import com.ylfin.spider.utils.SpiderUtils;
 import com.ylfin.spider.vo.TaobaoVO;
 import com.ylfin.spider.vo.bean.KeyWords;
 import org.openqa.selenium.By;
@@ -111,7 +112,7 @@ public class SeleniumSpider extends BaseSpider {
 
             for (TaobaoVO taobaoVO : taobaoVOS) {
                 taobaoVO.setKeywordId(keyword.getId());
-                String num = getNum(taobaoVO.getViewSales());
+                String num = SpiderUtils.getNum(taobaoVO.getViewSales());
                 taobaoVO.setViewSales(num);
                 taobaoVO.setStartDate(startDate);
                 if (StringUtils.isEmpty(taobaoVO.getCommentCount())) {
@@ -128,25 +129,9 @@ public class SeleniumSpider extends BaseSpider {
 
     }
 
-    private String loadPage(String url,Long sleep) {
-        driver.get(url);
-        if(sleep>0)
-             simpleWaite(1000L);
-        String content = this.waitFindElement(By.tagName("pre")).getText();
-        return unwarpJSONP(content);
-    }
 
-    private String getNum(String viewNum) {
-        String temp = viewNum.replaceAll("人付款", "").replaceAll("人收货", "");
-        return viewNum.replaceAll("[^0-9]", "");
-    }
 
-    private String unwarpJSONP(String jsonp) {
-        int length = jsonp.indexOf("(");
-        String json = jsonp.substring(length + 1);
-        int end = json.lastIndexOf(")");
-        json = json.substring(0, end);
-        return json;
-    }
+
+
 
 }

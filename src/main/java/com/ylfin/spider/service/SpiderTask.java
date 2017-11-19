@@ -4,10 +4,13 @@ import com.ylfin.spider.component.SeleniumSpider;
 import com.ylfin.spider.utils.DateUtils;
 import com.ylfin.spider.vo.KeywordsQueue;
 import com.ylfin.spider.vo.bean.KeyWords;
+import com.ylfin.spider.vo.bean.Shop;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
@@ -17,7 +20,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
 @Component
-public class SpiderTask {
+public class SpiderTask implements ApplicationRunner {
    static final Logger logger = LoggerFactory.getLogger(SpiderTask.class);
 
     @Autowired
@@ -25,33 +28,36 @@ public class SpiderTask {
 
     @Autowired
     TaoBaoResultService taoBaoResultService;
+
+    @Autowired
+    ShopService shopService;
     @Value("${page.size}")
     private int page ;
     @Value("${thread.size}")
     private int threadSize;
 
-    @PostConstruct
-    public void start() {
-        KeywordsQueue queue = new KeywordsQueue();
-        List<KeyWords> keyWords = keyWordsService.findActive();
-        if(CollectionUtils.isEmpty(keyWords)){
-            logger.warn("关键词为空，请配置！");
-            return;
-        }
-        for (KeyWords word : keyWords) {
-            queue.addKeyword(word);
-        }
-
-
-        threadSize = Math.min(threadSize, queue.getSize());
-
-        ThreadPoolExecutor es = (ThreadPoolExecutor) Executors.newFixedThreadPool(threadSize);
-        for (int i = 0; i < threadSize; i++) {
-            InnerThread innerThread =new InnerThread(queue,taoBaoResultService);
-            innerThread.setPages(page);
-            es.submit(innerThread);
-        }
-        es.shutdown();
+    @Override
+    public void run(ApplicationArguments applicationArguments) throws Exception {
+//        KeywordsQueue queue = new KeywordsQueue();
+//        List<KeyWords> keyWords = keyWordsService.findActive();
+//        if(CollectionUtils.isEmpty(keyWords)){
+//            logger.warn("关键词为空，请配置！");
+//            return;
+//        }
+//        for (KeyWords word : keyWords) {
+//            queue.addKeyword(word);
+//        }
+//
+//
+//        threadSize = Math.min(threadSize, queue.getSize());
+//
+//        ThreadPoolExecutor es = (ThreadPoolExecutor) Executors.newFixedThreadPool(threadSize);
+//        for (int i = 0; i < threadSize; i++) {
+//            InnerThread innerThread =new InnerThread(queue,taoBaoResultService);
+//            innerThread.setPages(page);
+//            es.submit(innerThread);
+//        }
+//        es.shutdown();
     }
 
     static class InnerThread implements Runnable {

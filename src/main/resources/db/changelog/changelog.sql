@@ -4,3 +4,25 @@ ALTER  TABLE  keywords add COLUMN   `active` tinyint(1) DEFAULT '1' COMMENT '是
 
 -- changeset godslhand:20171116-1
 ALTER  TABLE taobao_result CHANGE `data_str` spider_date datetime DEFAULT NULL COMMENT '抓取时间';
+
+-- changeset godslhand:20171119
+CREATE TABLE `shop` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `url` text COMMENT '店铺地址',
+  `name` varchar(255) DEFAULT NULL COMMENT '店铺名称',
+  `active` tinyint(1) DEFAULT '1' COMMENT '是否开启',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT '店铺信息';
+
+
+CREATE TABLE `shop_item` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `shop_id` bigint(20) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `sales` int(11) DEFAULT NULL COMMENT '销量',
+  `price` double DEFAULT NULL COMMENT '价格',
+  `rates` int(11) DEFAULT NULL COMMENT '评论数',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '店铺商品';
+
+

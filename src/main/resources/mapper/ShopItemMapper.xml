@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ylfin.spider.mapper.ShopItemDao">
+
+    <insert id="batchInsert" useGeneratedKeys="true" parameterType="java.util.List">
+      insert into shop_item
+        (shop_id, name,sales,price,rates)values
+        <foreach collection="list" item="item" index="index" separator="," >
+         (#{item.shopId},#{item.name},#{item.sales},#{item.price},#{item.rates})
+        </foreach>
+
+
+    </insert>
+</mapper>

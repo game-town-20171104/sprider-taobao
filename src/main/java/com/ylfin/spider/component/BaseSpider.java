@@ -1,6 +1,7 @@
 package com.ylfin.spider.component;
 
 import com.ylfin.spider.enums.OS;
+import com.ylfin.spider.utils.SpiderUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,13 +11,15 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.List;
+
 public class BaseSpider {
     WebDriver driver;
 
     public void init() {
         System.setProperty("webdriver.chrome.driver", getDriverPath());
         ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("--headless");
+//        chromeOptions.addArguments("--headless");
         chromeOptions.addArguments("--window-size=1920,1080");
          driver = (WebDriver) new ChromeDriver(chromeOptions);
     }
@@ -58,6 +61,27 @@ public class BaseSpider {
         return driver.findElement(by);
     }
 
+    /**
+     * xpath 方式class 获取元素 单个
+     * @param className
+     * @return
+     */
+    public WebElement waitFindElementByClass(String className){
+        By by =By.xpath("//*[contains(@class,'"+className+"')]");
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(by));
+        return driver.findElement(by);
+    }
+    /**
+     * xpath 方式class 获取元素 批量
+     * @param className
+     * @return
+     */
+    public List<WebElement> waitFindElementsByClass(String className){
+        By by =By.xpath("//*[contains(@class,'"+className+"')]");
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(by));
+        return driver.findElements(by);
+    }
+
     private String getDriverPath() {
         String basePath =this.getClass().getClassLoader().getResource("driver").getPath();
         switch (OS.getPlatform()){
@@ -73,6 +97,12 @@ public class BaseSpider {
         }
         return   basePath;
     }
-
+    public String loadPage(String url,Long sleep) {
+        driver.get(url);
+        if(sleep>0)
+            simpleWaite(1000L);
+        String content = this.waitFindElement(By.tagName("pre")).getText();
+        return SpiderUtils.unwarpJSONP(content);
+    }
 
 }

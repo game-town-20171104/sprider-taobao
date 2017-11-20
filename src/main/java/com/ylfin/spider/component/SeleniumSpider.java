@@ -74,7 +74,8 @@ public class SeleniumSpider extends BaseSpider {
             }
             List<TaobaoVO> taobaoVOS = null;
             String initative_id="staobaoz_"+ DateUtils.format("yyyyMMdd");
-            String url = "https://s.taobao.com/search?data-key=s&data-value=" + (curPage++ * pageSize) + "&ajax=true&_ksTS=1510048516809_1374&callback=jsonp1514&initiative_id="+initative_id+"&q=" + keyword.getTitle() + "&sort=sale-desc&bcoffset=0&p4ppushleft=%2C44&s=44";
+            String url = "https://s.taobao.com/search?data-key=s&data-value=" + (curPage++ * pageSize) + "&ajax=true&_ksTS=1510048516809_1374&callback=jsonp1514&initiative_id="+initative_id+"&q=" + keyword.getTitle() + "&sort=default&bcoffset=0&p4ppushleft=%2C44&s=44";
+            // 综合排序：default   ；  人气：renqi-desc ；销售量：sale-desc
             logger.info(url);
             String json = this.loadPage(url,0L);
             if (StringUtils.isEmpty(json)) {

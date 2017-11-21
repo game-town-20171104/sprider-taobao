@@ -44,7 +44,7 @@ public class ShopSpider extends BaseSpider {
         int curPage = 0;
         int spiderPage = 0;
         while (true) {
-            if (curPage >= total)
+            if (spiderPage==0&&curPage >= total)
                 break;
             if (spiderPage > 0 && curPage >= spiderPage)
                 break;

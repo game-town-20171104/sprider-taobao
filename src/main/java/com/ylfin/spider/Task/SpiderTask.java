@@ -81,6 +81,7 @@ public class SpiderTask implements ApplicationRunner {
             for (int i = 0; i < threadSize; i++) {
                 InnerThread innerThread =new InnerThread(queue,taoBaoResultService);
                 innerThread.setPages(page);
+                es.submit(innerThread);
             }
         }
 

@@ -1,7 +1,9 @@
 package com.ylfin.spider.vo;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import lombok.Data;
 
+@Data
 public class TaobaoVO {
     private  long keywordId ;
     @JSONField(name = "nick")
@@ -22,99 +24,4 @@ public class TaobaoVO {
     private String detailUrl;
     private String startDate ;
 
-    public String getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
-    }
-
-    public long getKeywordId() {
-        return keywordId;
-    }
-
-    public void setKeywordId(long keywordId) {
-        this.keywordId = keywordId;
-    }
-
-    public String getShop() {
-        return shop;
-    }
-
-    public void setShop(String shop) {
-        this.shop = shop;
-    }
-
-    public String getViewPrice() {
-        return viewPrice;
-    }
-
-    public void setViewPrice(String viewPrice) {
-        this.viewPrice = viewPrice;
-    }
-
-    public String getViewFee() {
-        return viewFee;
-    }
-
-    public void setViewFee(String viewFee) {
-        this.viewFee = viewFee;
-    }
-
-    public String getArea() {
-        return area;
-    }
-
-    public void setArea(String area) {
-        this.area = area;
-    }
-
-    public String getViewSales() {
-        return viewSales;
-    }
-
-    public void setViewSales(String viewSales) {
-        this.viewSales = viewSales;
-    }
-
-    public String getRawTitle() {
-        return rawTitle;
-    }
-
-    public void setRawTitle(String rawTitle) {
-        this.rawTitle = rawTitle;
-    }
-
-    public String getCommentCount() {
-        return commentCount;
-    }
-
-    public void setCommentCount(String commentCount) {
-        this.commentCount = commentCount;
-    }
-
-    public String getDetailUrl() {
-        return detailUrl;
-    }
-
-    public void setDetailUrl(String detailUrl) {
-        this.detailUrl = detailUrl;
-    }
-
-
-    @Override
-    public String toString() {
-        return "TaobaoVO{" +
-                "keywordId=" + keywordId +
-                ", shop='" + shop + '\'' +
-                ", viewPrice='" + viewPrice + '\'' +
-                ", viewFee='" + viewFee + '\'' +
-                ", area='" + area + '\'' +
-                ", viewSales='" + viewSales + '\'' +
-                ", rawTitle='" + rawTitle + '\'' +
-                ", commentCount='" + commentCount + '\'' +
-                ", detailUrl='" + detailUrl + '\'' +
-                '}';
-    }
 }

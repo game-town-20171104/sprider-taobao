@@ -1,8 +1,13 @@
-package com.ylfin.spider.service;
+package com.ylfin.spider.Task;
 
 import com.ylfin.spider.component.SeleniumSpider;
+import com.ylfin.spider.service.KeyWordsService;
+import com.ylfin.spider.service.ShopItemService;
+import com.ylfin.spider.service.ShopService;
+import com.ylfin.spider.service.TaoBaoResultService;
 import com.ylfin.spider.utils.DateUtils;
 import com.ylfin.spider.vo.KeywordsQueue;
+import com.ylfin.spider.vo.SpiderQueue;
 import com.ylfin.spider.vo.bean.KeyWords;
 import com.ylfin.spider.vo.bean.Shop;
 import org.slf4j.Logger;
@@ -14,7 +19,6 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -30,33 +34,59 @@ public class SpiderTask implements ApplicationRunner {
     TaoBaoResultService taoBaoResultService;
 
     @Autowired
+    ShopItemService shopItemService;
+
+    @Autowired
     ShopService shopService;
     @Value("${page.size}")
     private int page ;
     @Value("${thread.size}")
     private int threadSize;
+    @Value("${spider.model}")
+    private int model;
 
     @Override
     public void run(ApplicationArguments applicationArguments) throws Exception {
         KeywordsQueue queue = new KeywordsQueue();
+        SpiderQueue<Shop> shopQueue = new SpiderQueue<>();
         List<KeyWords> keyWords = keyWordsService.findActive();
-        if(CollectionUtils.isEmpty(keyWords)){
-            logger.warn("关键词为空，请配置！");
-            return;
-        }
-        for (KeyWords word : keyWords) {
-            queue.addKeyword(word);
+        if(!CollectionUtils.isEmpty(keyWords)){
+            for (KeyWords word : keyWords) {
+                queue.addKeyword(word);
+            }
+        }else {
+            logger.info("关键词配置为空！");
         }
 
 
-        threadSize = Math.min(threadSize, queue.getSize());
+        List<Shop> shops = shopService.findActive();
+        if(!CollectionUtils.isEmpty(shops)){
+            for (Shop word : shops) {
+                shopQueue.add(word);
+            }
+        }else {
+            logger.info("店铺配置为空");
+        }
+
+
+//        threadSize = Math.min(threadSize, queue.getSize());
 
         ThreadPoolExecutor es = (ThreadPoolExecutor) Executors.newFixedThreadPool(threadSize);
-        for (int i = 0; i < threadSize; i++) {
-            InnerThread innerThread =new InnerThread(queue,taoBaoResultService);
-            innerThread.setPages(page);
-            es.submit(innerThread);
+
+        if(model==2){
+            ShopThread shopThread = new ShopThread(shopQueue,shopItemService);
+            shopThread.setPages(page);
+            es.submit(shopThread);
+        }else {
+            for (int i = 0; i < threadSize; i++) {
+                InnerThread innerThread =new InnerThread(queue,taoBaoResultService);
+                innerThread.setPages(page);
+            }
         }
+
+
+
+
         es.shutdown();
     }
 

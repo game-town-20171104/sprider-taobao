@@ -4,9 +4,9 @@
 
     <insert id="batchInsert" useGeneratedKeys="true" parameterType="java.util.List">
       insert into shop_item
-        (shop_id, name,sales,price,rates)values
+        (shop_id, name,sales,price,rates,spider_date)values
         <foreach collection="list" item="item" index="index" separator="," >
-         (#{item.shopId},#{item.name},#{item.sales},#{item.price},#{item.rates})
+         (#{item.shopId},#{item.name},#{item.sales},#{item.price},#{item.rates},#{item.spiderDate})
         </foreach>
 
 

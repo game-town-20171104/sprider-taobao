@@ -26,3 +26,6 @@ CREATE TABLE `shop_item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '店铺商品';
 
 
+-- changeset godslhand:20171121
+ALTER  TABLE shop_item add COLUMN  spider_date datetime DEFAULT NULL COMMENT '抓取时间';
+

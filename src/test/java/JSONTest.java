@@ -6,10 +6,9 @@ public class JSONTest {
 
     @Test
     public void test(){
-        String str ="jsonp1514({\"pageName\":\"mainsrp\"});";
-        System.out.println(unwarpJSONP(str));
-        String str2 ="jsonp1514();";
-        System.out.println(unwarpJSONP(str2));
+        System.out.println();
+        String fileSplit =System.getProperty("file.separator");
+        System.out.println(System.getProperty("user.home")+fileSplit+"AppData"+fileSplit+"Local"+fileSplit+"Google"+fileSplit+"Chrome"+fileSplit+"User Data");
     }
 
     private String unwarpJSONP(String jsonp) {

@@ -23,6 +23,9 @@ page:
   size: 9
 thread:
   size: 2
+# 1,爬关键词，2 怕店铺
+spider:
+  model: 2
 
 
 #mybatis

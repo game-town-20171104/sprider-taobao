@@ -29,3 +29,13 @@ CREATE TABLE `shop_item` (
 -- changeset godslhand:20171121
 ALTER  TABLE shop_item add COLUMN  spider_date datetime DEFAULT NULL COMMENT '抓取时间';
 
+
+-- changeset godslhand:20171122
+CREATE TABLE `search_keywords` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL COMMENT '关键词',
+   `shop_code` varchar(255) DEFAULT NULL COMMENT '商店编号',
+  `active` tinyint(1) DEFAULT '1' COMMENT '是否开启',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT '搜索关键词';
+

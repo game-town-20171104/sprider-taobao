@@ -56,6 +56,7 @@ public class ShopSpider extends BaseSpider {
                 simpleWaite(2000L);
 //                /
             }
+            this.waitFindElementByClass("viewport");
 
             //i/async
 //            String url = shop.getUrl() + "/i/asynSearch.htm?callback=jsonp148&path=/search.htm&mid=w-1797666998-0&wid=1797666998&pageNo=" + (++curPage) + "&search=y&orderType=hotsell_desc";

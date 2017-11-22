@@ -3,21 +3,21 @@ package com.ylfin.spider.component;
 import com.ylfin.spider.enums.OS;
 import com.ylfin.spider.utils.SpiderUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class BaseSpider {
     WebDriver driver;
-    private int waitTime =60;
+    private int waitTime = 60;
 
     private String deviceName;
 
@@ -66,6 +66,14 @@ public class BaseSpider {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public void sendUnFocusAbleKey(WebElement element, CharSequence... keysToSend) {
+        Actions actions = new Actions(driver);
+        actions.moveToElement(element);
+        actions.click();
+        actions.sendKeys(keysToSend);
+        actions.build().perform();
     }
 
     public void waiteTitleCondition(String keyword) {
@@ -121,7 +129,7 @@ public class BaseSpider {
                 basePath = basePath + "/chromedriver_mac32/chromedriver";
                 break;
             case LINUX:
-                basePath = basePath + "/chromedriver_linux64/chromedriver";
+                basePath = basePath + "\\chromedriver_linux64\\chromedriver";
                 break;
             case WINDOWS:
                 basePath = basePath + "\\chromedriver_win32\\chromedriver.exe";
@@ -138,6 +146,43 @@ public class BaseSpider {
         return SpiderUtils.unwarpJSONP(content);
     }
 
+    private int randomInt(int position) {
+        return new Random().nextInt(position);
+    }
+    private  Long randomTime(){
+        return  (randomInt(4)+1)*100L;
+    }
+    public void simpleRandomWaite(int seconds){
+        simpleWaite(randomInt(seconds)*1000L);
+    }
+    public void scrollSlow2end() {
+        simpleWaite(randomTime());
+        ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, document.body.scrollHeight/3)");
+        simpleWaite(randomTime());
+        ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, (document.body.scrollHeight)*2/3)");
+        simpleWaite(randomTime());
+        ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, document.body.scrollHeight)");
+        simpleWaite(randomTime());
+
+
+    }
+
+    public void scrollBack2Top() {
+        ((JavascriptExecutor) driver).executeScript("window.scrollTo( 0,0)");
+    }
+
+    /**
+     * 关闭多余标签
+     */
+    public void closeOthers(){
+       String curt =driver.getWindowHandle();
+       Set<String > windows =driver.getWindowHandles();
+       for(String handle : windows){
+           if(!curt.equals(handle)){
+               driver.switchTo().window(handle).close();
+           }
+       }
+    }
 
     public void setDeviceName(String deviceName) {
         this.deviceName = deviceName;

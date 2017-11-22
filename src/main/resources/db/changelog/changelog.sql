@@ -30,6 +30,13 @@ CREATE TABLE `shop_item` (
 ALTER  TABLE shop_item add COLUMN  spider_date datetime DEFAULT NULL COMMENT '抓取时间';
 
 
+
+-- changeset sworddancer:20171122
+ALTER TABLE `spider`.`shop`
+ADD COLUMN `type` varchar(255) AFTER `active`;
+
+
+
 -- changeset godslhand:20171122
 CREATE TABLE `search_keywords` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,

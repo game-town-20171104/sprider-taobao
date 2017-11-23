@@ -2,13 +2,11 @@ package com.ylfin.spider.component;
 
 import com.ylfin.spider.enums.OS;
 import com.ylfin.spider.utils.SpiderUtils;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -18,37 +16,50 @@ import java.util.*;
 public class BaseSpider {
     WebDriver driver;
     private int waitTime = 60;
-
     private String deviceName;
+    private Proxy proxy;
+    private boolean headless = true;
+
 
     //    https://langyuedianzi.taobao.com/i/asyncSearch.htm?callback=jsonp148&pageNo=1&search=y&orderType=hotsell_desc
     public void init() {
         System.setProperty("webdriver.chrome.driver", getDriverPath());
         ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("--headless");
+        if (headless) {
+            chromeOptions.addArguments("--headless");
+        }
+
         chromeOptions.addArguments("--window-size=1920,1080");
         driver = (WebDriver) new ChromeDriver(chromeOptions);
     }
 
+
     public void initWithProfile() {
         System.setProperty("webdriver.chrome.driver", getDriverPath());
         ChromeOptions chromeOptions = new ChromeOptions();
-//        chromeOptions.addArguments("--headless");
+        if (headless) {
+            chromeOptions.addArguments("--headless");
+        }
         //设置用户配置文件夹
         String fileSplit = System.getProperty("file.separator");
 //        String path = System.getProperty("user.home") + fileSplit + "AppData" + fileSplit + "Local" + fileSplit + "Google" + fileSplit + "Chrome" + fileSplit + "mobile";
 //        chromeOptions.addArguments("--user-data-dir=" + path);
         chromeOptions.addArguments("--window-size=1920,1080");
-
+        DesiredCapabilities capabilities = DesiredCapabilities.chrome();
 
         if (deviceName != null) {
             Map<String, String> mobileEmulation = new HashMap<>();
             mobileEmulation.put("deviceName", deviceName);
             chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
         }
-
-        driver = (WebDriver) new ChromeDriver(chromeOptions);
+        capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
+        if (this.proxy != null) {
+            capabilities.setCapability("proxy", proxy);
+        }
+        driver = (WebDriver) new ChromeDriver(capabilities);
     }
+
+
 
     public void quit() {
         if (driver != null) {
@@ -149,12 +160,15 @@ public class BaseSpider {
     private int randomInt(int position) {
         return new Random().nextInt(position);
     }
-    private  Long randomTime(){
-        return  (randomInt(4)+1)*100L;
+
+    private Long randomTime() {
+        return (randomInt(4) + 1) * 100L;
     }
-    public void simpleRandomWaite(int seconds){
-        simpleWaite(randomInt(seconds)*1000L);
+
+    public void simpleRandomWaite(int seconds) {
+        simpleWaite(randomInt(seconds) * 1000L);
     }
+
     public void scrollSlow2end() {
         simpleWaite(randomTime());
         ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, document.body.scrollHeight/3)");
@@ -174,17 +188,35 @@ public class BaseSpider {
     /**
      * 关闭多余标签
      */
-    public void closeOthers(){
-       String curt =driver.getWindowHandle();
-       Set<String > windows =driver.getWindowHandles();
-       for(String handle : windows){
-           if(!curt.equals(handle)){
-               driver.switchTo().window(handle).close();
-           }
-       }
+    public void closeOthers() {
+        String curt = driver.getWindowHandle();
+        Set<String> windows = driver.getWindowHandles();
+        for (String handle : windows) {
+            if (!curt.equals(handle)) {
+                driver.switchTo().window(handle).close();
+            }
+        }
+    }
+
+    public void switch2NewWindow() {
+        String curt = driver.getWindowHandle();
+        Set<String> windows = driver.getWindowHandles();
+        System.out.println("oldTitle" + driver.getTitle());
+        driver.switchTo().window(windows.toArray(new String[]{})[windows.size() - 1]);
+
     }
 
     public void setDeviceName(String deviceName) {
         this.deviceName = deviceName;
     }
+
+    public void setProxy(Proxy proxy) {
+        this.proxy = proxy;
+    }
+
+    public void setHeadless(boolean headless) {
+        this.headless = headless;
+    }
+
+
 }

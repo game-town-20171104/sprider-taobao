@@ -40,6 +40,7 @@ public class ShopSpider extends BaseSpider {
 
     public ShopSpider(ShopItemService shopItemService) {
         this.shopItemService = shopItemService;
+        this.setHeadless(false);
     }
 
     public void handle(Shop shop) {
@@ -47,7 +48,6 @@ public class ShopSpider extends BaseSpider {
         int spiderPage = 0;
 
         if(first){
-
             driver.get("https://login.m.taobao.com/login.htm");
             WebElement input =this.waitFindElementByClass("am-input-required");
             String username =input.getText();

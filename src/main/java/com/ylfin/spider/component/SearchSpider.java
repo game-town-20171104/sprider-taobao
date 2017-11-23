@@ -82,8 +82,12 @@ public class SearchSpider extends BaseSpider {
         searchKeyWords.setName("PS4 数字 勇者斗恶龙11 认证");
         searchKeyWords.setShopCode("561426363500");
         SearchSpider spider = new SearchSpider();
-        spider.setHeadless(true);
-//        Proxy proxy = new Proxy();
+        spider.setHeadless(false);
+        Proxy proxy = new Proxy();
+        //114.233.99.254:3798
+//        113.228.107.43:1648
+        proxy.setHttpProxy("113.228.107.43:1648");
+        spider.setProxy(proxy);
         spider.initWithProfile();
         spider.handle(searchKeyWords);
 

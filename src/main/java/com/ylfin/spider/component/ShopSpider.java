@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.ylfin.spider.service.ShopItemService;
 import com.ylfin.spider.utils.SpiderUtils;
+import com.ylfin.spider.utils.StringUtils;
 import com.ylfin.spider.vo.bean.ShopItem;
 import com.ylfin.spider.vo.bean.Shop;
 import org.openqa.selenium.By;
@@ -23,6 +24,7 @@ public class ShopSpider extends BaseSpider {
     Logger logger = LoggerFactory.getLogger(getClass());
     private String startDate;
     private int total ;
+    private boolean first =true;
 
     public String getStartDate() {
         return startDate;
@@ -43,21 +45,30 @@ public class ShopSpider extends BaseSpider {
     public void handle(Shop shop) {
         int curPage = 0;
         int spiderPage = 0;
+
+        if(first){
+
+            driver.get("https://login.m.taobao.com/login.htm");
+            WebElement input =this.waitFindElementByClass("am-input-required");
+            String username =input.getText();
+            System.out.println(username);
+            username= input.getAttribute("value");
+            System.out.println(username);
+            if(!org.springframework.util.StringUtils.isEmpty(username)){
+                this.waitFindElementByClass("am-button-submit").click();
+            }
+            simpleWaite(2000L);
+            this.waiteTitleCondition("我的淘宝");
+            simpleWaite(200L);
+        }
+
+        first= false;
         while (true) {
             if (spiderPage==0&&curPage >= total)
                 break;
             if (spiderPage > 0 && curPage >= spiderPage)
                 break;
-            if (curPage == 0) {
-                simpleWaite(200L);
-                driver.get("https://login.m.taobao.com/login.htm");
-                this.waitFindElementByClass("am-button-submit").click();
-//                driver.findElement(By.id("J_SubmitStatic")).click();
-                simpleWaite(2000L);
-                this.waiteTitleCondition("我的淘宝");
-//                /
-            }
-//            this.waitFindElementByClass("viewport");
+
 
 
             //i/async
@@ -70,13 +81,13 @@ public class ShopSpider extends BaseSpider {
 //              String json = this.loadPage(url,0L);
 //                simpleWaite(1*1000L);
                 ((JavascriptExecutor) driver).executeScript(getJavaScript(++curPage));
+                this.simpleWaite(Long.valueOf(SpiderUtils.randomInteger(200,500)));
                 String jsonp = this.waitFindElement(By.id("jsonData")).getText();
                 JSONObject res = JSON.parseObject(jsonp);
                 Integer totalNum = res.getJSONObject("data").getInteger("totalResults");
                 if (spiderPage == 0) {
                     spiderPage = totalNum / 30 + 1;
                 }
-
 
                 logger.info(String.format("%s==>总页数：%s，配置页数：%s/%s", shop, spiderPage, curPage, total));
                 System.out.println(res.getJSONObject("data").getJSONArray("itemsArray"));
@@ -89,7 +100,7 @@ public class ShopSpider extends BaseSpider {
                     shopItem.setShopId(shop.getId());
                 }
                 shopItemService.batchInsert(shopItems);
-//                simpleWaite(500L);
+                simpleWaite(Long.valueOf(SpiderUtils.randomInteger(500,1100)));
             } catch (Exception e) {
                 logger.error("爬虫抓取出错", e);
                 continue;
@@ -155,11 +166,7 @@ public class ShopSpider extends BaseSpider {
                 "        ;\n" +
                 "        \n" +
                 "\n" +
-                "        if (!page) {\n" +
-                "            console.error('缺少 page 参数!');\n" +
-                "            return;\n" +
-                "        }\n" +
-                "\n" +
+
                 "        lib.mtop.request({\n" +
                 "            api: \"com.taobao.search.api.getShopItemList\",\n" +
                 "            v: \"2.0\",\n" +

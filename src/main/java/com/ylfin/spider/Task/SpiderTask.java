@@ -85,10 +85,23 @@ public class SpiderTask implements ApplicationRunner {
             }
         }
 
+      es.shutdown();
+      Thread daemon= new Thread(() -> {
+           while (true){
+               try {
+                   Thread.sleep(1000L);
+                   if(es.isTerminated()){
+                       System.out.println("准备退出……");
+                       System.exit(0);
+                   }
+               } catch (InterruptedException e) {
+                   e.printStackTrace();
+               }
+           }
+      });
+      daemon.setDaemon(true);
+      daemon.start();
 
-
-
-        es.shutdown();
     }
 
     static class InnerThread implements Runnable {

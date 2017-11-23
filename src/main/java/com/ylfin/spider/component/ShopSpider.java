@@ -54,9 +54,11 @@ public class ShopSpider extends BaseSpider {
                 this.waitFindElementByClass("am-button-submit").click();
 //                driver.findElement(By.id("J_SubmitStatic")).click();
                 simpleWaite(2000L);
+                this.waiteTitleCondition("我的淘宝");
 //                /
             }
-            this.waitFindElementByClass("viewport");
+//            this.waitFindElementByClass("viewport");
+
 
             //i/async
 //            String url = shop.getUrl() + "/i/asynSearch.htm?callback=jsonp148&path=/search.htm&mid=w-1797666998-0&wid=1797666998&pageNo=" + (++curPage) + "&search=y&orderType=hotsell_desc";

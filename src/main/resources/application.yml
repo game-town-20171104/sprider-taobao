@@ -16,15 +16,16 @@ spring:
     est-on-borrow: false
     est-while-idle: true
     ime-between-eviction-runs-millis: 18800
-    jdbc-interceptors=ConnectionState: SlowQueryReport(threshold=0)
+    jdbc-interceptors=ConnectionState: SlowQueryReport(threshold=0)∑
 
 
 page:
   size: 9
 thread:
   size: 2
-# 1,爬关键词，2 怕店铺
+# 1,爬关键词，2 爬店铺
 spider:
+
   model: 2
 
 

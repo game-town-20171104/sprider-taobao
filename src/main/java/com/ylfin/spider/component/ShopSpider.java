@@ -81,7 +81,7 @@ public class ShopSpider extends BaseSpider {
 //              String json = this.loadPage(url,0L);
 //                simpleWaite(1*1000L);
                 ((JavascriptExecutor) driver).executeScript(getJavaScript(++curPage));
-                this.simpleWaite(Long.valueOf(SpiderUtils.randomInteger(200,500)));
+                this.simpleWaite(Long.valueOf(SpiderUtils.randomInteger(10000,15000)));
                 String jsonp = this.waitFindElement(By.id("jsonData")).getText();
                 JSONObject res = JSON.parseObject(jsonp);
                 Integer totalNum = res.getJSONObject("data").getInteger("totalResults");

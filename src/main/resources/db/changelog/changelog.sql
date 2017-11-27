@@ -46,3 +46,8 @@ CREATE TABLE `search_keywords` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT '搜索关键词';
 
+-- changeset sworddancer:20171125
+ALTER TABLE `spider`.`shop_item`
+ADD COLUMN `type` varchar(255) AFTER `spider_date`;
+
+

@@ -46,3 +46,11 @@ CREATE TABLE `search_keywords` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT '搜索关键词';
 
+
+-- changeset godslhand:20171127
+CREATE  TABLE  `proxy_server` (
+`id` int(11) NOT NULL AUTO_INCREMENT,
+`url`  varchar(255) DEFAULT NULL COMMENT '代理服务器地址',
+  PRIMARY KEY (`id`)
+)ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT '代理服务器地址';
+

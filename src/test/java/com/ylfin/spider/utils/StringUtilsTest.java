@@ -28,8 +28,19 @@ public class StringUtilsTest {
     @Test
     public void testReplaceSpaceWithPlus() throws Exception {
         String keyword = "ps4 gt sport 二手";
-        String result  = StringUtils.replaceSpaceWithPlus(keyword);
-        Assert.isTrue(result.contains("ps4+gt+sport+二手"),result);
-        Assert.isTrue(!result.contains("ps4 gt+sport+二手"),result);
+        String result = StringUtils.replaceSpaceWithPlus(keyword);
+        Assert.isTrue(result.contains("ps4+gt+sport+二手"), result);
+        Assert.isTrue(!result.contains("ps4 gt+sport+二手"), result);
     }
-} 
+
+  @Test
+  public void testSplit(){
+      String str= "abvc&123&";
+      System.out.println(str.substring(0,str.length()-1));
+  }
+  @Test
+  public void SystemOutTest(){
+      System.out.println("171.42.201.118:5374");
+      System.out.println("171.42.201.118:5374");
+  }
+}

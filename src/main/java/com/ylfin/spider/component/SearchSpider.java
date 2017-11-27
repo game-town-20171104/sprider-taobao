@@ -27,7 +27,13 @@ public class SearchSpider extends BaseSpider {
             return;
         }
 
-        logger.info("ip 检测完毕,当前ip：{}",ip);
+        logger.info("ip 检测完毕,当前ip：{}", ip);
+        driver.get(ipServer);
+        if (StringUtils.isEmpty(ip) || ip.contains("代理服务器出现问题")) {
+            logger.info("代理ip有问题，或已失效，或查询服务器（" + ipServer + "）出问题");
+            return;
+        }
+
         String searchUrl = "https://www.taobao.com";
         driver.get(searchUrl);
         //search-combobox-input
@@ -35,9 +41,10 @@ public class SearchSpider extends BaseSpider {
         WebElement input = this.waitFindElementByClass("search-combobox-input");
         this.sendUnFocusAbleKey(input, searchKeyWords.getName());
         WebElement btn = this.waitFindElementByClass("btn-search");
+        this.simpleRandomWaite(2);
         btn.click();
         logger.info("搜索完毕");
-       this.scrollEndAndTop();
+        this.scrollEndAndTop();
         WebElement sortBtn = this.waitFindElement(By.xpath("//*[@data-value='sale-desc']"));
         sortBtn.click();
         this.scrollEndAndTop();
@@ -59,14 +66,18 @@ public class SearchSpider extends BaseSpider {
         ((JavascriptExecutor) driver).executeScript("window.scrollTo( 0,200)");
         logger.info("店铺排行查看完毕");
         List<WebElement> elements = this.waitFindElementsByClass("photo");
-        int index = new Random().nextInt(elements.size()-1);
+        int index = new Random().nextInt(elements.size() - 1);
         elements.get(index).click();
         this.switch2NewWindow();
         this.scrollEndAndTop();
         logger.info("随机查看商品");
         this.closeOthers();
+
         logger.info("关闭其他窗口");
     }
+
+
+
 
     /**
      * 滚上滚下
@@ -76,6 +87,13 @@ public class SearchSpider extends BaseSpider {
         this.scrollBack2Top();
     }
 
+    public void setHttpProxy(String proxy) {
+        Proxy p = new Proxy();
+        p.setHttpProxy(proxy);
+        super.setProxy(p);
+    }
+
+    //183.162.209.148:3212,14.134.189.1:6487
     public static void main(String[] args) {
         SearchKeyWords searchKeyWords = new SearchKeyWords();
         searchKeyWords.setId(1L);

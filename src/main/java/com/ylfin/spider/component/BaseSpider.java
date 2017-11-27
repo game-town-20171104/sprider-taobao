@@ -162,11 +162,14 @@ public class BaseSpider {
     }
 
     private Long randomTime() {
-        return (randomInt(4) + 1) * 100L;
+        return (randomInt(5) + 1) * 100L;
     }
 
     public void simpleRandomWaite(int seconds) {
         simpleWaite(randomInt(seconds) * 1000L);
+    }
+    public void simpleRandomWaite() {
+        simpleWaite(SpiderUtils.randomInteger(500,2000)*1L);
     }
 
     public void scrollSlow2end() {
@@ -182,6 +185,11 @@ public class BaseSpider {
     }
 
     public void scrollBack2Top() {
+        simpleWaite(randomTime());
+        ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, (document.body.scrollHeight)*2/3)");
+        simpleWaite(randomTime());
+        ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, document.body.scrollHeight/3)");
+        simpleWaite(randomTime());
         ((JavascriptExecutor) driver).executeScript("window.scrollTo( 0,0)");
     }
 

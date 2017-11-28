@@ -21,16 +21,17 @@ public class SearchThread implements  Runnable {
     public void run() {
         System.out.println(Thread.currentThread() + "==start==" + Thread.activeCount());
         SearchSpider spider = new SearchSpider();
+        String ip = proxyService.findProxy();
+        spider.setHttpProxy(ip);
+        spider.setHeadless(false); //默认是关闭的
+        spider.initWithProfile();
         while (true) {
             SearchKeyWords keyWords = queue.get();
             if (keyWords == null) {
                 System.out.println("消费结束，准备退出……");
                 break;
             }
-            String ip = proxyService.findProxy();
-            spider.setHttpProxy(ip);
-            spider.setHeadless(false); //默认是关闭的
-            spider.initWithProfile();
+
             System.out.println("开始消费：" + keyWords);
             try {
                 spider.handle(keyWords);

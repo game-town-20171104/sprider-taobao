@@ -10,10 +10,13 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
 public class BaseSpider {
+    Logger logger = LoggerFactory.getLogger(getClass());
     WebDriver driver;
     private int waitTime = 60;
     private String deviceName;
@@ -33,7 +36,9 @@ public class BaseSpider {
         driver = (WebDriver) new ChromeDriver(chromeOptions);
     }
 
-
+    /**
+     * 读取profile的初始化
+     */
     public void initWithProfile() {
         System.setProperty("webdriver.chrome.driver", getDriverPath());
         ChromeOptions chromeOptions = new ChromeOptions();
@@ -87,6 +92,10 @@ public class BaseSpider {
         actions.build().perform();
     }
 
+    /**
+     * 等待title 出现关键词
+     * @param keyword
+     */
     public void waiteTitleCondition(String keyword) {
         (new WebDriverWait(driver, waitTime)).until(new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver d) {
@@ -95,10 +104,18 @@ public class BaseSpider {
         });
     }
 
+    /**
+     * 等待袁术
+     * @param by
+     */
     public void waitBy(By by) {
         (new WebDriverWait(driver, waitTime)).until(ExpectedConditions.elementToBeClickable(by));
     }
 
+    /**
+     * 等待元素并点击 ==》可用waitFindElementByClass 替换
+     * @param element
+     */
     public void waitAndClick(WebElement element) {
         (new WebDriverWait(driver, waitTime)).until(ExpectedConditions.elementToBeClickable(element));
         element.click();
@@ -133,6 +150,10 @@ public class BaseSpider {
         return driver.findElements(by);
     }
 
+    /**
+     * 获取不同环境下的chromedriver驱动路径
+     * @return
+     */
     private String getDriverPath() {
         String basePath = this.getClass().getClassLoader().getResource("driver").getPath();
         switch (OS.getPlatform()) {
@@ -165,13 +186,33 @@ public class BaseSpider {
         return (randomInt(5) + 1) * 100L;
     }
 
+    /**
+     * 0-n之间的秒等待
+     * @param seconds
+     */
     public void simpleRandomWaite(int seconds) {
         simpleWaite(randomInt(seconds) * 1000L);
     }
+
+    /**
+     * 500毫秒-2秒之前的随机
+     */
     public void simpleRandomWaite() {
         simpleWaite(SpiderUtils.randomInteger(500,2000)*1L);
     }
 
+    /**
+     * 毫秒之间的随机等待
+     * @param minMillisecond
+     * @param maxMillisecond
+     */
+    public void simpleRandomWaite(int minMillisecond ,int maxMillisecond){
+        simpleWaite(Long.valueOf(SpiderUtils.randomInteger(minMillisecond,maxMillisecond)));
+    }
+
+    /**
+     * 逐步滚动到下面
+     */
     public void scrollSlow2end() {
         simpleWaite(randomTime());
         ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, document.body.scrollHeight/3)");
@@ -183,7 +224,9 @@ public class BaseSpider {
 
 
     }
-
+    /**
+     * 逐步滚动到上面
+     */
     public void scrollBack2Top() {
         simpleWaite(randomTime());
         ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, (document.body.scrollHeight)*2/3)");
@@ -191,6 +234,13 @@ public class BaseSpider {
         ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, document.body.scrollHeight/3)");
         simpleWaite(randomTime());
         ((JavascriptExecutor) driver).executeScript("window.scrollTo( 0,0)");
+    }
+
+    public WebDriver getDriver() {
+        if(driver==null){
+           logger.warn("driver 为空，请先执行init 方法");
+        }
+        return driver;
     }
 
     /**

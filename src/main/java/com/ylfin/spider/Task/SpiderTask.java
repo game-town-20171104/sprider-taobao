@@ -1,9 +1,9 @@
 package com.ylfin.spider.Task;
 
-import com.ylfin.spider.component.SeleniumSpider;
+import com.ylfin.spider.register.RegisterFactory;
+import com.ylfin.spider.register.service.MailService;
+import com.ylfin.spider.register.vo.bean.MailBean;
 import com.ylfin.spider.service.*;
-import com.ylfin.spider.utils.DateUtils;
-import com.ylfin.spider.vo.KeywordsQueue;
 import com.ylfin.spider.vo.SpiderQueue;
 import com.ylfin.spider.vo.bean.KeyWords;
 import com.ylfin.spider.vo.bean.SearchKeyWords;
@@ -43,6 +43,12 @@ public class SpiderTask implements ApplicationRunner {
     @Autowired
     SearchKeywordService searchKeywordService;
 
+    @Autowired
+    MailService mailService;
+
+    @Autowired
+    RegisterFactory registerFactory;
+
 
     @Value("${page.size}")
     private int page;
@@ -69,32 +75,44 @@ public class SpiderTask implements ApplicationRunner {
             shopThread.setPages(page);
             es.submit(shopThread);
         } else if (model == 1) {
-            KeywordsQueue queue = new KeywordsQueue();
+            SpiderQueue<KeyWords> queue = new SpiderQueue<>();
             List<KeyWords> keyWords = keyWordsService.findActive();
             if (!CollectionUtils.isEmpty(keyWords)) {
-                keyWords.forEach(queue::addKeyword);
+                keyWords.forEach(queue::add);
             } else {
                 logger.info("关键词配置为空！");
             }
             for (int i = 0; i < threadSize; i++) {
-                InnerThread innerThread = new InnerThread(queue, taoBaoResultService);
+                KeyWordsThread innerThread = new KeyWordsThread(queue, taoBaoResultService);
                 innerThread.setPages(page);
                 es.submit(innerThread);
             }
-        }else if(model == 3){
+        } else if (model == 3) {
             logger.info("keywords search start");
             SpiderQueue<SearchKeyWords> searchQueue = new SpiderQueue<>();
-            List<SearchKeyWords> searchKeyWords =searchKeywordService.findActive();
-            if(CollectionUtils.isEmpty(searchKeyWords)){
+            List<SearchKeyWords> searchKeyWords = searchKeywordService.findActive();
+            if (CollectionUtils.isEmpty(searchKeyWords)) {
                 logger.info("搜索配置为空！");
                 return;
             }
             searchKeyWords.forEach(searchQueue::add);
-            SearchThread searchThread = new SearchThread(searchQueue,proxyService);
+            SearchThread searchThread = new SearchThread(searchQueue, proxyService);
+            es.submit(searchThread);
+        } else if (model == 4) {
+            logger.info("mail163 register  start");
+            SpiderQueue<MailBean> mailQueue = new SpiderQueue<>();
+            List<MailBean> mails = mailService.findActiveAndScuess();
+            if (CollectionUtils.isEmpty(mails)) {
+                logger.info("注册配置为空！");
+                return;
+            }
+            mails.forEach(mailQueue::add);
+            Mail163Thread searchThread = new Mail163Thread(mailQueue,registerFactory);
             es.submit(searchThread);
         }
 
         es.shutdown();
+        //守护线程，如果所有线程都结束，退出应用
         Thread daemon = new Thread(() -> {
             while (true) {
                 try {
@@ -113,48 +131,5 @@ public class SpiderTask implements ApplicationRunner {
 
     }
 
-    static class InnerThread implements Runnable {
-        private KeywordsQueue queue;
-        private int pages;
-        TaoBaoResultService taoBaoResultService;
 
-        public InnerThread(KeywordsQueue queue, TaoBaoResultService taoBaoResultService) {
-            this.queue = queue;
-            this.taoBaoResultService = taoBaoResultService;
-        }
-
-        @Override
-        public void run() {
-            System.out.println(Thread.currentThread() + "==start==" + Thread.activeCount());
-            SeleniumSpider spider = new SeleniumSpider(taoBaoResultService);
-            if (pages > 0) {
-                spider.setTotal(pages);
-            }
-
-            spider.init();
-            spider.setStartDate(DateUtils.format());
-            while (true) {
-                KeyWords keyword = queue.getKeyword();
-
-                if (keyword == null) {
-                    System.out.println("消费结束，准备退出……");
-                    break;
-                }
-                System.out.println("开始消费：" + keyword);
-                try {
-                    spider.jsonHandle(keyword);
-                } catch (Exception e) {
-                    logger.error(keyword + "爬虫脚本出错了", e);
-                }
-
-            }
-
-            spider.quit();
-            System.out.println(Thread.currentThread() + "==end==" + Thread.activeCount());
-        }
-
-        public void setPages(int pages) {
-            this.pages = pages;
-        }
-    }
 }

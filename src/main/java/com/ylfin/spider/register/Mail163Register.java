@@ -1,6 +1,7 @@
 package com.ylfin.spider.register;
 
 import com.ylfin.spider.component.BaseSpider;
+import com.ylfin.spider.register.service.MailService;
 import com.ylfin.spider.register.vo.bean.MailBean;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.Select;
@@ -11,6 +12,12 @@ public class Mail163Register extends BaseSpider implements Register<MailBean> {
     Logger logger = LoggerFactory.getLogger(getClass());
 
     String url ="http://reg.email.163.com/unireg/call.do?cmd=register.entrance&from=163navi&regPage=163";
+
+    private MailService mailService;
+
+    public Mail163Register(MailService mailService) {
+        this.mailService = mailService;
+    }
 
     @Override
     public void initRegister() {
@@ -35,7 +42,7 @@ public class Mail163Register extends BaseSpider implements Register<MailBean> {
         this.waitFindElement(By.id("mainMobileIpt")).sendKeys(mail.getPhone());
         this.waiteTitleCondition("新用户注册成功");
         logger.info("注册成功：{}",mail);
-
+        mailService.setSuccess(mail.getId());
     }
 
     @Override
@@ -50,7 +57,7 @@ public class Mail163Register extends BaseSpider implements Register<MailBean> {
         mailBean.setPassword("asd123");
         mailBean.setPhone("17757416906");
 
-        Register<MailBean> register = new Mail163Register();
+        Register<MailBean> register = new Mail163Register(null);
         register.initRegister();
         register.handle(mailBean);
         register.close();

@@ -50,7 +50,17 @@ CREATE TABLE `search_keywords` (
 ALTER TABLE `spider`.`shop_item`
 ADD COLUMN `type` varchar(255) AFTER `spider_date`;
 
-
+-- changeset godslhand:20171130
+CREATE  TABLE  `reg_mail` (
+`id` bigint(20) NOT NULL AUTO_INCREMENT,
+`username` varchar(255) DEFAULT NULL COMMENT '用户名',
+`email` varchar(255) DEFAULT NULL COMMENT '邮箱',
+`password` varchar(255) DEFAULT NULL COMMENT '密码',
+`phone` varchar(255) DEFAULT NULL COMMENT '手机',
+`success` tinyint(1) DEFAULT '0' COMMENT '是否成功',
+`active` tinyint(1) DEFAULT '1' COMMENT '是否开启',
+  PRIMARY KEY (`id`)
+)ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT '邮箱注册';
 
 -- changeset godslhand:20171127
 CREATE  TABLE  `proxy_server` (
@@ -59,4 +69,3 @@ CREATE  TABLE  `proxy_server` (
   PRIMARY KEY (`id`)
 )ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT '代理服务器地址';
 
--- 我是最后一行

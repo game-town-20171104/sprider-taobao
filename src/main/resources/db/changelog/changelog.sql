@@ -62,6 +62,25 @@ CREATE  TABLE  `reg_mail` (
   PRIMARY KEY (`id`)
 )ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT '邮箱注册';
 
+
+-- changeset godslhand:20171204
+CREATE  TABLE  `reg_sony` (
+`id` bigint(20) NOT NULL AUTO_INCREMENT,
+`psn` varchar(255) DEFAULT NULL COMMENT '帐号/邮箱',
+`username` varchar(255) DEFAULT NULL COMMENT '用户名',
+`password` varchar(255) DEFAULT NULL COMMENT '密码',
+`country` varchar(255) DEFAULT NULL COMMENT '国家',
+`province` varchar(255) DEFAULT NULL COMMENT '省',
+`phone` varchar(255) DEFAULT NULL COMMENT '手机',
+`question` varchar(255) DEFAULT NULL COMMENT '问题',
+`ques_answer` varchar(255) DEFAULT NULL COMMENT '答案',
+`step` int(11) DEFAULT NULL COMMENT '进行到的步骤',
+`success` tinyint(1) DEFAULT '0' COMMENT '是否成功',
+`active` tinyint(1) DEFAULT '1' COMMENT '是否开启',
+  PRIMARY KEY (`id`)
+)ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT '邮箱注册';
+
+
 -- changeset godslhand:20171127
 CREATE  TABLE  `proxy_server` (
 `id` int(11) NOT NULL AUTO_INCREMENT,

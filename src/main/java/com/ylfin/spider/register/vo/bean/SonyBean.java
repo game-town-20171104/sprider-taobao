@@ -17,5 +17,6 @@ public class SonyBean {
     private String phone;
     private Boolean success;
     private Boolean active;
+    private Integer step;
 
 }

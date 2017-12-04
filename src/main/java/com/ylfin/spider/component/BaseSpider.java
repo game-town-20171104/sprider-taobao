@@ -22,7 +22,7 @@ public class BaseSpider {
     private String deviceName;
     private Proxy proxy;
     private boolean headless = true;
-
+    private String initWindow;
 
     //    https://langyuedianzi.taobao.com/i/asyncSearch.htm?callback=jsonp148&pageNo=1&search=y&orderType=hotsell_desc
     public void init() {
@@ -34,6 +34,7 @@ public class BaseSpider {
 
         chromeOptions.addArguments("--window-size=1920,1080");
         driver = (WebDriver) new ChromeDriver(chromeOptions);
+        this.initWindow = driver.getWindowHandle();
     }
 
     /**
@@ -62,8 +63,8 @@ public class BaseSpider {
             capabilities.setCapability("proxy", proxy);
         }
         driver = (WebDriver) new ChromeDriver(capabilities);
+        this.initWindow = driver.getWindowHandle();
     }
-
 
 
     public void quit() {
@@ -94,6 +95,7 @@ public class BaseSpider {
 
     /**
      * 等待title 出现关键词
+     *
      * @param keyword
      */
     public void waiteTitleCondition(String keyword) {
@@ -105,7 +107,22 @@ public class BaseSpider {
     }
 
     /**
+     * 自定义超长等待
+     *
+     * @param keyword
+     * @param waitSeconds
+     */
+    public void waiteTitleCondition(String keyword, int waitSeconds) {
+        (new WebDriverWait(driver, waitSeconds)).until(new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver d) {
+                return d.getTitle().toLowerCase().startsWith(keyword);
+            }
+        });
+    }
+
+    /**
      * 等待袁术
+     *
      * @param by
      */
     public void waitBy(By by) {
@@ -113,7 +130,21 @@ public class BaseSpider {
     }
 
     /**
+     * 根据属性xpath查找
+     *
+     * @param attr
+     * @param value
+     * @return
+     */
+    public WebElement waitFindElementByAttr(String attr, String value) {
+        By by = By.xpath("//*[contains(@" + attr + ",'" + value + "')]");
+        (new WebDriverWait(driver, waitTime)).until(ExpectedConditions.elementToBeClickable(by));
+        return driver.findElement(by);
+    }
+
+    /**
      * 等待元素并点击 ==》可用waitFindElementByClass 替换
+     *
      * @param element
      */
     public void waitAndClick(WebElement element) {
@@ -126,6 +157,26 @@ public class BaseSpider {
         return driver.findElement(by);
     }
 
+    public List<WebElement> waitFindElements(By by) {
+        (new WebDriverWait(driver, waitTime)).until(ExpectedConditions.elementToBeClickable(by));
+        return driver.findElements(by);
+    }
+
+    public WebElement waitFindElementById(String id) {
+        return this.waitFindElement(By.id(id));
+    }
+
+    /**
+     * 新窗口中打开
+     *
+     * @param url
+     */
+    public void openNewWindow(String url) {
+        String js = "window.open(\"https://www.sogou.com\");";
+        ((JavascriptExecutor) driver).executeScript(js);
+
+    }
+
     /**
      * xpath 方式class 获取元素 单个
      *
@@ -134,7 +185,7 @@ public class BaseSpider {
      */
     public WebElement waitFindElementByClass(String className) {
         By by = By.xpath("//*[contains(@class,'" + className + "')]");
-        (new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(by));
+        (new WebDriverWait(driver, waitTime)).until(ExpectedConditions.elementToBeClickable(by));
         return driver.findElement(by);
     }
 
@@ -146,12 +197,13 @@ public class BaseSpider {
      */
     public List<WebElement> waitFindElementsByClass(String className) {
         By by = By.xpath("//*[contains(@class,'" + className + "')]");
-        (new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(by));
+        (new WebDriverWait(driver, waitTime)).until(ExpectedConditions.elementToBeClickable(by));
         return driver.findElements(by);
     }
 
     /**
      * 获取不同环境下的chromedriver驱动路径
+     *
      * @return
      */
     private String getDriverPath() {
@@ -188,6 +240,7 @@ public class BaseSpider {
 
     /**
      * 0-n之间的秒等待
+     *
      * @param seconds
      */
     public void simpleRandomWaite(int seconds) {
@@ -198,16 +251,17 @@ public class BaseSpider {
      * 500毫秒-2秒之前的随机
      */
     public void simpleRandomWaite() {
-        simpleWaite(SpiderUtils.randomInteger(500,2000)*1L);
+        simpleWaite(SpiderUtils.randomInteger(500, 2000) * 1L);
     }
 
     /**
      * 毫秒之间的随机等待
+     *
      * @param minMillisecond
      * @param maxMillisecond
      */
-    public void simpleRandomWaite(int minMillisecond ,int maxMillisecond){
-        simpleWaite(Long.valueOf(SpiderUtils.randomInteger(minMillisecond,maxMillisecond)));
+    public void simpleRandomWaite(int minMillisecond, int maxMillisecond) {
+        simpleWaite(Long.valueOf(SpiderUtils.randomInteger(minMillisecond, maxMillisecond)));
     }
 
     /**
@@ -224,6 +278,7 @@ public class BaseSpider {
 
 
     }
+
     /**
      * 逐步滚动到上面
      */
@@ -237,8 +292,8 @@ public class BaseSpider {
     }
 
     public WebDriver getDriver() {
-        if(driver==null){
-           logger.warn("driver 为空，请先执行init 方法");
+        if (driver == null) {
+            logger.warn("driver 为空，请先执行init 方法");
         }
         return driver;
     }
@@ -264,6 +319,19 @@ public class BaseSpider {
 
     }
 
+    public void switch2Window(String window) {
+        driver.switchTo().window(window);
+    }
+
+    /**
+     * 切换iframe
+     *
+     * @param frame
+     */
+    public void switchFrame(WebElement frame) {
+        driver.switchTo().frame(frame);
+    }
+
     public void setDeviceName(String deviceName) {
         this.deviceName = deviceName;
     }
@@ -276,5 +344,7 @@ public class BaseSpider {
         this.headless = headless;
     }
 
-
+    public String getInitWindow() {
+        return initWindow;
+    }
 }

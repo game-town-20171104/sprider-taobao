@@ -8,14 +8,10 @@ import com.ylfin.spider.vo.SpiderQueue;
 
 public class Mail163Thread extends AbstractThread<MailBean> {
 
-    private  RegisterFactory registerFactory;
 
-    public Mail163Thread(SpiderQueue<MailBean> mailQueue, RegisterFactory registerFactory) {
-        super.queue =mailQueue;
-        this.registerFactory = registerFactory;
+    public Mail163Thread(SpiderQueue<MailBean> queue, RegisterFactory registerFactory) {
+        super(queue, registerFactory);
     }
-
-
 
     @Override
     protected Register<MailBean> getRegister() {

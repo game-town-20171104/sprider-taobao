@@ -16,7 +16,7 @@ public class MailServiceImpl implements MailService {
     @Autowired
     MailDao mailDao;
     @Override
-    public List<MailBean> findActiveAndScuess() {
+    public List<MailBean> findActiveAndUnSucc() {
         return  mailDao.selectList(  new EntityWrapper<MailBean>().eq("active",true).eq("success",false));
     }
 

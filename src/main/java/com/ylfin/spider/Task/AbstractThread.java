@@ -1,6 +1,7 @@
 package com.ylfin.spider.Task;
 
 import com.ylfin.spider.register.Register;
+import com.ylfin.spider.register.RegisterFactory;
 import com.ylfin.spider.vo.SpiderQueue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,12 @@ public abstract class AbstractThread<T> implements Runnable{
 
     Logger logger = LoggerFactory.getLogger(AbstractThread.class);
     protected SpiderQueue<T> queue ;
+    protected RegisterFactory registerFactory;
+
+    public AbstractThread(SpiderQueue<T> queue, RegisterFactory registerFactory) {
+        this.queue = queue;
+        this.registerFactory = registerFactory;
+    }
 
     protected abstract Register<T> getRegister();
 

@@ -19,4 +19,10 @@ public class SonyBean {
     private Boolean active;
     private Integer step;
 
+    private String address ;
+    private String city ;
+    private String firstName ;
+    private String lastName;
+
+
 }

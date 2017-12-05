@@ -29,21 +29,27 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
         super.init();
     }
 
+    /**
+     * 每一步都有编号，别修改顺序！！！！！！！！
+     * @param sonyBean
+     */
     @Override
     public void handle(SonyBean sonyBean) {
 
         try {
             getDriver().get(url);
-//        this.waitFindElementByClass("caption ").click();
-            registerInfo(sonyBean);
-            checkEmail(sonyBean);
+            registerInfo_01(sonyBean);
+            checkEmail_02(sonyBean);
             sureEmail(sonyBean);
             login(sonyBean);
-
             this.waiteTitleCondition("首页");
             this.waitFindElementById("navAccount").click();
-            changeSecurityQuestion(sonyBean);
-            changeIntroduction(sonyBean);
+            changeIntroduction_03(sonyBean);
+            changeSecurityQuestion_04(sonyBean);
+            crateOnlineId_05(sonyBean);
+            updateAddress_06(sonyBean);
+            updateAccountInfo_07(sonyBean);
+            updateMobile_08(sonyBean);
             sonyService.setSuccess(sonyBean.getId());
         } catch (RegisterException e) {
             SonyRegisterStep step = e.getSonyRegisterStep();
@@ -52,6 +58,8 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
         }
 
     }
+
+
 
     private void sureEmail(SonyBean sonyBean) {
         if (sonyBean.getStep() > SonyRegisterStep.STEP_02.getCode()) {
@@ -63,7 +71,12 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
         this.waitFindElementById("emailVerificationSaveBtn").click();
     }
 
-    private void registerInfo(SonyBean sonyBean) {
+    /**
+     * 填写注册信息
+     * STEP_01
+     * @param sonyBean
+     */
+    private void registerInfo_01(SonyBean sonyBean) {
         if(sonyBean.getStep()> SonyRegisterStep.STEP_01.getCode()){
             logger.info("跳过注册");
             return;
@@ -94,11 +107,11 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
     }
 
     /**
-     * 修改简介
-     *
+     * 修改简介-真实姓名
+     * STEP_03
      * @param sonyBean
      */
-    private void changeIntroduction(SonyBean sonyBean) {
+    private void changeIntroduction_03(SonyBean sonyBean) {
         if(sonyBean.getStep()> SonyRegisterStep.STEP_03.getCode()){
             logger.info("跳过修改简介");
             return;
@@ -107,8 +120,8 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
         try {
             this.waitFindElementById("leftColumn_profileCatLabel").click();
             this.waitFindElementById("editProfileSocialIdentityButton").click();
-            this.waitFindElementById("socialFirstNameField").sendKeys("sword");
-            this.waitFindElementById("socialLastNameField").sendKeys("dancer");
+            this.waitFindElementById("socialFirstNameField").sendKeys(sonyBean.getFirstName());
+            this.waitFindElementById("socialLastNameField").sendKeys(sonyBean.getLastName());
             this.waitFindElementById("editProfileIdentityButton").click();
         } catch (Exception e) {
             throw new RegisterException(sonyBean+""+SonyRegisterStep.STEP_03,e,SonyRegisterStep.STEP_03);
@@ -119,11 +132,81 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
     }
 
     /**
-     * 修改安全问题
-     *
+     * 生成在线id
+     * STEP_05
+     */
+    private void crateOnlineId_05(SonyBean sonyBean){
+        if(sonyBean.getStep()> SonyRegisterStep.STEP_05.getCode()){
+            logger.info("跳过在线id");
+            return;
+        }
+        logger.info("开始生成在线id……");
+        try {
+            String url="https://account.sonyentertainmentnetwork.com/liquid/cam/account/profile/edit-profile-online-id!input.action";
+            //https://id.sonyentertainmentnetwork.com/id/management/#/p/security
+            getDriver().get(url);
+            this.waitFindElementById("handle").sendKeys(sonyBean.getUsername());
+            this.waitFindElementById("saveOnlineIdButton").click();
+        } catch (Exception e) {
+            throw new RegisterException(sonyBean+""+SonyRegisterStep.STEP_05,e,SonyRegisterStep.STEP_05);
+        }
+    }
+
+    /**
+     * 修改帐号详情--有验证码
+     * STEP_07
      * @param sonyBean
      */
-    private void changeSecurityQuestion(SonyBean sonyBean) {
+    private void updateAccountInfo_07(SonyBean sonyBean){
+        if(sonyBean.getStep()> SonyRegisterStep.STEP_07.getCode()){
+            logger.info("跳过修改帐号详情");
+            return;
+        }
+        logger.info("开始修改帐号详情……");
+        try {
+            String url ="https://account.sonyentertainmentnetwork.com/liquid/cam/account/profile/edit-identity!input.action";
+            getDriver().get(url);
+            this.waitFindElementById("lastNameField").sendKeys(sonyBean.getLastName());
+            this.waitFindElementById("firstNameField").sendKeys(sonyBean.getFirstName());
+            logger.info("等待用戶填写验证码");
+            //TODO check success
+            this.waiteTitleCondition("帐号详情",10*60);
+//            this.waitFindElementByClass("toutRow");
+            //toutRow  您的身份信息已保存。
+//            this.waitFindElement(By.xpath("//span[text()='您的身份信息已保存。']"));
+        } catch (Exception e) {
+            throw new RegisterException(sonyBean+""+SonyRegisterStep.STEP_07,e,SonyRegisterStep.STEP_07);
+        }
+
+    }
+
+    /**
+     * 修改地址
+     * @param sonyBean
+     * STEP_06
+     */
+    private void updateAddress_06(SonyBean sonyBean){
+        if(sonyBean.getStep()> SonyRegisterStep.STEP_06.getCode()){
+            logger.info("跳过修改地址");
+            return;
+        }
+        logger.info("开始修改地址……");
+        try {
+            String url ="https://account.sonyentertainmentnetwork.com/liquid/cam/account/profile/edit-location!input.action";
+            getDriver().get(url);
+            this.waitFindElementById("address_address1Field_input").sendKeys(sonyBean.getAddress());
+            this.waitFindElementById("address_cityField_input").sendKeys(sonyBean.getCity());
+            this.waitFindElementById("saveLocationButton").click();
+        } catch (Exception e) {
+            throw new RegisterException(sonyBean+""+SonyRegisterStep.STEP_06,e,SonyRegisterStep.STEP_06);
+        }
+    }
+    /**
+     * 修改安全问题
+     *STEP_04
+     * @param sonyBean
+     */
+    private void changeSecurityQuestion_04(SonyBean sonyBean) {
         if(sonyBean.getStep()> SonyRegisterStep.STEP_04.getCode()){
             logger.info("跳过修改安全问题");
             return;
@@ -142,7 +225,7 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
 
     /**
      * 登录
-     *
+     * 注冊成功之后，后续流程异常，需要使用登录功能
      * @param sonyBean
      */
     private void login(SonyBean sonyBean) {
@@ -160,10 +243,10 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
 
     /**
      * 邮箱验证
-     *
+     *STEP_02
      * @param sonyBean
      */
-    private void checkEmail(SonyBean sonyBean) {
+    private void checkEmail_02(SonyBean sonyBean) {
         if(sonyBean.getStep()> SonyRegisterStep.STEP_02.getCode()){
             logger.info("跳过邮箱验证");
             return;
@@ -194,6 +277,39 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
         } catch (Exception e) {
             throw new RegisterException(sonyBean+""+SonyRegisterStep.STEP_02,e,SonyRegisterStep.STEP_02);
         }
+
+    }
+
+
+    /**
+     * 修改手机号
+     *
+     * @param sonyBean
+     */
+    private void updateMobile_08(SonyBean sonyBean) {
+        String url  ="https://id.sonyentertainmentnetwork.com/id/management/#/p/security";
+        if (sonyBean.getStep() > SonyRegisterStep.STEP_08.getCode()) {
+            logger.info("跳过手机修改");
+            return;
+        }
+        logger.info("开始手机修改……");
+
+        try {
+            getDriver().get(url);
+
+            this.waitFindElementsByClass("secondary-button").get(2).click();
+            //添加手机
+            this.waitFindElement(By.xpath("//span[text()='添加手机']")).click();
+            this.waitFindElementByClass("selected-flag").click();
+            this.waitFindElementByAttr("data-country-code","cn").click();
+            this.waitFindElementByClass("theme-textfield").sendKeys(sonyBean.getPhone());
+            this.waitFindElementByClass("primary-button").click();
+            logger.info("等待用戶輸入短信……");
+            this.waitFindElementByClass("icon-succeed");
+        } catch (Exception e) {
+            throw new RegisterException(sonyBean+""+SonyRegisterStep.STEP_08,e,SonyRegisterStep.STEP_08);
+        }
+
 
     }
 

@@ -80,6 +80,11 @@ CREATE  TABLE  `reg_sony` (
   PRIMARY KEY (`id`)
 )ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT '邮箱注册';
 
+-- changeset godslhand:20171205
+ALTER  TABLE  reg_sony add COLUMN   `address` varchar(255) DEFAULT  COMMENT '地址' ;
+ALTER  TABLE  reg_sony add COLUMN   `city` varchar(255) DEFAULT  COMMENT '城市' ;
+ALTER  TABLE  reg_sony add COLUMN   `firstName` varchar(255) DEFAULT  COMMENT '名（老外风格）' ;
+ALTER  TABLE  reg_sony add COLUMN   `lastName` varchar(255) DEFAULT  COMMENT '姓（老外风格）' ;
 
 -- changeset godslhand:20171127
 CREATE  TABLE  `proxy_server` (

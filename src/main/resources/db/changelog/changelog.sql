@@ -83,8 +83,8 @@ CREATE  TABLE  `reg_sony` (
 -- changeset godslhand:20171205
 ALTER  TABLE  reg_sony add COLUMN   `address` varchar(255) DEFAULT NULL  COMMENT '地址' ;
 ALTER  TABLE  reg_sony add COLUMN   `city` varchar(255) DEFAULT NULL COMMENT '城市' ;
-ALTER  TABLE  reg_sony add COLUMN   `firstName` varchar(255) DEFAULT NULL  COMMENT '名（老外风格）' ;
-ALTER  TABLE  reg_sony add COLUMN   `lastName` varchar(255) DEFAULT NULL COMMENT '姓（老外风格）' ;
+ALTER  TABLE  reg_sony add COLUMN   `first_name` varchar(255) DEFAULT NULL  COMMENT '名（老外风格）' ;
+ALTER  TABLE  reg_sony add COLUMN   `last_name` varchar(255) DEFAULT NULL COMMENT '姓（老外风格）' ;
 
 -- changeset godslhand:20171127
 CREATE  TABLE  `proxy_server` (

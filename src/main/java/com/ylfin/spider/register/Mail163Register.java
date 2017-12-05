@@ -51,7 +51,7 @@ public class Mail163Register extends BaseSpider implements Register<MailBean> {
     }
 
     public static void main(String[] args) {
-      
+
 
 
     }

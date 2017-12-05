@@ -51,16 +51,7 @@ public class Mail163Register extends BaseSpider implements Register<MailBean> {
     }
 
     public static void main(String[] args) {
-        MailBean mailBean = new MailBean();
-        mailBean.setUsername("songfl002");
-        mailBean.setEmail("songfl002@163.com");
-        mailBean.setPassword("asd123");
-        mailBean.setPhone("17757416906");
-
-        Register<MailBean> register = new Mail163Register(null);
-        register.initRegister();
-        register.handle(mailBean);
-        register.close();
+      
 
 
     }

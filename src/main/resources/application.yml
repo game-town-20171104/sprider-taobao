@@ -24,7 +24,7 @@ thread:
   size: 2
 # 1,爬关键词，2 爬店铺，3 关键词搜索，4 邮箱注册，5 游戏注册
 spider:
-  model: 5
+  model: 4
 
 
 #mybatis

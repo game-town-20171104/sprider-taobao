@@ -35,6 +35,9 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
      */
     @Override
     public void handle(SonyBean sonyBean) {
+        if(sonyBean.getStep()==null){
+            sonyBean.setStep(0);
+        }
 
         try {
             getDriver().get(url);
@@ -238,7 +241,7 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
         getDriver().get(url);
         List<WebElement> webElements = this.waitFindElements(By.xpath("//input[@class]"));
         webElements.get(0).sendKeys(sonyBean.getPsn());
-        webElements.get(0).sendKeys(sonyBean.getPassword());
+        webElements.get(1).sendKeys(sonyBean.getPassword());
     }
 
     /**
@@ -256,6 +259,7 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
         try {
             this.openNewWindow("https://mail.163.com/");
             this.switch2NewWindow();
+            this.switchFrame(this.waitFindElementById("x-URS-iframe"));
             this.waitFindElementByClass("dlemail").sendKeys(sonyBean.getPsn());
             this.waitFindElementByClass("dlpwd").sendKeys(sonyBean.getPassword());
             this.waitFindElementByClass("u-loginbtn").click();

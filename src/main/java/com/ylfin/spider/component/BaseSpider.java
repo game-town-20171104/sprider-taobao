@@ -172,7 +172,7 @@ public class BaseSpider {
      * @param url
      */
     public void openNewWindow(String url) {
-        String js = "window.open(\"https://www.sogou.com\");";
+        String js = "window.open(\""+url+"\");";
         ((JavascriptExecutor) driver).executeScript(js);
 
     }

@@ -3,7 +3,9 @@ package com.ylfin.spider.register;
 import com.ylfin.spider.Exception.RegisterException;
 import com.ylfin.spider.component.BaseSpider;
 import com.ylfin.spider.register.enums.SonyRegisterStep;
+import com.ylfin.spider.register.service.MailService;
 import com.ylfin.spider.register.service.SonyService;
+import com.ylfin.spider.register.vo.bean.MailBean;
 import com.ylfin.spider.register.vo.bean.SonyBean;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -18,9 +20,14 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
     private SonyService sonyService;
     //    String url ="https://id.sonyentertainmentnetwork.com/create_account/?#/create_account/wizard/account_info_page1?entry=%2Fcreate_account";
     private Logger logger = LoggerFactory.getLogger(getClass());
+    private MailService mailService;
 
     public SonyRegister(SonyService sonyService) {
         this.sonyService = sonyService;
+    }
+
+    public void setMailService(MailService mailService) {
+        this.mailService = mailService;
     }
 
     @Override
@@ -273,13 +280,21 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
             return;
         }
         logger.info("开始邮箱验证……");
+        MailBean mailBean = mailService.findByEmail(sonyBean.getPsn());
+        String password ;
+        if (mailBean == null){
+
+            throw new RegisterException(sonyBean+" 未找到对应的邮箱密码",SonyRegisterStep.STEP_02);
+        }
+        password = mailBean.getPassword();
 
         try {
+
             this.openNewWindow("https://mail.163.com/");
             this.switch2NewWindow();
             this.switchFrame(this.waitFindElementById("x-URS-iframe"));
             this.waitFindElementByClass("dlemail").sendKeys(sonyBean.getPsn());
-            this.waitFindElementByClass("dlpwd").sendKeys(sonyBean.getPassword());
+            this.waitFindElementByClass("dlpwd").sendKeys(password);
             this.waitFindElementByClass("u-loginbtn").click();
 
             this.waitFindElementByAttr("title", "收件箱").click();

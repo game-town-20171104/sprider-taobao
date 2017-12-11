@@ -8,4 +8,6 @@ public interface MailService {
     List<MailBean> findActiveAndUnSucc();
 
    void setSuccess(Long id);
+
+     MailBean findByEmail(String email);
 }

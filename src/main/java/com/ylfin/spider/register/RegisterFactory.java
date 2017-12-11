@@ -18,7 +18,7 @@ public class RegisterFactory {
     public Register getRegister(RegisterType registerType) {
         switch (registerType) {
             case sony:
-                return new SonyRegister(sonyService);
+                return buildSonyRegister();
             case mail163:
                 return createMail163Register();
             default:
@@ -26,6 +26,12 @@ public class RegisterFactory {
         }
 
         return null;
+    }
+
+    private SonyRegister buildSonyRegister(){
+        SonyRegister sonyRegister =  new SonyRegister(sonyService);
+        sonyRegister.setMailService(mailService);
+        return  sonyRegister;
     }
 
 

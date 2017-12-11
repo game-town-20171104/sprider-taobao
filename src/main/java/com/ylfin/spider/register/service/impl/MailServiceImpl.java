@@ -20,6 +20,12 @@ public class MailServiceImpl implements MailService {
         return  mailDao.selectList(  new EntityWrapper<MailBean>().eq("active",true).eq("success",false));
     }
 
+    public MailBean findByEmail(String email){
+        MailBean mailBean = new MailBean();
+        mailBean.setEmail(email);
+        return  mailDao.selectOne(mailBean);
+    }
+
     @Override
     public void setSuccess(Long id) {
         MailBean mailBean =new MailBean();

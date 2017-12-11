@@ -4,6 +4,7 @@ import com.ylfin.spider.AbstractSpringTest;
 import com.ylfin.spider.register.mapper.MailDao;
 import com.ylfin.spider.register.service.MailService;
 import com.ylfin.spider.register.vo.bean.MailBean;
+import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -31,5 +32,11 @@ public class MailServiceImplTest extends AbstractSpringTest{
 
 //        mailService.setSuccess(936111248674684929L);
     }
+    
+   @Test
+   public void findByEmail(){
+     MailBean bean =  mailService.findByEmail("songfl2012@163.com");
+       Assert.assertNotNull(bean);
+   }
 
 }

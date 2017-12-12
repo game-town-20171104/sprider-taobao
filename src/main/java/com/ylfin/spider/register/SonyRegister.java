@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 public class SonyRegister extends BaseSpider implements Register<SonyBean> {
-    String url = "https://account.sonyentertainmentnetwork.com/reg/account/create-account!input.action?request_locale=zh_HK";
+    String url = "https://asia.playstation.com/chs-hk/account/#settings";
     private SonyService sonyService;
     //    String url ="https://id.sonyentertainmentnetwork.com/create_account/?#/create_account/wizard/account_info_page1?entry=%2Fcreate_account";
     private Logger logger = LoggerFactory.getLogger(getClass());
@@ -93,6 +93,8 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
 
         try {
             getDriver().get(url);
+            this.waitFindElementById("nav-7").click();
+            this.waitFindElementById("psn-pc-signin-nav").click();
             List<WebElement> webElementList = this.waitFindElements(By.xpath("//section/input[@class]"));
             webElementList.get(0).sendKeys(sonyBean.getPsn());
             webElementList.get(1).click();

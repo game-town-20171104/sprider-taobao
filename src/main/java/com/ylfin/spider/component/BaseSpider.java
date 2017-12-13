@@ -141,6 +141,12 @@ public class BaseSpider {
         (new WebDriverWait(driver, waitTime)).until(ExpectedConditions.elementToBeClickable(by));
         return driver.findElement(by);
     }
+    public List<WebElement> waitFindElementsByAttr(String attr, String value) {
+        By by = By.xpath("//*[contains(@" + attr + ",'" + value + "')]");
+        (new WebDriverWait(driver, waitTime)).until(ExpectedConditions.elementToBeClickable(by));
+        return driver.findElements(by);
+    }
+
 
     /**
      * 等待元素并点击 ==》可用waitFindElementByClass 替换
@@ -164,6 +170,21 @@ public class BaseSpider {
 
     public WebElement waitFindElementById(String id) {
         return this.waitFindElement(By.id(id));
+    }
+
+    /**
+     * 判断是否存在用 1s
+     * @param by
+     * @return
+     */
+    public boolean isExist(By by){
+        try {
+            (new WebDriverWait(driver, 1)).until(ExpectedConditions.elementToBeClickable(by));
+        } catch (Exception e) {
+            logger.info("判断元素是否存在："+e.getMessage());
+            return false;
+        }
+        return  true;
     }
 
     /**

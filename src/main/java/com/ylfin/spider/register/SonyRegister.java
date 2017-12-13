@@ -47,11 +47,12 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
         }
 
         try {
-
+            logout();
             registerInfo_01(sonyBean);
+            login(sonyBean);
             checkEmail_02(sonyBean);
             sureEmail(sonyBean);
-            login(sonyBean);
+
             changeIntroduction_03(sonyBean);
             changeSecurityQuestion_04(sonyBean);
             crateOnlineId_05(sonyBean);
@@ -67,6 +68,14 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
 
     }
 
+    /**
+     * 启动前先登出帐号
+     */
+    private void logout() {
+        logger.info("先登出帐号");
+        getDriver().get("https://account.sonyentertainmentnetwork.com/external/auth/logout!sso.action");
+
+    }
 
 
     private void sureEmail(SonyBean sonyBean) {
@@ -93,8 +102,9 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
 
         try {
             getDriver().get(url);
-            this.waitFindElementById("nav-7").click();
-            this.waitFindElementById("psn-pc-signin-nav").click();
+//            this.waitFindElementById("nav-7").click();
+            this.waitFindElement(By.linkText("创建账号")).click();
+            this.switch2NewWindow();
             List<WebElement> webElementList = this.waitFindElements(By.xpath("//section/input[@class]"));
             webElementList.get(0).sendKeys(sonyBean.getPsn());
             webElementList.get(1).click();
@@ -112,6 +122,7 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
 //        this.waitFindElementById("createAccountButton")).click();//不点击，让申请人点击
 //        this.waitFindElementByClass("wrapper-fitparent").click();
             this.waiteTitleCondition("核实您的电子邮件地址", 10 * 60);
+            sonyService.updateStep(sonyBean.getId(),SonyRegisterStep.STEP_02);
         } catch (Exception e) {
             throw new RegisterException(sonyBean+""+SonyRegisterStep.STEP_01,e, SonyRegisterStep.STEP_01);
         }
@@ -130,9 +141,22 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
         logger.info("开始修改简介……");
         try {
             getDriver().get("https://account.sonyentertainmentnetwork.com/liquid/cam/account/profile/edit-profile-social-identity!input.action");
-            this.waitFindElementById("socialFirstNameField").sendKeys(sonyBean.getFirstName());
-            this.waitFindElementById("socialLastNameField").sendKeys(sonyBean.getLastName());
-            this.waitFindElementById("editProfileIdentityButton").click();
+            WebElement firstName =this.waitFindElementById("socialFirstNameField");
+            firstName.clear();
+            firstName.sendKeys(sonyBean.getFirstName());
+            WebElement lastName =this.waitFindElementById("socialLastNameField");
+            lastName.clear();
+            lastName.sendKeys(sonyBean.getLastName());
+            //判断是否有验证码
+            if(this.isExist(By.id("recaptcha-accessible-status"))){
+                logger.info("简介有验证码……");
+            } else{
+                this.waitFindElementById("editProfileIdentityButton").click();
+            }
+            logger.info("简介修改完成");
+            this.waiteTitleCondition("账号详情",10*60);
+            sonyService.updateStep(sonyBean.getId(),SonyRegisterStep.STEP_04);
+
         } catch (Exception e) {
             throw new RegisterException(sonyBean+""+SonyRegisterStep.STEP_03,e,SonyRegisterStep.STEP_03);
         }
@@ -157,9 +181,9 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
             getDriver().get(url);
             this.waitFindElementById("handle").sendKeys(sonyBean.getUsername());
             this.waitFindElementById("saveOnlineIdButton").click();
-            if(getDriver().getCurrentUrl().equals(url)){
-                logger.error(sonyBean+" 在线id修改失败！！！！");
-            }
+
+            this.waiteTitleCondition("账号详情",10*60);
+            sonyService.updateStep(sonyBean.getId(),SonyRegisterStep.STEP_06);
         } catch (Exception e) {
             throw new RegisterException(sonyBean+""+SonyRegisterStep.STEP_05,e,SonyRegisterStep.STEP_05);
         }
@@ -179,8 +203,12 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
         try {
             String url ="https://account.sonyentertainmentnetwork.com/liquid/cam/account/profile/edit-identity!input.action";
             getDriver().get(url);
-            this.waitFindElementById("lastNameField").sendKeys(sonyBean.getLastName());
-            this.waitFindElementById("firstNameField").sendKeys(sonyBean.getFirstName());
+            WebElement lastname  =this.waitFindElementById("lastNameField");
+            lastname.clear();
+            lastname.sendKeys(sonyBean.getLastName());
+            WebElement firstName = this.waitFindElementById("firstNameField");
+            firstName.clear();
+            firstName.sendKeys(sonyBean.getFirstName());
             logger.info("等待用戶填写验证码");
             //TODO check success
             this.waiteTitleCondition("账号详情",10*60);
@@ -188,6 +216,7 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
 //            this.waitFindElementByClass("toutRow");
             //toutRow  您的身份信息已保存。
 //            this.waitFindElement(By.xpath("//span[text()='您的身份信息已保存。']"));
+            sonyService.updateStep(sonyBean.getId(),SonyRegisterStep.STEP_08);
         } catch (Exception e) {
             throw new RegisterException(sonyBean+""+SonyRegisterStep.STEP_07,e,SonyRegisterStep.STEP_07);
         }
@@ -211,6 +240,7 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
             this.waitFindElementById("address_address1Field_input").sendKeys(sonyBean.getAddress());
             this.waitFindElementById("address_cityField_input").sendKeys(sonyBean.getCity());
             this.waitFindElementById("saveLocationButton").click();
+            sonyService.updateStep(sonyBean.getId(),SonyRegisterStep.STEP_07);
         } catch (Exception e) {
             throw new RegisterException(sonyBean+""+SonyRegisterStep.STEP_06,e,SonyRegisterStep.STEP_06);
         }
@@ -232,6 +262,7 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
             new Select(this.waitFindElementById("securityQuestionListField")).selectByVisibleText(sonyBean.getQuestion());
             this.waitFindElementById("securityAnswerField").sendKeys(sonyBean.getQuesAnswer());
             this.waitFindElementById("changeSecurityQuestionButton").click();
+            sonyService.updateStep(sonyBean.getId(),SonyRegisterStep.STEP_05);
         } catch (Exception e) {
             throw new RegisterException(sonyBean+""+SonyRegisterStep.STEP_04,e,SonyRegisterStep.STEP_04);
         }
@@ -302,16 +333,17 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
             this.waitFindElementByAttr("title", "收件箱").click();
             this.waitFindElement(By.xpath("//*[text()='账户登记成功确认']")).click();
 
-            List<WebElement> elements = this.waitFindElementsByClass("frame-main");
+            List<WebElement> elements = this.waitFindElementsByAttr("aria-label","读信");
             for (WebElement element : elements) {
                 if (element.isDisplayed()) {
                     WebElement frame = element.findElement(By.tagName("iframe"));
-                    this.switch2NewWindow();
+                    this.switchFrame(frame);
                     break;
                 }
             }
             this.waitFindElement(By.linkText("立即验证")).click();
             this.switch2NewWindow();
+
 
         } catch (Exception e) {
             throw new RegisterException(sonyBean+""+SonyRegisterStep.STEP_02,e,SonyRegisterStep.STEP_02);

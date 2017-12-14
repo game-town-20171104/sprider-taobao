@@ -13,6 +13,8 @@ public abstract class AbstractThread<T> implements Runnable{
     protected SpiderQueue<T> queue ;
     protected RegisterFactory registerFactory;
 
+    private int interval =1;//秒 时间间隔
+
     public AbstractThread(SpiderQueue<T> queue, RegisterFactory registerFactory) {
         this.queue = queue;
         this.registerFactory = registerFactory;
@@ -26,6 +28,7 @@ public abstract class AbstractThread<T> implements Runnable{
         Register<T> spider = this.getRegister();
 
         spider.initRegister();
+        Long lastTime = System.currentTimeMillis();
         while (true) {
             T vo = queue.get();
 
@@ -40,9 +43,22 @@ public abstract class AbstractThread<T> implements Runnable{
                 logger.error(vo + "爬虫脚本出错了", e);
             }
 
+            //超时设置，防止一直失败、短间隔循环
+            Long currentTime = System.currentTimeMillis();
+            if((currentTime-lastTime)<1000){
+                try {
+                    Thread.sleep(1000*interval);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                lastTime = currentTime;
+            }
+
         }
 
         spider.close();
         System.out.println(Thread.currentThread() + "==end==" + Thread.activeCount());
     }
+
+
 }

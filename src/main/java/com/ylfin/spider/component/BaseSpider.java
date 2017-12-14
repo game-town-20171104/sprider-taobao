@@ -330,6 +330,7 @@ public class BaseSpider {
                 driver.switchTo().window(handle).close();
             }
         }
+        driver.switchTo().window(curt);
     }
 
     public void switch2NewWindow() {

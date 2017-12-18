@@ -120,6 +120,20 @@ public class BaseSpider {
         });
     }
 
+    public void waiteTitleCondition(int waitSeconds,String ... keyword ) {
+        (new WebDriverWait(driver, waitSeconds)).until(new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver d) {
+                boolean result = false;
+               String title = d.getTitle().toLowerCase();
+                for (String word :keyword){
+                    if(title.startsWith(word))
+                        return true;
+                }
+                return result;
+            }
+        });
+    }
+
     /**
      * 等待袁术
      *
@@ -331,6 +345,8 @@ public class BaseSpider {
             }
         }
         driver.switchTo().window(curt);
+        this.initWindow = curt;
+
     }
 
     public void switch2NewWindow() {

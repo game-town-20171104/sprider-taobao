@@ -125,7 +125,8 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
 //        new Select(selects.get(2)).selectByVisibleText("简体中文");
 //        this.waitFindElementById("createAccountButton")).click();//不点击，让申请人点击
 //        this.waitFindElementByClass("wrapper-fitparent").click();
-//            this.waiteTitleCondition("核实您的电子邮件地址", 10 * 60);
+            this.waiteTitleCondition( 10 * 60,"核实您的电子邮件地址","登录");
+            this.regLogin(sonyBean);
         this.closeOthers();
             sonyService.updateStep(sonyBean.getId(), SonyRegisterStep.STEP_02);
         } catch (Exception e) {
@@ -278,6 +279,24 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
     }
 
     /**
+     * 注册后需要登录的场景
+     */
+    private void regLogin(SonyBean sonyBean){
+        try {
+            WebElement userInput =this.waitFindElementByAttr("type","email");
+            userInput.clear();
+            userInput.sendKeys(sonyBean.getPsn());
+            WebElement password =this.waitFindElementByAttr("type","password");
+            password.clear();
+            password.sendKeys(sonyBean.getPassword());
+            this.waiteTitleCondition("核实您的电子邮件地址",10*60);
+        } catch (Exception e) {
+            logger.error("注册后登录失败！！！",e);
+        }
+    }
+
+
+    /**
      * 登录
      * 注冊成功之后，后续流程异常，需要使用登录功能
      *
@@ -333,6 +352,13 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
         password = mailBean.getPassword();
 
         try {
+            String verifyUrl = "https://account.sonyentertainmentnetwork.com/security/unverified-user!input.action";
+            if(!getDriver().getCurrentUrl().startsWith(verifyUrl)){
+                getDriver().get(verifyUrl);
+                //点击重新发送
+                this.waitFindElementById("sendEmailButton").click();
+            }
+
 
             this.openNewWindow("https://mail.163.com/");
             this.switch2NewWindow();

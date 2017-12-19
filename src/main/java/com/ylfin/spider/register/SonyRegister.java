@@ -114,9 +114,9 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
 //            webElementList.get(4).sendKeys(sonyBean.getPassword());
 //        this.waitFindElementByClass("wrapper-fitparent").click();
             List<WebElement> selects = this.waitFindElements(By.tagName("select"));
-            new Select(selects.get(0)).selectByValue("1987");
-            new Select(selects.get(1)).selectByValue("12");
-            new Select(selects.get(2)).selectByValue("8");
+            new Select(selects.get(0)).selectByValue("1985");
+            new Select(selects.get(1)).selectByValue("2");
+            new Select(selects.get(2)).selectByValue("16");
             new Select(this.waitFindElementById("regInput_Country")).selectByVisibleText(sonyBean.getCountry());
             new Select(this.waitFindElementById("regInput_Language")).selectByVisibleText("简体中文");
             new Select(this.waitFindElementById("account_address_provinceField")).selectByVisibleText(sonyBean.getProvince());
@@ -125,7 +125,7 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
 //        new Select(selects.get(2)).selectByVisibleText("简体中文");
 //        this.waitFindElementById("createAccountButton")).click();//不点击，让申请人点击
 //        this.waitFindElementByClass("wrapper-fitparent").click();
-            this.waiteTitleCondition( 10 * 60,"核实您的电子邮件地址","登录");
+            this.waiteTitleCondition( "登陆",10 * 60);
             this.regLogin(sonyBean);
         this.closeOthers();
             sonyService.updateStep(sonyBean.getId(), SonyRegisterStep.STEP_02);

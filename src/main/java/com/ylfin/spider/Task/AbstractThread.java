@@ -27,11 +27,11 @@ public abstract class AbstractThread<T> implements Runnable{
         System.out.println(Thread.currentThread() + "==start==" + Thread.activeCount());
         Register<T> spider = this.getRegister();
 
-        spider.initRegister();
+
         Long lastTime = System.currentTimeMillis();
         while (true) {
+            spider.initRegister();
             T vo = queue.get();
-
             if (vo == null) {
                 System.out.println("消费结束，准备退出……");
                 break;
@@ -53,10 +53,11 @@ public abstract class AbstractThread<T> implements Runnable{
                 }
                 lastTime = currentTime;
             }
+            spider.close();
 
         }
 
-        spider.close();
+
         System.out.println(Thread.currentThread() + "==end==" + Thread.activeCount());
     }
 

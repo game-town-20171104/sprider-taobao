@@ -34,7 +34,7 @@ public class SonyServiceImplTest extends AbstractSpringTest {
 
     @Test
     public void updateStep() throws Exception {
-        sonyService.updateStep(1L, SonyRegisterStep.STEP_02);
+        sonyService.updateStep(1L, SonyRegisterStep.STEP_200);
     }
 
 }

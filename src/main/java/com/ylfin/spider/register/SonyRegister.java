@@ -48,17 +48,17 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
         }
 
         try {
-            logout();
+//            logout();
             registerInfo_01(sonyBean);
             login(sonyBean);
             checkEmail_02(sonyBean);
             sureEmail(sonyBean);
-
+            onlineId_21(sonyBean);
             changeIntroduction_03(sonyBean);
             changeSecurityQuestion_04(sonyBean);
-            crateOnlineId_05(sonyBean);
+//            crateOnlineId_05(sonyBean);
             updateAddress_06(sonyBean);
-            updateAccountInfo_07(sonyBean);
+//            updateAccountInfo_07(sonyBean);
             updateMobile_08(sonyBean);
             sonyService.setSuccess(sonyBean.getId());
         } catch (RegisterException e) {
@@ -78,9 +78,32 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
 
     }
 
+    /**
+     * 注册登录完成后。立即生成在线id
+     * @param sonyBean
+     */
+    private void onlineId_21(SonyBean sonyBean){
+        if (sonyBean.getStep() > SonyRegisterStep.STEP_210.getCode()) {
+            logger.info("跳过在线id验证");
+            return;
+        }
+        logger.info("生成在线id");
+        try {
+            this.waiteTitleCondition("为 PlayStation™Network 更新账号");
+            WebElement webElement =this.waitFindElementById("handleFieldInput");
+            webElement.clear();
+            webElement.sendKeys(sonyBean.getUsername());
+            this.waitFindElementById("saveIdentityButton").click();
+            sonyService.updateStep(sonyBean.getId(), SonyRegisterStep.STEP_300);
+            logger.info("生成在线id修改完成");
+        } catch (Exception e) {
+            throw new RegisterException(sonyBean + "" + SonyRegisterStep.STEP_210, e, SonyRegisterStep.STEP_210);
+        }
+
+    }
 
     private void sureEmail(SonyBean sonyBean) {
-        if (sonyBean.getStep() > SonyRegisterStep.STEP_02.getCode()) {
+        if (sonyBean.getStep() > SonyRegisterStep.STEP_200.getCode()) {
             logger.info("跳过邮箱确认");
             return;
         }
@@ -96,31 +119,45 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
      * @param sonyBean
      */
     private void registerInfo_01(SonyBean sonyBean) {
-        if (sonyBean.getStep() > SonyRegisterStep.STEP_01.getCode()) {
+        if (sonyBean.getStep() > SonyRegisterStep.STEP_100.getCode()) {
             logger.info("跳过注册");
             return;
         }
         logger.info("开始注册……");
 
         try {
+            this.simpleRandomWaite(500,1000);
             getDriver().get(url);
 //            this.waitFindElementById("nav-7").click();
+            this.simpleRandomWaite(200,600);
             this.waitFindElement(By.linkText("创建账号")).click();
             this.switch2NewWindow();
             List<WebElement> webElementList = this.waitFindElements(By.xpath("//section/input[@class]"));
+            this.simpleRandomWaite(500,1000);
             webElementList.get(0).sendKeys(sonyBean.getPsn());
 //            webElementList.get(1).click();
 //            webElementList.get(3).sendKeys(sonyBean.getPassword());
 //            webElementList.get(4).sendKeys(sonyBean.getPassword());
 //        this.waitFindElementByClass("wrapper-fitparent").click();
+            this.simpleRandomWaite(500,1000);
             List<WebElement> selects = this.waitFindElements(By.tagName("select"));
+            this.simpleRandomWaite(500,1000);
             new Select(selects.get(0)).selectByValue("1987");
+            this.simpleRandomWaite(500,1000);
             new Select(selects.get(1)).selectByValue("12");
+            this.simpleRandomWaite(500,1000);
             new Select(selects.get(2)).selectByValue("8");
+            this.simpleRandomWaite(500,2000);
+            this.waitFindElementById("regInput_MaleGender").click();
+            this.simpleRandomWaite(500,2000);
             new Select(this.waitFindElementById("regInput_Country")).selectByVisibleText(sonyBean.getCountry());
+            this.simpleRandomWaite(700,1000);
             new Select(this.waitFindElementById("regInput_Language")).selectByVisibleText("简体中文");
+            this.simpleRandomWaite(300,1200);
             new Select(this.waitFindElementById("account_address_provinceField")).selectByVisibleText(sonyBean.getProvince());
+            this.simpleRandomWaite(1000,1500);
             this.waitFindElementById("account_password").sendKeys(sonyBean.getPassword());
+            this.simpleRandomWaite(600,1500);
             this.waitFindElementById("confirmPasswordField").sendKeys(sonyBean.getPassword());
 //        new Select(selects.get(2)).selectByVisibleText("简体中文");
 //        this.waitFindElementById("createAccountButton")).click();//不点击，让申请人点击
@@ -128,9 +165,9 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
             this.waiteTitleCondition( 10 * 60,"核实您的电子邮件地址","登录");
             this.regLogin(sonyBean);
         this.closeOthers();
-            sonyService.updateStep(sonyBean.getId(), SonyRegisterStep.STEP_02);
+            sonyService.updateStep(sonyBean.getId(), SonyRegisterStep.STEP_200);
         } catch (Exception e) {
-            throw new RegisterException(sonyBean + "" + SonyRegisterStep.STEP_01, e, SonyRegisterStep.STEP_01);
+            throw new RegisterException(sonyBean + "" + SonyRegisterStep.STEP_100, e, SonyRegisterStep.STEP_100);
         }
     }
 
@@ -141,7 +178,7 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
      * @param sonyBean
      */
     private void changeIntroduction_03(SonyBean sonyBean) {
-        if (sonyBean.getStep() > SonyRegisterStep.STEP_03.getCode()) {
+        if (sonyBean.getStep() > SonyRegisterStep.STEP_300.getCode()) {
             logger.info("跳过修改简介");
             return;
         }
@@ -162,10 +199,10 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
             }
             logger.info("简介修改完成");
             this.waiteTitleCondition("账号详情", 10 * 60);
-            sonyService.updateStep(sonyBean.getId(), SonyRegisterStep.STEP_04);
+            sonyService.updateStep(sonyBean.getId(), SonyRegisterStep.STEP_400);
 
         } catch (Exception e) {
-            throw new RegisterException(sonyBean + "" + SonyRegisterStep.STEP_03, e, SonyRegisterStep.STEP_03);
+            throw new RegisterException(sonyBean + "" + SonyRegisterStep.STEP_300, e, SonyRegisterStep.STEP_300);
         }
 
         //socialFirstNameField
@@ -177,7 +214,7 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
      * STEP_05
      */
     private void crateOnlineId_05(SonyBean sonyBean) {
-        if (sonyBean.getStep() > SonyRegisterStep.STEP_05.getCode()) {
+        if (sonyBean.getStep() > SonyRegisterStep.STEP_500.getCode()) {
             logger.info("跳过在线id");
             return;
         }
@@ -190,9 +227,9 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
             this.waitFindElementById("saveOnlineIdButton").click();
 
             this.waiteTitleCondition("账号详情", 10 * 60);
-            sonyService.updateStep(sonyBean.getId(), SonyRegisterStep.STEP_06);
+            sonyService.updateStep(sonyBean.getId(), SonyRegisterStep.STEP_600);
         } catch (Exception e) {
-            throw new RegisterException(sonyBean + "" + SonyRegisterStep.STEP_05, e, SonyRegisterStep.STEP_05);
+            throw new RegisterException(sonyBean + "" + SonyRegisterStep.STEP_500, e, SonyRegisterStep.STEP_500);
         }
     }
 
@@ -203,7 +240,7 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
      * @param sonyBean
      */
     private void updateAccountInfo_07(SonyBean sonyBean) {
-        if (sonyBean.getStep() > SonyRegisterStep.STEP_07.getCode()) {
+        if (sonyBean.getStep() > SonyRegisterStep.STEP_700.getCode()) {
             logger.info("跳过修改帐号详情");
             return;
         }
@@ -224,9 +261,9 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
 //            this.waitFindElementByClass("toutRow");
             //toutRow  您的身份信息已保存。
 //            this.waitFindElement(By.xpath("//span[text()='您的身份信息已保存。']"));
-            sonyService.updateStep(sonyBean.getId(), SonyRegisterStep.STEP_08);
+            sonyService.updateStep(sonyBean.getId(), SonyRegisterStep.STEP_800);
         } catch (Exception e) {
-            throw new RegisterException(sonyBean + "" + SonyRegisterStep.STEP_07, e, SonyRegisterStep.STEP_07);
+            throw new RegisterException(sonyBean + "" + SonyRegisterStep.STEP_700, e, SonyRegisterStep.STEP_700);
         }
 
     }
@@ -237,7 +274,7 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
      * @param sonyBean STEP_06
      */
     private void updateAddress_06(SonyBean sonyBean) {
-        if (sonyBean.getStep() > SonyRegisterStep.STEP_06.getCode()) {
+        if (sonyBean.getStep() > SonyRegisterStep.STEP_600.getCode()) {
             logger.info("跳过修改地址");
             return;
         }
@@ -248,9 +285,9 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
             this.waitFindElementById("address_address1Field_input").sendKeys(sonyBean.getAddress());
             this.waitFindElementById("address_cityField_input").sendKeys(sonyBean.getCity());
             this.waitFindElementById("saveLocationButton").click();
-            sonyService.updateStep(sonyBean.getId(), SonyRegisterStep.STEP_07);
+            sonyService.updateStep(sonyBean.getId(), SonyRegisterStep.STEP_700);
         } catch (Exception e) {
-            throw new RegisterException(sonyBean + "" + SonyRegisterStep.STEP_06, e, SonyRegisterStep.STEP_06);
+            throw new RegisterException(sonyBean + "" + SonyRegisterStep.STEP_600, e, SonyRegisterStep.STEP_600);
         }
     }
 
@@ -261,7 +298,7 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
      * @param sonyBean
      */
     private void changeSecurityQuestion_04(SonyBean sonyBean) {
-        if (sonyBean.getStep() > SonyRegisterStep.STEP_04.getCode()) {
+        if (sonyBean.getStep() > SonyRegisterStep.STEP_400.getCode()) {
             logger.info("跳过修改安全问题");
             return;
         }
@@ -272,9 +309,9 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
             new Select(this.waitFindElementById("securityQuestionListField")).selectByVisibleText(sonyBean.getQuestion());
             this.waitFindElementById("securityAnswerField").sendKeys(sonyBean.getQuesAnswer());
             this.waitFindElementById("changeSecurityQuestionButton").click();
-            sonyService.updateStep(sonyBean.getId(), SonyRegisterStep.STEP_05);
+            sonyService.updateStep(sonyBean.getId(), SonyRegisterStep.STEP_500);
         } catch (Exception e) {
-            throw new RegisterException(sonyBean + "" + SonyRegisterStep.STEP_04, e, SonyRegisterStep.STEP_04);
+            throw new RegisterException(sonyBean + "" + SonyRegisterStep.STEP_400, e, SonyRegisterStep.STEP_400);
         }
     }
 
@@ -308,7 +345,7 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
             try {
                 i++;
                 Integer step = sonyBean.getStep() == null ? 0 : sonyBean.getStep();
-                if (step <= SonyRegisterStep.STEP_01.getCode()) {
+                if (step <= SonyRegisterStep.STEP_100.getCode()) {
                     return;
                 }
                 logger.info("开始登录……");
@@ -338,7 +375,7 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
      * @param sonyBean
      */
     private void checkEmail_02(SonyBean sonyBean) {
-        if (sonyBean.getStep() > SonyRegisterStep.STEP_02.getCode()) {
+        if (sonyBean.getStep() > SonyRegisterStep.STEP_200.getCode()) {
             logger.info("跳过邮箱验证");
             return;
         }
@@ -347,7 +384,7 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
         String password;
         if (mailBean == null) {
 
-            throw new RegisterException(sonyBean + " 未找到对应的邮箱密码", SonyRegisterStep.STEP_02);
+            throw new RegisterException(sonyBean + " 未找到对应的邮箱密码", SonyRegisterStep.STEP_200);
         }
         password = mailBean.getPassword();
 
@@ -370,6 +407,7 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
             this.waitFindElementByAttr("title", "收件箱").click();
             this.waitFindElement(By.xpath("//*[text()='账户登记成功确认']")).click();
 
+
             List<WebElement> elements = this.waitFindElementsByAttr("aria-label", "读信");
             for (WebElement element : elements) {
                 if (element.isDisplayed()) {
@@ -379,11 +417,14 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
                 }
             }
             this.waitFindElement(By.linkText("立即验证")).click();
-            this.switch2NewWindow();
 
+//            getDriver().switchTo().defaultContent();
+//            this.waitFindElement(By.linkText("退出")).click();
+            this.switch2NewWindow();
+            this.simpleWaite(5*10000L);
 
         } catch (Exception e) {
-            throw new RegisterException(sonyBean + "" + SonyRegisterStep.STEP_02, e, SonyRegisterStep.STEP_02);
+            throw new RegisterException(sonyBean + "" + SonyRegisterStep.STEP_200, e, SonyRegisterStep.STEP_200);
         }
 
     }
@@ -396,7 +437,7 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
      */
     private void updateMobile_08(SonyBean sonyBean) {
         String url = "https://id.sonyentertainmentnetwork.com/id/management/#/p/security";
-        if (sonyBean.getStep() > SonyRegisterStep.STEP_08.getCode()) {
+        if (sonyBean.getStep() > SonyRegisterStep.STEP_800.getCode()) {
             logger.info("跳过手机修改");
             return;
         }
@@ -415,7 +456,7 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
             logger.info("等待用戶輸入短信……");
             this.waitFindElementByClass("icon-succeed");
         } catch (Exception e) {
-            throw new RegisterException(sonyBean + "" + SonyRegisterStep.STEP_08, e, SonyRegisterStep.STEP_08);
+            throw new RegisterException(sonyBean + "" + SonyRegisterStep.STEP_800, e, SonyRegisterStep.STEP_800);
         }
 
 

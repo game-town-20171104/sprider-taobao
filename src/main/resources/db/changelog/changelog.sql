@@ -93,3 +93,7 @@ CREATE  TABLE  `proxy_server` (
   PRIMARY KEY (`id`)
 )ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT '代理服务器地址';
 
+
+-- changeset godslhand:20171221
+UPDATE `spider`.`reg_sony` SET  `step` = step*100
+

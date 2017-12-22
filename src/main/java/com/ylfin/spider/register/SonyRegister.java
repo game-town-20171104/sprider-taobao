@@ -53,7 +53,7 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
             login(sonyBean);
             checkEmail_02(sonyBean);
             sureEmail(sonyBean);
-            onlineId_21(sonyBean);
+            onlineId_210(sonyBean);
             changeIntroduction_03(sonyBean);
             changeSecurityQuestion_04(sonyBean);
 //            crateOnlineId_05(sonyBean);
@@ -82,14 +82,18 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
      * 注册登录完成后。立即生成在线id
      * @param sonyBean
      */
-    private void onlineId_21(SonyBean sonyBean){
+    private void onlineId_210(SonyBean sonyBean){
         if (sonyBean.getStep() > SonyRegisterStep.STEP_210.getCode()) {
             logger.info("跳过在线id验证");
             return;
         }
         logger.info("生成在线id");
         try {
-            this.waiteTitleCondition("为 PlayStation™Network 更新账号");
+            String url ="https://account.sonyentertainmentnetwork.com/cam/devices/playstation/edit-profile!input.action";
+            if(!getDriver().getCurrentUrl().equals(url)){
+                logger.warn("在线id修改路径不对……自行打开url");
+                getDriver().get(url);
+            }
             WebElement webElement =this.waitFindElementById("handleFieldInput");
             webElement.clear();
             webElement.sendKeys(sonyBean.getUsername());
@@ -351,11 +355,16 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
                 logger.info("开始登录……");
                 String url = "https://asia.playstation.com/chs-hk/account/#settings";
                 getDriver().get(url);
+                this.simpleRandomWaite(500,1000);
                 this.waitFindElementById("signin-btn").click();
+                this.simpleRandomWaite(500,1000);
                 this.waitFindElementById("signInInput_SignInID").sendKeys(sonyBean.getPsn());
+                this.simpleRandomWaite(500,1000);
                 this.waitFindElementById("signInInput_Password").sendKeys(sonyBean.getPassword());
+                this.simpleRandomWaite(500,1000);
                 this.waitFindElementById("signInButton").click();
-                this.waitFindElementById("currentUserPC");
+//                this.waitFindElementById("currentUserPC");
+                this.waitFindElement(By.xpath("//*[text()='"+sonyBean.getUsername()+"']"));//修改判断标准，有帐号信息的界面就认为登录了
                 break;
             } catch (Exception e) {
                 logger.error("登录失败,重新登录", e);

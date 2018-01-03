@@ -8,7 +8,7 @@ import lombok.*;
 @ToString
 public enum  RegisterType {
 
-    mail163("网易"),sony("索尼");
+    mail163("网易"),sony("索尼"),catePrice("分类价格爬取");
 
     private String name ;
 

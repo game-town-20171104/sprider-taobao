@@ -1,6 +1,8 @@
 package com.ylfin.spider.register;
 
 
+import com.ylfin.spider.cateprice.CatePriceSpider;
+import com.ylfin.spider.cateprice.service.CatePriceService;
 import com.ylfin.spider.register.enums.RegisterType;
 import com.ylfin.spider.register.service.MailService;
 import com.ylfin.spider.register.service.SonyService;
@@ -15,12 +17,17 @@ public class RegisterFactory {
     @Autowired
     private SonyService sonyService;
 
+    @Autowired
+    private CatePriceService catePriceService;
+
     public Register getRegister(RegisterType registerType) {
         switch (registerType) {
             case sony:
                 return buildSonyRegister();
             case mail163:
                 return createMail163Register();
+            case catePrice:
+                return new CatePriceSpider(catePriceService);
             default:
                 break;
         }

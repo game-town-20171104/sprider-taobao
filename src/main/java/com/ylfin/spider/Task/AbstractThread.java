@@ -13,7 +13,7 @@ public abstract class AbstractThread<T> implements Runnable{
     protected SpiderQueue<T> queue ;
     protected RegisterFactory registerFactory;
 
-    private int interval =1;//秒 时间间隔
+    private int interval =2;//秒 时间间隔
 
     public AbstractThread(SpiderQueue<T> queue, RegisterFactory registerFactory) {
         this.queue = queue;
@@ -30,12 +30,12 @@ public abstract class AbstractThread<T> implements Runnable{
 
         Long lastTime = System.currentTimeMillis();
         while (true) {
-            spider.initRegister();
             T vo = queue.get();
             if (vo == null) {
                 System.out.println("消费结束，准备退出……");
                 break;
             }
+            spider.initRegister();
             System.out.println("开始消费：" + vo);
             try {
                 spider.handle(vo);

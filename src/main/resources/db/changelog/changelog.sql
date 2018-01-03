@@ -97,3 +97,26 @@ CREATE  TABLE  `proxy_server` (
 -- changeset godslhand:20171221
 UPDATE `spider`.`reg_sony` SET  `step` = step*100
 
+
+-- changeset godslhand:20180103
+CREATE  TABLE  `tb_cate_price` (
+`id` bigint(20) NOT NULL AUTO_INCREMENT,
+`keyword` varchar(255) DEFAULT NULL COMMENT '关键词',
+`title` varchar(255) DEFAULT NULL COMMENT '标题',
+`game` varchar(255) DEFAULT NULL COMMENT '游戏名',
+`shop` varchar(255) DEFAULT NULL COMMENT '掌柜',
+`shop_url` varchar(255) DEFAULT NULL COMMENT '店铺URL',
+`item_url` varchar(255) DEFAULT NULL COMMENT '商品地址',
+`offline_name` varchar(255) DEFAULT NULL COMMENT '离线版本名称',
+`offline_price` double DEFAULT NULL COMMENT '离线价格',
+`auth_name` varchar(255) DEFAULT NULL COMMENT '认证版名称',
+`auth_price` double DEFAULT NULL COMMENT '进行到的步骤',
+`auth_half_name` varchar(255) DEFAULT NULL COMMENT '认证6个月名称',
+`auth_half_price` double DEFAULT NULL COMMENT '认证6个月价格',
+`un_auth_name` varchar(255) DEFAULT NULL COMMENT '非认证名称',
+`un_auth_price` double DEFAULT NULL COMMENT '非认证价格',
+`success` tinyint(1) DEFAULT '0' COMMENT '是否成功',
+`active` tinyint(1) DEFAULT '1' COMMENT '是否开启',
+`update_time` DATE DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+)ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT '分类价格';

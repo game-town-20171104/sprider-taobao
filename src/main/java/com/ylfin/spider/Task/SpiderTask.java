@@ -1,7 +1,8 @@
 package com.ylfin.spider.Task;
 
+import com.ylfin.spider.cateprice.service.CatePriceService;
+import com.ylfin.spider.cateprice.vo.bean.CatePrice;
 import com.ylfin.spider.register.RegisterFactory;
-import com.ylfin.spider.register.SonyRegister;
 import com.ylfin.spider.register.service.MailService;
 import com.ylfin.spider.register.service.SonyService;
 import com.ylfin.spider.register.vo.bean.MailBean;
@@ -56,6 +57,9 @@ public class SpiderTask implements ApplicationRunner {
     @Autowired
     SonyService sonyService;
 
+    @Autowired
+    CatePriceService catePriceService;
+
 
     @Value("${page.size}")
     private int page;
@@ -79,6 +83,8 @@ public class SpiderTask implements ApplicationRunner {
             submitMail163(es);
         } else if (model == 5) {
             submitSony(es);
+        }else if (model == 6) {
+            submitCatePrice(es);
         }
 
         es.shutdown();
@@ -100,7 +106,8 @@ public class SpiderTask implements ApplicationRunner {
         daemon.start();
 
     }
-    private void submitSpiderKeywords(ExecutorService es){
+
+    private void submitSpiderKeywords(ExecutorService es) {
         SpiderQueue<KeyWords> queue = new SpiderQueue<>();
         List<KeyWords> keyWords = keyWordsService.findActive();
         if (!CollectionUtils.isEmpty(keyWords)) {
@@ -118,9 +125,10 @@ public class SpiderTask implements ApplicationRunner {
 
     /**
      * 店铺爬取
+     *
      * @param es
      */
-    private void submitShopSpider(ExecutorService es){
+    private void submitShopSpider(ExecutorService es) {
         SpiderQueue<Shop> shopQueue = new SpiderQueue<>();
         List<Shop> shops = shopService.findActive();
         if (!CollectionUtils.isEmpty(shops)) {
@@ -136,9 +144,10 @@ public class SpiderTask implements ApplicationRunner {
 
     /**
      * 关键词搜索
+     *
      * @param es
      */
-    private void submitKeywordSearch(ExecutorService es){
+    private void submitKeywordSearch(ExecutorService es) {
         logger.info("keywords search start");
         SpiderQueue<SearchKeyWords> searchQueue = new SpiderQueue<>();
         List<SearchKeyWords> searchKeyWords = searchKeywordService.findActive();
@@ -153,9 +162,10 @@ public class SpiderTask implements ApplicationRunner {
 
     /**
      * 网易注册
+     *
      * @param es
      */
-    private void submitMail163(ExecutorService es){
+    private void submitMail163(ExecutorService es) {
         logger.info("mail163 register  start");
         SpiderQueue<MailBean> mailQueue = new SpiderQueue<>();
         List<MailBean> mails = mailService.findActiveAndUnSucc();
@@ -164,15 +174,16 @@ public class SpiderTask implements ApplicationRunner {
             return;
         }
         mails.forEach(mailQueue::add);
-        Mail163Thread searchThread = new Mail163Thread(mailQueue,registerFactory);
+        Mail163Thread searchThread = new Mail163Thread(mailQueue, registerFactory);
         es.submit(searchThread);
     }
 
     /**
      * 索尼注册
+     *
      * @param es
      */
-    private void submitSony(ExecutorService es){
+    private void submitSony(ExecutorService es) {
         logger.info("sony register  start");
         SpiderQueue<SonyBean> queue = new SpiderQueue<>();
         List<SonyBean> mails = sonyService.findActiveAndUnSucc();
@@ -181,8 +192,25 @@ public class SpiderTask implements ApplicationRunner {
             return;
         }
         mails.forEach(queue::add);
-        SonyRegisterThread sonyThread = new SonyRegisterThread(queue,registerFactory);
+        SonyRegisterThread sonyThread = new SonyRegisterThread(queue, registerFactory);
         es.submit(sonyThread);
+    }
+
+
+    /**
+     * 分类价格爬取
+     * @param es
+     */
+    private void submitCatePrice(ExecutorService es) {
+        SpiderQueue<CatePrice> queue = new SpiderQueue<>();
+        List<CatePrice> catePrices = catePriceService.findActiveAndUnSuccess();
+        if (CollectionUtils.isEmpty(catePrices)) {
+            logger.info("分类价格配置为空！");
+            return;
+        }
+        catePrices.forEach(queue::add);
+        CatePriceThread catePriceThread = new CatePriceThread(queue, registerFactory);
+        es.submit(catePriceThread);
     }
 
 

@@ -17,6 +17,7 @@ import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -100,7 +101,15 @@ public class SeleniumSpider extends BaseSpider {
                     break;
                 }
                 JSONArray items = itemlist.getJSONObject("data").getJSONArray("auctions");
-                taobaoVOS = JSON.parseArray(items.toJSONString(), TaobaoVO.class);
+
+                for (int i=0;i<items.size();i++){
+                   JSONObject job = items.getJSONObject(i);
+                   if(job.containsKey("isHideIM")&&job.getBoolean("isHideIM")){
+                     continue;
+                   }
+                    taobaoVOS.add(JSON.parseObject(job.toJSONString(),TaobaoVO.class));
+                }
+//                taobaoVOS = JSON.parseArray(items.toJSONString(), TaobaoVO.class);
             } catch (Exception e) {
                 logger.error(keyword + "转换出错", e);
                 logger.info("出错json：{}", json);

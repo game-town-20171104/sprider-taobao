@@ -1,5 +1,9 @@
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.junit.Test;
 
+import java.util.Iterator;
 import java.util.Random;
 
 public class JSONTest {
@@ -28,5 +32,22 @@ public class JSONTest {
         int end = json.lastIndexOf(")");
         json = json.substring(0, end);
         return json;
+    }
+
+    @Test
+    public void loop(){
+//        String str ="[{isHideIM:\"true\",test:1},{test:2},{isHideIM:\"true\",test:3},{isHideIM:\"true\",test:4}]";
+//        JSONArray items = JSON.parseArray(str);
+//
+//
+//        JSONArray items = JSON.parseArray(str);
+//        for (int i=0;i<items.size();i++){
+//            JSONObject job =items.getJSONObject(i);
+//            System.out.println(job.getBoolean("isHideIM"));
+//            if(job.containsKey("isHideIM")&&job.getBoolean("isHideIM")){
+//                items.remove(job);
+//            }
+//        }
+//        System.out.println(items);
     }
 }

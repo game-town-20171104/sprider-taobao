@@ -53,10 +53,10 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
             login(sonyBean);
             checkEmail_02(sonyBean);
             sureEmail(sonyBean);
-            onlineId_210(sonyBean);
+//            onlineId_210(sonyBean);
             changeIntroduction_03(sonyBean);
             changeSecurityQuestion_04(sonyBean);
-//            crateOnlineId_05(sonyBean);
+            crateOnlineId_05(sonyBean);
             updateAddress_06(sonyBean);
 //            updateAccountInfo_07(sonyBean);
             updateMobile_08(sonyBean);
@@ -146,11 +146,11 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
             this.simpleRandomWaite(500,1000);
             List<WebElement> selects = this.waitFindElements(By.tagName("select"));
             this.simpleRandomWaite(500,1000);
-            new Select(selects.get(0)).selectByValue("1987");
+            new Select(selects.get(0)).selectByValue("1985");
             this.simpleRandomWaite(500,1000);
-            new Select(selects.get(1)).selectByValue("12");
+            new Select(selects.get(1)).selectByValue("2");
             this.simpleRandomWaite(500,1000);
-            new Select(selects.get(2)).selectByValue("8");
+            new Select(selects.get(2)).selectByValue("16");
             this.simpleRandomWaite(500,2000);
             this.waitFindElementById("regInput_MaleGender").click();
             this.simpleRandomWaite(500,2000);
@@ -167,7 +167,7 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
 //        this.waitFindElementById("createAccountButton")).click();//不点击，让申请人点击
 //        this.waitFindElementByClass("wrapper-fitparent").click();
             this.waiteTitleCondition( 10 * 60,"核实您的电子邮件地址","登录");
-            this.regLogin(sonyBean);
+//            this.regLogin(sonyBean);
         this.closeOthers();
             sonyService.updateStep(sonyBean.getId(), SonyRegisterStep.STEP_200);
         } catch (Exception e) {
@@ -227,7 +227,7 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
             String url = "https://account.sonyentertainmentnetwork.com/liquid/cam/account/profile/edit-profile-online-id!input.action";
             //https://id.sonyentertainmentnetwork.com/id/management/#/p/security
             getDriver().get(url);
-            this.waitFindElementById("handle").sendKeys(sonyBean.getUsername());
+            this.waitFindElementById("handle").sendKeys(sonyBean.getUsername()+"a");
             this.waitFindElementById("saveOnlineIdButton").click();
 
             this.waiteTitleCondition("账号详情", 10 * 60);

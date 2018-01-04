@@ -91,8 +91,14 @@ public class SeleniumSpider extends BaseSpider {
                         totalPage = page.getJSONObject("data").getInteger("totalPage");
                     } else {
                         totalPage =1;
+
                     }
 
+                }
+                String tips=result.getJSONObject("mods").getJSONObject("tips").getString("status");
+                if("show".equals(tips)){
+                    logger.info("%s==>为查询到相关的数据，返回结果为推荐数据，跳过！！");
+                    break;
                 }
                 logger.info(String.format("%s==>总页数：%s，配置页数：%s/%s", keyword, totalPage, curPage, total));
                 JSONObject itemlist = result.getJSONObject("mods").getJSONObject("itemlist");

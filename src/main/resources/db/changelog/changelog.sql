@@ -120,3 +120,11 @@ CREATE  TABLE  `tb_cate_price` (
 `update_time` DATE DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
 )ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT '分类价格';
+
+
+-- changeset godslhand:20180104
+ALTER  TABLE  tb_cate_price add COLUMN   `shop_title` varchar(255) DEFAULT NULL COMMENT '店铺名称';
+ALTER  TABLE  tb_cate_price add COLUMN   `offline_filter` varchar(255) DEFAULT NULL COMMENT '离线过滤标识' AFTER `offline_name` ;
+ALTER  TABLE  tb_cate_price add COLUMN   `auth_filter` varchar(255) DEFAULT NULL COMMENT '认证过滤标识' AFTER `auth_name` ;
+ALTER  TABLE  tb_cate_price add COLUMN   `un_auth_filter` varchar(255) DEFAULT NULL COMMENT '非认证过滤标识' AFTER `un_auth_name` ;
+ALTER  TABLE  tb_cate_price add COLUMN   `auth_half_filter` varchar(255) DEFAULT NULL COMMENT '半认证过滤标识' AFTER `auth_half_name` ;

@@ -16,12 +16,16 @@ public class CatePrice {
     private String shopUrl;
     private String itemUrl;
     private String offlineName;
+    private String offlineFilter;
     private Double offlinePrice;
     private String authName;
+    private String authFilter;
     private Double authPrice;
     private String authHalfName;
+    private String authHalfFilter;
     private Double authHalfPrice;
     private String unAuthName;
+    private String unAuthFilter;
     private Double unAuthPrice;
     private Boolean active;
     private Boolean success;

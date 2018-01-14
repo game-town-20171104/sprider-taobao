@@ -10,6 +10,7 @@ import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -87,6 +88,13 @@ public class CatePriceSpider extends BaseSpider implements Register<CatePrice> {
         if(catePrice.getAuthName()==null)
             return;
         try {
+            String  filter =catePrice.getAuthFilter();
+            if(!StringUtils.isEmpty(filter)&&catePrice.getTitle().contains(filter)){
+                String price =this.waitFindElementByClass("tb-rmb-num").getText();
+                catePrice.setAuthPrice(Double.valueOf(price));
+                return;
+            }
+
             WebElement clickItem = this.waitFindElementByAttr("data-property","游戏版本").findElement(By.xpath(".//span[contains(text(),'"+catePrice.getAuthName()+"')]"));
             clickItem.click();
 //            this.waitFindElementByAttr("data-property","语种分类").findElement(By.xpath(".//span[contains(text(),'简体中文')"));

@@ -5,6 +5,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.util.Assert;
 
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
+
 /**
  * StringUtils Tester.
  *
@@ -42,5 +47,13 @@ public class StringUtilsTest {
   public void SystemOutTest(){
       System.out.println("171.42.201.118:5374");
       System.out.println("171.42.201.118:5374");
+  }
+  
+  @Test
+  public void urlTest() throws Exception {
+      String str="http://www.baidu.com?name=中文";
+      URL url = new URL(str);
+      System.out.println(url.getPath()+"?"+URLEncoder.encode(url.getQuery(),"UTF-8"));
+      System.out.println(URLEncoder.encode("陈维伟","UTF-8"));
   }
 }

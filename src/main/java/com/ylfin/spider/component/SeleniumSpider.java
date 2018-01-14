@@ -16,10 +16,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SeleniumSpider extends BaseSpider {
     Logger logger = LoggerFactory.getLogger(getClass());
@@ -66,6 +63,7 @@ public class SeleniumSpider extends BaseSpider {
         int pageSize = 44;//不可编辑
         int curPage = 0;
         int totalPage = 0;
+
         while (true) {
             if (curPage >= total) {
                 break;
@@ -73,9 +71,14 @@ public class SeleniumSpider extends BaseSpider {
             if (totalPage > 0 && curPage >= totalPage) {
                 break;
             }
+            driver.get("https://www.taobao.com");
+           simpleWaite(1000L);
             List<TaobaoVO> taobaoVOS = null;
             String initative_id="staobaoz_"+ DateUtils.format("yyyyMMdd");
-            String url = "https://s.taobao.com/search?data-key=s&data-value=" + (curPage++ * pageSize) + "&ajax=true&_ksTS=1510048516809_1374&callback=jsonp1514&initiative_id="+initative_id+"&q=" + keyword.getTitle() + "&sort=default&bcoffset=0&p4ppushleft=%2C44&s=44";
+            String _ksTS=System.currentTimeMillis()+"_"+SpiderUtils.randomInteger(100,999);
+            //jsonp980
+            //https://s.taobao.com/search?data-key=s%2Cps&data-value=0%2C1&ajax=true&_ksTS=1515897442531_979&callback=jsonp980&initiative_id=staobaoz_20180114&q=ps4+%E7%A5%9E%E6%B5%B74&bcoffset=4&ntoffset=4&p4ppushleft=2%2C48&s=44
+            String url = "https://s.taobao.com/search?data-key=s&data-value=" + (curPage++ * pageSize) + "&ajax=true&_ksTS="+_ksTS+"&callback=jsonp"+new Random().nextInt(9999)+"&initiative_id="+initative_id+"&q=" + keyword.getTitle() + "&sort=default&bcoffset=0&p4ppushleft=%2C48&s=44";
             // 综合排序：default   ；  人气：renqi-desc ；销售量：sale-desc
             logger.info(url);
             String json = this.loadPage(url,0L);
@@ -107,7 +110,7 @@ public class SeleniumSpider extends BaseSpider {
                     break;
                 }
                 JSONArray items = itemlist.getJSONObject("data").getJSONArray("auctions");
-
+                taobaoVOS = new ArrayList<>();
                 for (int i=0;i<items.size();i++){
                    JSONObject job = items.getJSONObject(i);
                    if(job.containsKey("isHideIM")&&job.getBoolean("isHideIM")){

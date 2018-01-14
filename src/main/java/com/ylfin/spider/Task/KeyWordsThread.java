@@ -26,26 +26,26 @@ public class KeyWordsThread implements Runnable {
         if (pages > 0) {
             spider.setTotal(pages);
         }
-
-        spider.init();
-        spider.setStartDate(DateUtils.format());
+        String data =DateUtils.format();
         while (true) {
             KeyWords keyword = queue.get();
-
             if (keyword == null) {
                 System.out.println("消费结束，准备退出……");
                 break;
             }
+            spider.setHeadless(false);
+            spider.init();
+            spider.setStartDate(data);
             System.out.println("开始消费：" + keyword);
             try {
                 spider.jsonHandle(keyword);
             } catch (Exception e) {
                 logger.error(keyword + "爬虫脚本出错了", e);
             }
-
+            spider.quit();
         }
 
-        spider.quit();
+
         System.out.println(Thread.currentThread() + "==end==" + Thread.activeCount());
     }
 

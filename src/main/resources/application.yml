@@ -21,10 +21,10 @@ spring:
 page:
   size: 9
 thread:
-  size: 2
+  size: 1
 # 1,爬关键词，2 爬店铺，3 关键词搜索，4 邮箱注册，5 游戏注册，6 分类价格爬取
 spider:
-  model: 6
+  model: 1
 
 
 #mybatis

@@ -4,8 +4,11 @@ import com.ylfin.spider.cateprice.service.CatePriceService;
 import com.ylfin.spider.cateprice.vo.bean.CatePrice;
 import com.ylfin.spider.register.RegisterFactory;
 import com.ylfin.spider.register.service.MailService;
+import com.ylfin.spider.register.service.NintendoService;
 import com.ylfin.spider.register.service.SonyService;
+import com.ylfin.spider.register.service.impl.NintendoServiceImpl;
 import com.ylfin.spider.register.vo.bean.MailBean;
+import com.ylfin.spider.register.vo.bean.NintendoBean;
 import com.ylfin.spider.register.vo.bean.SonyBean;
 import com.ylfin.spider.service.*;
 import com.ylfin.spider.vo.SpiderQueue;
@@ -60,6 +63,8 @@ public class SpiderTask implements ApplicationRunner {
     @Autowired
     CatePriceService catePriceService;
 
+    @Autowired
+    NintendoService nintendoService;
 
     @Value("${page.size}")
     private int page;
@@ -85,6 +90,8 @@ public class SpiderTask implements ApplicationRunner {
             submitSony(es);
         }else if (model == 6) {
             submitCatePrice(es);
+        }else if (model == 7) {
+            submitNintendo(es);
         }
 
         es.shutdown();
@@ -213,5 +220,24 @@ public class SpiderTask implements ApplicationRunner {
         es.submit(catePriceThread);
     }
 
+
+
+    /**
+     * 任天堂注册
+     *
+     * @param es
+     */
+    private void submitNintendo(ExecutorService es) {
+        logger.info("sony nitendo  start");
+        SpiderQueue<NintendoBean> queue = new SpiderQueue<>();
+        List<NintendoBean> mails = nintendoService.findActiveAndUnSucc();
+        if (CollectionUtils.isEmpty(mails)) {
+            logger.info("注册配置为空！");
+            return;
+        }
+        mails.forEach(queue::add);
+        NintendoThread nintendoThread = new NintendoThread(queue, registerFactory);
+        es.submit(nintendoThread);
+    }
 
 }

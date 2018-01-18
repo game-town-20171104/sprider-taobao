@@ -18,7 +18,7 @@ import java.util.*;
 public class BaseSpider {
     Logger logger = LoggerFactory.getLogger(getClass());
     WebDriver driver;
-    private int waitTime = 60*3;
+    private int waitTime = 1*3;
     private String deviceName;
     private Proxy proxy;
     private boolean headless = true;

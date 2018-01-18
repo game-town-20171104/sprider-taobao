@@ -5,6 +5,7 @@ import com.ylfin.spider.cateprice.CatePriceSpider;
 import com.ylfin.spider.cateprice.service.CatePriceService;
 import com.ylfin.spider.register.enums.RegisterType;
 import com.ylfin.spider.register.service.MailService;
+import com.ylfin.spider.register.service.NintendoService;
 import com.ylfin.spider.register.service.SonyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,6 +21,9 @@ public class RegisterFactory {
     @Autowired
     private CatePriceService catePriceService;
 
+    @Autowired
+    private NintendoService nintendoService;
+
     public Register getRegister(RegisterType registerType) {
         switch (registerType) {
             case sony:
@@ -28,12 +32,21 @@ public class RegisterFactory {
                 return createMail163Register();
             case catePrice:
                 return new CatePriceSpider(catePriceService);
+            case nintendo:
+                return buildNintendRegister();
             default:
                 break;
         }
 
         return null;
     }
+
+    private Register buildNintendRegister() {
+        NintendoRegister nintendoRegister = new NintendoRegister(nintendoService);
+        nintendoRegister.setMailService(mailService);
+        return nintendoRegister;
+    }
+
 
     private SonyRegister buildSonyRegister(){
         SonyRegister sonyRegister =  new SonyRegister(sonyService);

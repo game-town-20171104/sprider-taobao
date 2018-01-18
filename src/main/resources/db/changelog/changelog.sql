@@ -120,3 +120,15 @@ CREATE  TABLE  `tb_cate_price` (
 `update_time` DATE DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
 )ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT '分类价格';
+
+
+-- changeset godslhand:20180118
+CREATE  TABLE  `reg_nintendo` (
+`id` bigint(20) NOT NULL AUTO_INCREMENT,
+`nickname` varchar(255) DEFAULT NULL COMMENT '昵称',
+`email` varchar(255) DEFAULT NULL COMMENT '邮箱',
+`password` varchar(255) DEFAULT NULL COMMENT '密码',
+`success` tinyint(1) DEFAULT '0' COMMENT '是否成功',
+`active` tinyint(1) DEFAULT '1' COMMENT '是否开启',
+  PRIMARY KEY (`id`)
+)ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT '邮箱注册';

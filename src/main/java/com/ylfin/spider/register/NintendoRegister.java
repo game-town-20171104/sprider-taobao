@@ -69,29 +69,29 @@ public class NintendoRegister extends BaseSpider implements Register<NintendoBea
      * 7個字母一個數字
      * @return
      */
-    private  String generatePassword(){
+    private static String generatePassword(){
         String[] seed1={"A","B","C","D","E","F","G","H","J","K","M","N","Q","R","S","T","U","V","W","X","Y","Z"};
         String[] seed2 = {"1","2","3","4","5","6","7","8","9"};
 
         StringBuilder sb = new StringBuilder();
-        boolean hasNum =false;
+        boolean hasLatter =false;
         for(int i=0;i<8;i++){
 
-            if(hasNum){
-                sb.append(seed1[SpiderUtils.randomInteger(0,seed1.length-1)]);
+            if(hasLatter){
+                sb.append(seed2[SpiderUtils.randomInteger(0,seed2.length-1)]);
                 continue;
             }
-            if (!hasNum&&i==7){
-                sb.append(seed2[SpiderUtils.randomInteger(0,seed2.length-1)]);
+            if (!hasLatter&&i==7){
+                sb.append(seed1[SpiderUtils.randomInteger(0,seed1.length-1)]);
                 continue;
             }
 
             int randomNum =SpiderUtils.randomInteger(0,seed1.length+seed2.length-1);
-            if(randomNum>=seed1.length){
-                hasNum =true;
-                sb.append(seed2[randomNum-seed1.length]);
+            if(randomNum>=seed2.length){
+                hasLatter =true;
+                sb.append(seed1[randomNum-seed2.length]);
             }else {
-                sb.append(seed1[randomNum]);
+                sb.append(seed2[randomNum]);
             }
 
         }
@@ -116,9 +116,9 @@ public class NintendoRegister extends BaseSpider implements Register<NintendoBea
 
 
     public static void main(String[] args) {
-//        for (int i=0;i<100;i++){
-//            System.out.println( generatePassword());
-//        }
+        for (int i=0;i<100;i++){
+            System.out.println( generatePassword());
+        }
     }
 }
 

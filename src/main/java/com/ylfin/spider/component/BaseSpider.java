@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class BaseSpider {
     Logger logger = LoggerFactory.getLogger(getClass());
@@ -263,6 +264,22 @@ public class BaseSpider {
             simpleWaite(1000L);
         String content = this.waitFindElement(By.tagName("pre")).getText();
         return SpiderUtils.unwarpJSONP(content);
+    }
+
+    /**
+     *超时关闭加载
+     * @param seconds
+     * @param url
+     */
+    public void getOverdue(int seconds,String url){
+        try{
+            //设置超时时间为3S
+            driver.manage().timeouts().pageLoadTimeout(seconds, TimeUnit.SECONDS);
+            driver.manage().timeouts().setScriptTimeout(seconds, TimeUnit.SECONDS);
+            driver.get(url);
+        }catch(Exception e){
+            logger.warn("页面超时加载："+seconds+" 秒",e);
+        }
     }
 
     private int randomInt(int position) {

@@ -132,3 +132,15 @@ CREATE  TABLE  `reg_nintendo` (
 `active` tinyint(1) DEFAULT '1' COMMENT '是否开启',
   PRIMARY KEY (`id`)
 )ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT '邮箱注册';
+
+
+
+-- changeset godslhand:20180226
+CREATE  TABLE  `tb_eshop` (
+`id` bigint(20) NOT NULL AUTO_INCREMENT,
+`game` varchar(255) DEFAULT NULL COMMENT '游戏',
+`price` double DEFAULT NULL COMMENT '价格',
+`country` varchar(255) DEFAULT NULL COMMENT '国家',
+`spider_time` datetime(6)  DEFAULT NULL COMMENT '爬取时间',
+  PRIMARY KEY (`id`)
+)ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT 'eshop价格表';

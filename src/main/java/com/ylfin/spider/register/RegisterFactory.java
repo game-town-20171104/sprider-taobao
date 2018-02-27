@@ -3,6 +3,8 @@ package com.ylfin.spider.register;
 
 import com.ylfin.spider.cateprice.CatePriceSpider;
 import com.ylfin.spider.cateprice.service.CatePriceService;
+import com.ylfin.spider.eshop.EshopSpider;
+import com.ylfin.spider.eshop.service.EshopService;
 import com.ylfin.spider.register.enums.RegisterType;
 import com.ylfin.spider.register.service.MailService;
 import com.ylfin.spider.register.service.NintendoService;
@@ -23,6 +25,9 @@ public class RegisterFactory {
 
     @Autowired
     private NintendoService nintendoService;
+
+    @Autowired
+    private EshopService eshopService;
 
     public Register getRegister(RegisterType registerType) {
         switch (registerType) {

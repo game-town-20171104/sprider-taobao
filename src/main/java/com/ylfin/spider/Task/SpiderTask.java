@@ -2,6 +2,7 @@ package com.ylfin.spider.Task;
 
 import com.ylfin.spider.cateprice.service.CatePriceService;
 import com.ylfin.spider.cateprice.vo.bean.CatePrice;
+import com.ylfin.spider.eshop.EshopSpider;
 import com.ylfin.spider.register.RegisterFactory;
 import com.ylfin.spider.register.service.MailService;
 import com.ylfin.spider.register.service.NintendoService;
@@ -73,6 +74,9 @@ public class SpiderTask implements ApplicationRunner {
     @Value("${spider.model}")
     private int model;
 
+    @Autowired
+    EshopTask eshopTask;
+
     @Override
     public void run(ApplicationArguments applicationArguments) throws Exception {
 
@@ -92,6 +96,11 @@ public class SpiderTask implements ApplicationRunner {
             submitCatePrice(es);
         }else if (model == 7) {
             submitNintendo(es);
+        }else if(model ==8 ){
+            //立即执行一次
+            es.shutdown();
+            eshopTask.dailyPriceSpider();
+            return;
         }
 
         es.shutdown();
@@ -239,5 +248,8 @@ public class SpiderTask implements ApplicationRunner {
         NintendoThread nintendoThread = new NintendoThread(queue, registerFactory);
         es.submit(nintendoThread);
     }
+
+
+
 
 }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ylfin.spider.eshop.mapper.EshopDao">
+
+    <insert id="batchInsert" useGeneratedKeys="true" parameterType="java.util.List">
+        insert into tb_eshop
+        (id, game,country,price,spider_time)values
+        <foreach collection="list" item="item" index="index" separator="," >
+            (#{item.id},#{item.game},#{item.country},#{item.price},#{item.spiderTime})
+        </foreach>
+
+
+    </insert>
+</mapper>
+

@@ -132,9 +132,9 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
         try {
             this.simpleRandomWaite(500,1000);
             getDriver().get(url);
-//            this.waitFindElementById("nav-7").click();
+            this.waitFindElementById("nav-7").click();
             this.simpleRandomWaite(200,600);
-            this.waitFindElement(By.linkText("创建账号")).click();
+            this.waitFindElementByClass("psc-btn-black").click();
             this.switch2NewWindow();
             List<WebElement> webElementList = this.waitFindElements(By.xpath("//section/input[@class]"));
             this.simpleRandomWaite(500,1000);
@@ -356,7 +356,8 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
                 String url = "https://asia.playstation.com/chs-hk/account/#settings";
                 getDriver().get(url);
                 this.simpleRandomWaite(500,1000);
-                this.waitFindElementById("signin-btn").click();
+                this.waitFindElementByAttr("data-id","#mdd-signin").click();
+                this.waitFindElementByClass("psc-btn-black").click();
                 this.simpleRandomWaite(500,1000);
                 this.waitFindElementById("signInInput_SignInID").sendKeys(sonyBean.getPsn());
                 this.simpleRandomWaite(500,1000);

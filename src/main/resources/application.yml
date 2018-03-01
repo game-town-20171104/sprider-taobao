@@ -24,7 +24,7 @@ thread:
   size: 1
 # 1,爬关键词，2 爬店铺，3 关键词搜索，4 邮箱注册，5 游戏注册，6 分类价格爬取，7 任天堂，8 switch价格爬取（eshop）
 spider:
-  model: 8
+  model: 5
 
 
 #mybatis

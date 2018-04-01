@@ -35,6 +35,7 @@ public abstract class AbstractThread<T> implements Runnable{
                 System.out.println("消费结束，准备退出……");
                 break;
             }
+            System.out.println("vo:=========>"+vo);
             spider.initRegister();
             System.out.println("开始消费：" + vo);
             try {
@@ -53,6 +54,7 @@ public abstract class AbstractThread<T> implements Runnable{
                 }
                 lastTime = currentTime;
             }
+
             spider.close();
 
         }

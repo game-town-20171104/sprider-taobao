@@ -25,17 +25,24 @@ public class BaseSpider {
     private boolean headless = true;
     private String initWindow;
 
+    private String basePath;
     //    https://langyuedianzi.taobao.com/i/asyncSearch.htm?callback=jsonp148&pageNo=1&search=y&orderType=hotsell_desc
     public void init() {
-        System.setProperty("webdriver.chrome.driver", getDriverPath());
-        ChromeOptions chromeOptions = new ChromeOptions();
-        if (headless) {
-            chromeOptions.addArguments("--headless");
-        }
+        try {
+            System.setProperty("webdriver.chrome.driver", getDriverPath());
+            ChromeOptions chromeOptions = new ChromeOptions();
+            if (headless) {
+                chromeOptions.addArguments("--headless");
+            }
 
-        chromeOptions.addArguments("--window-size=1920,1080");
-        driver = (WebDriver) new ChromeDriver(chromeOptions);
-        this.initWindow = driver.getWindowHandle();
+            chromeOptions.addArguments("--window-size=1920,1080");
+            System.out.println("chrome setting is ok ……");
+            driver = new ChromeDriver(chromeOptions);
+            System.out.println("chrome has started ......");
+            this.initWindow = driver.getWindowHandle();
+        } catch (Exception e) {
+            throw new RuntimeException("chrome初始化失败：",e);
+        }
     }
 
     /**
@@ -109,6 +116,14 @@ public class BaseSpider {
 
     /**
      * 自定义超长等待
+     * @param by
+     * @param waitSeconds
+     */
+    public void waiteCondition(By by,int waitSeconds){
+        (new WebDriverWait(driver, waitSeconds)).until(ExpectedConditions.elementToBeClickable(by));
+    }
+    /**
+     * 自定义超长等待
      *
      * @param keyword
      * @param waitSeconds
@@ -120,6 +135,7 @@ public class BaseSpider {
             }
         });
     }
+
 
     public void waiteTitleCondition(int waitSeconds,String ... keyword ) {
         (new WebDriverWait(driver, waitSeconds)).until(new ExpectedCondition<Boolean>() {
@@ -162,6 +178,16 @@ public class BaseSpider {
         return driver.findElements(by);
     }
 
+    public WebElement waitFindElementByText(String text){
+        By by = By.xpath("//*[contains(text()," + text + "')]");
+        (new WebDriverWait(driver, waitTime)).until(ExpectedConditions.elementToBeClickable(by));
+        return driver.findElement(by);
+    }
+    public WebElement waitFindElementByText(String text,int waitSecond){
+        By by = By.xpath("//*[contains(text()," + text + "')]");
+        (new WebDriverWait(driver, waitSecond)).until(ExpectedConditions.elementToBeClickable(by));
+        return driver.findElement(by);
+    }
 
     /**
      * 等待元素并点击 ==》可用waitFindElementByClass 替换
@@ -237,13 +263,23 @@ public class BaseSpider {
         return driver.findElements(by);
     }
 
+    public void setBasePath(String basePath) {
+        this.basePath = basePath;
+    }
+
     /**
      * 获取不同环境下的chromedriver驱动路径
      *
      * @return
      */
     private String getDriverPath() {
-        String basePath = this.getClass().getClassLoader().getResource("driver").getPath();
+        if(basePath ==null){
+            basePath = this.getClass().getClassLoader().getResource("driver").getPath();
+        }else if(basePath.startsWith("classpath:")){
+            basePath = this.getClass().getClassLoader().getResource("").getPath()+basePath.substring(10);
+        }
+        System.out.println("路径:====>"+basePath);
+//        String basePath ="D:/driver";
         switch (OS.getPlatform()) {
             case MAC:
                 basePath = basePath + "/chromedriver_mac32/chromedriver";

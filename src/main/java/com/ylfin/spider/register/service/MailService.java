@@ -10,4 +10,6 @@ public interface MailService {
    void setSuccess(Long id);
 
      MailBean findByEmail(String email);
+
+     void update(MailBean mailBean);
 }

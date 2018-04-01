@@ -101,9 +101,11 @@ public class SpiderTask implements ApplicationRunner {
             es.shutdown();
             eshopTask.dailyPriceSpider();
             return;
+        }else if (model == 9) {
+            submitAoi(es);
         }
 
-        es.shutdown();
+//        es.shutdown();
         //守护线程，如果所有线程都结束，退出应用
         Thread daemon = new Thread(() -> {
             while (true) {
@@ -212,6 +214,23 @@ public class SpiderTask implements ApplicationRunner {
         es.submit(sonyThread);
     }
 
+    /**
+     * AOI 邮箱注册
+     *
+     * @param es
+     */
+    private void submitAoi(ExecutorService es) {
+        logger.info("aoi register  start");
+        SpiderQueue<MailBean> mailQueue = new SpiderQueue<>();
+        List<MailBean> mails = mailService.findActiveAndUnSucc();
+        if (CollectionUtils.isEmpty(mails)) {
+            logger.info("注册配置为空！");
+            return;
+        }
+        mails.forEach(mailQueue::add);
+        MailAoiThread searchThread = new MailAoiThread(mailQueue, registerFactory);
+        es.submit(searchThread);
+    }
 
     /**
      * 分类价格爬取

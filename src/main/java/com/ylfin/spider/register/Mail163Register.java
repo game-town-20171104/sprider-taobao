@@ -28,13 +28,21 @@ public class Mail163Register extends BaseSpider implements Register<MailBean> {
     @Override
     public void handle(MailBean mail) {
         logger.info("开始注册：{}",mail);
-        getDriver().get(url);
-        this.waitFindElement(By.id("nameIpt")).sendKeys(mail.getUsername());
+
         String[]   source =mail.getEmail().split("@");
+        String souceType =source[1];
         if(source.length<2){
             throw new RuntimeException(String.format("%s邮箱格式错误",mail));
         }
-        String souceType =source[1];
+        if(!source.equals("163.com")&&!source.equals("126.com")){
+            logger.warn("{}：不是网易邮箱，跳过",mail);
+            return;
+        }
+
+        getDriver().get(url);
+        this.waitFindElement(By.id("nameIpt")).sendKeys(mail.getUsername());
+
+
         Select select = new Select(this.waitFindElement(By.id("mainDomainSelect")));
         select.selectByValue(souceType);
         this.waitFindElement(By.id("mainPwdIpt")).sendKeys(mail.getPassword());

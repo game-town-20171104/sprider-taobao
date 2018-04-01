@@ -6,6 +6,7 @@ import com.ylfin.spider.register.service.MailService;
 import com.ylfin.spider.register.service.NintendoService;
 import com.ylfin.spider.register.vo.bean.MailBean;
 import com.ylfin.spider.register.vo.bean.NintendoBean;
+import com.ylfin.spider.utils.PasswordUtils;
 import com.ylfin.spider.utils.SpiderUtils;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -32,7 +33,7 @@ public class NintendoRegister extends BaseSpider implements Register<NintendoBea
 
     @Override
     public void handle(NintendoBean nintendoBean) {
-        nintendoBean.setPassword(generatePassword());
+        nintendoBean.setPassword(PasswordUtils.generatePassword());
         String url ="https://accounts.nintendo.com/login";
         getDriver().get(url);
         this.scrollSlow2end();
@@ -65,45 +66,7 @@ public class NintendoRegister extends BaseSpider implements Register<NintendoBea
 
     }
 
-    /**
-     * 7個数字一個字母
-     * @return
-     */
-    private static String generatePassword(){
-        String[] seed1={"A","B","C","D","E","F","G","H","J","K","M","N","Q","R","S","T","U","V","W","X","Y","Z"};
-        String[] seed2 = {"1","2","3","4","5","6","7","8","9"};
 
-        int totalNum = 8;
-        int seed1Num =1; //必定会满足的数量，可自行修改
-        int seed2Num =totalNum-seed1Num;
-        StringBuilder sb = new StringBuilder();
-//        boolean hasLatter =false;
-        int seed1Count=0;
-        for(int i=0;i<totalNum-1;i++){
-            //保证seed1不超标
-            if(seed1Count>=seed1Num){
-                sb.append(seed2[SpiderUtils.randomInteger(0,seed2.length-1)]);
-                continue;
-            }
-            //保证有足够的seed1
-            if (seed1Count<seed1Num&&i>=totalNum-seed1Num){
-                sb.append(seed1[SpiderUtils.randomInteger(0,seed1.length-1)]);
-                seed1Count++;
-                continue;
-            }
-
-            int randomNum =SpiderUtils.randomInteger(0,seed1.length+seed2.length-1);
-            if(randomNum>=seed2.length){
-                seed1Count++;
-                sb.append(seed1[randomNum-seed2.length]);
-            }else {
-                sb.append(seed2[randomNum]);
-            }
-
-        }
-
-        return sb.toString();
-    }
 
     private String getCheckCode(NintendoBean nintendoBean) {
         //TODO find password
@@ -123,7 +86,7 @@ public class NintendoRegister extends BaseSpider implements Register<NintendoBea
 
     public static void main(String[] args) {
         for (int i=0;i<1000;i++){
-            System.out.println( generatePassword());
+            System.out.println( PasswordUtils.generatePassword());
         }
     }
 }

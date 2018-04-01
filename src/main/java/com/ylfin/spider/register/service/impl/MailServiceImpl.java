@@ -27,10 +27,17 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
+    public void update(MailBean mailBean) {
+        mailDao.updateById(mailBean);
+    }
+
+    @Override
     public void setSuccess(Long id) {
         MailBean mailBean =new MailBean();
         mailBean.setId(id);
         mailBean.setSuccess(true);
         mailDao.updateById(mailBean);
     }
+
+
 }

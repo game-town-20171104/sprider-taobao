@@ -213,6 +213,9 @@ public class BaseSpider {
         return this.waitFindElement(By.id(id));
     }
 
+    public WebElement waitFindElementByName(String name){
+        return this.waitFindElementByAttr("name",name);
+    }
     /**
      * 判断是否存在用 1s
      * @param by

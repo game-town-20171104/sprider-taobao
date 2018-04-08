@@ -280,25 +280,26 @@ public class BaseSpider {
      * @return
      */
     private String getDriverPath() {
+        String tempPath="";
         if(basePath ==null){
-            basePath = this.getClass().getClassLoader().getResource("driver").getPath();
+            tempPath = this.getClass().getClassLoader().getResource("driver").getPath();
         }else if(basePath.startsWith("classpath:")){
-            basePath = this.getClass().getClassLoader().getResource("").getPath()+basePath.substring(10);
+            tempPath = this.getClass().getClassLoader().getResource("").getPath()+basePath.substring(10);
         }
-        System.out.println("路径:====>"+basePath);
+        System.out.println("路径:====>"+tempPath);
 //        String basePath ="D:/driver";
         switch (OS.getPlatform()) {
             case MAC:
-                basePath = basePath + "/chromedriver_mac32/chromedriver";
+                tempPath = tempPath + "/chromedriver_mac32/chromedriver";
                 break;
             case LINUX:
-                basePath = basePath + "\\chromedriver_linux64\\chromedriver";
+                tempPath = tempPath + "\\chromedriver_linux64\\chromedriver";
                 break;
             case WINDOWS:
-                basePath = basePath + "\\chromedriver_win32\\chromedriver.exe";
+                tempPath = tempPath + "\\chromedriver_win32\\chromedriver.exe";
                 break;
         }
-        return basePath;
+        return tempPath;
     }
 
     public String loadPage(String url, Long sleep) {

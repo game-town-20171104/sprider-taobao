@@ -13,6 +13,6 @@ public class MailAoiThread extends AbstractThread<MailBean> {
 
     @Override
     protected Register<MailBean> getRegister() {
-        return registerFactory.getRegister(RegisterType.mailAoi);
+        return registerFactory.getRegister(RegisterType.mailProto);
     }
 }

@@ -203,6 +203,10 @@ public class BaseSpider {
         (new WebDriverWait(driver, waitTime)).until(ExpectedConditions.elementToBeClickable(by));
         return driver.findElement(by);
     }
+    public WebElement waitFindElement(By by,int seconds) {
+        (new WebDriverWait(driver, seconds)).until(ExpectedConditions.elementToBeClickable(by));
+        return driver.findElement(by);
+    }
 
     public List<WebElement> waitFindElements(By by) {
         (new WebDriverWait(driver, waitTime)).until(ExpectedConditions.elementToBeClickable(by));

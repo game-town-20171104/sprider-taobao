@@ -42,8 +42,8 @@ public class RegisterFactory {
                 return buildCatePrice();
             case nintendo:
                 return buildNintendRegister();
-            case mailAoi:
-                return buildAoiRegister();
+            case mailProto:
+                return buildProtoRegister();
             default:
                 break;
         }
@@ -70,8 +70,8 @@ public class RegisterFactory {
         return  sonyRegister;
     }
 
-    private AoiRegister buildAoiRegister(){
-        AoiRegister register = new AoiRegister(mailService);
+    private ProtonmailRegister buildProtoRegister(){
+        ProtonmailRegister register = new ProtonmailRegister(mailService);
         register.setBasePath(driverPath);
         return register;
     }

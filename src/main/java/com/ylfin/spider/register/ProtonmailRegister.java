@@ -48,12 +48,16 @@ public class ProtonmailRegister extends BaseSpider implements Register<MailBean>
         this.getDriver().get(url);
 
         this.waitFindElementByName("username").sendKeys(mailBean.getUsername());
+        this.simpleRandomWaite(1*1000,2*1000);
         String password = PasswordUtils.generatePassword();
         mailBean.setPassword(password);
         log.info(mailBean.getEmail()+" password is:"+password);
         this.waitFindElementByName("password").sendKeys(password);
+        this.simpleRandomWaite(1*1000,2*1000);
         this.waitFindElementByName("passwordc").sendKeys(password);
-        this.waitFindElementByName("notificationEmail").sendKeys(recoveryMail);
+//        this.simpleRandomWaite(1*1000,2*1000);
+//        this.waitFindElementByName("notificationEmail").sendKeys(recoveryMail);
+        this.simpleRandomWaite(1*1000,2*1000);
         this.waitFindElementByClass("signUpProcess-btn-create").click();
         this.waitFindElement(By.xpath("//*[@id=\"welcomeModal\"]"),3*60);
         mailBean.setSuccess(true);

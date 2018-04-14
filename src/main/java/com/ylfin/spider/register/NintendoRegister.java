@@ -2,6 +2,9 @@ package com.ylfin.spider.register;
 
 import com.ylfin.spider.component.BaseSpider;
 import com.ylfin.spider.component.MailHelper;
+import com.ylfin.spider.component.checker.Checker;
+import com.ylfin.spider.component.checker.ProtonMailChecker;
+import com.ylfin.spider.register.enums.RegisterType;
 import com.ylfin.spider.register.service.MailService;
 import com.ylfin.spider.register.service.NintendoService;
 import com.ylfin.spider.register.vo.bean.MailBean;
@@ -72,8 +75,8 @@ public class NintendoRegister extends BaseSpider implements Register<NintendoBea
         //TODO find password
         this.simpleRandomWaite(1000,2000);
       MailBean mailBean= mailService.findByEmail(nintendoBean.getEmail());
-        MailHelper mailHelper = new MailHelper(this);
-        String code =mailHelper.getCheckCode(mailBean.getUsername(),mailBean.getPassword(),"Nintendo Account","");
+        Checker  checker = new ProtonMailChecker(this);
+        String code =checker.getCheckCode(mailBean, RegisterType.nintendo);
         return code;
     }
 

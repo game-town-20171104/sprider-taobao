@@ -179,12 +179,12 @@ public class BaseSpider {
     }
 
     public WebElement waitFindElementByText(String text){
-        By by = By.xpath("//*[contains(text()," + text + "')]");
+        By by = By.xpath("//*[contains(text(),'" + text + "')]");
         (new WebDriverWait(driver, waitTime)).until(ExpectedConditions.elementToBeClickable(by));
         return driver.findElement(by);
     }
     public WebElement waitFindElementByText(String text,int waitSecond){
-        By by = By.xpath("//*[contains(text()," + text + "')]");
+        By by = By.xpath("//*[contains(text(),'" + text + "')]");
         (new WebDriverWait(driver, waitSecond)).until(ExpectedConditions.elementToBeClickable(by));
         return driver.findElement(by);
     }

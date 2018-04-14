@@ -2,6 +2,9 @@ package com.ylfin.spider.register;
 
 import com.ylfin.spider.Exception.RegisterException;
 import com.ylfin.spider.component.BaseSpider;
+import com.ylfin.spider.component.checker.Checker;
+import com.ylfin.spider.component.checker.ProtonMailChecker;
+import com.ylfin.spider.register.enums.RegisterType;
 import com.ylfin.spider.register.enums.SonyRegisterStep;
 import com.ylfin.spider.register.service.MailService;
 import com.ylfin.spider.register.service.SonyService;
@@ -357,7 +360,7 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
                 getDriver().get(url);
                 this.simpleRandomWaite(500,1000);
                 this.waitFindElementByAttr("data-id","#mdd-signin").click();
-                this.waitFindElementByClass("psc-btn-black").click();
+                this.waitFindElementByClass("psc-btn-blue").click();
                 this.simpleRandomWaite(500,1000);
                 this.waitFindElementById("signInInput_SignInID").sendKeys(sonyBean.getPsn());
                 this.simpleRandomWaite(500,1000);
@@ -365,7 +368,7 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
                 this.simpleRandomWaite(500,1000);
                 this.waitFindElementById("signInButton").click();
 //                this.waitFindElementById("currentUserPC");
-                this.waitFindElement(By.xpath("//*[text()='"+sonyBean.getUsername()+"']"));//修改判断标准，有帐号信息的界面就认为登录了
+                this.waitFindElementByText(sonyBean.getUsername());//修改判断标准，有帐号信息的界面就认为登录了
                 break;
             } catch (Exception e) {
                 logger.error("登录失败,重新登录", e);
@@ -406,27 +409,30 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
                 this.waitFindElementById("sendEmailButton").click();
             }
 
+            Checker checker = new ProtonMailChecker(this);
+            checker.getCheckCode(mailBean, RegisterType.mailProto);
 
-            this.openNewWindow("https://mail.163.com/");
-            this.switch2NewWindow();
-            this.switchFrame(this.waitFindElementById("x-URS-iframe"));
-            this.waitFindElementByClass("dlemail").sendKeys(sonyBean.getPsn());
-            this.waitFindElementByClass("dlpwd").sendKeys(password);
-            this.waitFindElementByClass("u-loginbtn").click();
-
-            this.waitFindElementByAttr("title", "收件箱").click();
-            this.waitFindElement(By.xpath("//*[text()='账户登记成功确认']")).click();
-
-
-            List<WebElement> elements = this.waitFindElementsByAttr("aria-label", "读信");
-            for (WebElement element : elements) {
-                if (element.isDisplayed()) {
-                    WebElement frame = element.findElement(By.tagName("iframe"));
-                    this.switchFrame(frame);
-                    break;
-                }
-            }
-            this.waitFindElement(By.linkText("立即验证")).click();
+//
+//            this.openNewWindow("https://mail.163.com/");
+//            this.switch2NewWindow();
+//            this.switchFrame(this.waitFindElementById("x-URS-iframe"));
+//            this.waitFindElementByClass("dlemail").sendKeys(sonyBean.getPsn());
+//            this.waitFindElementByClass("dlpwd").sendKeys(password);
+//            this.waitFindElementByClass("u-loginbtn").click();
+//
+//            this.waitFindElementByAttr("title", "收件箱").click();
+//            this.waitFindElement(By.xpath("//*[text()='账户登记成功确认']")).click();
+//
+//
+//            List<WebElement> elements = this.waitFindElementsByAttr("aria-label", "读信");
+//            for (WebElement element : elements) {
+//                if (element.isDisplayed()) {
+//                    WebElement frame = element.findElement(By.tagName("iframe"));
+//                    this.switchFrame(frame);
+//                    break;
+//                }
+//            }
+//            this.waitFindElement(By.linkText("立即验证")).click();
 
 //            getDriver().switchTo().defaultContent();
 //            this.waitFindElement(By.linkText("退出")).click();

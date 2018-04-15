@@ -368,7 +368,7 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
                 this.simpleRandomWaite(500,1000);
                 this.waitFindElementById("signInButton").click();
 //                this.waitFindElementById("currentUserPC");
-                this.waitFindElementByText(sonyBean.getUsername());//修改判断标准，有帐号信息的界面就认为登录了
+                this.waitFindElementByText(sonyBean.getUsername(),60);//修改判断标准，有帐号信息的界面就认为登录了
                 break;
             } catch (Exception e) {
                 logger.error("登录失败,重新登录", e);
@@ -410,7 +410,7 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
             }
 
             Checker checker = new ProtonMailChecker(this);
-            checker.getCheckCode(mailBean, RegisterType.mailProto);
+            checker.getCheckCode(mailBean, RegisterType.sony);
 
 //
 //            this.openNewWindow("https://mail.163.com/");
@@ -437,7 +437,8 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
 //            getDriver().switchTo().defaultContent();
 //            this.waitFindElement(By.linkText("退出")).click();
             this.switch2NewWindow();
-            this.simpleWaite(5*10000L);
+            this.waitFindElementByText("您的电子邮件地址已确认完毕",60);//把简单等待50s的改成确认文字的1分钟
+//            this.simpleWaite(5*10000L);
 
         } catch (Exception e) {
             throw new RegisterException(sonyBean + "" + SonyRegisterStep.STEP_200, e, SonyRegisterStep.STEP_200);

@@ -33,6 +33,7 @@ public class ProtonMailChecker extends Checker {
         String code ="";
         switch (registerType) {
             case sony:
+                spider.simpleRandomWaite();
                 spider.waitFindElement(By.xpath("//*[text()='账户登记成功确认']")).click();
                 spider.waitFindElement(By.linkText("立即验证")).click();
                 break;

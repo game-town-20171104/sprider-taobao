@@ -34,11 +34,14 @@ public class ProtonMailChecker extends Checker {
         switch (registerType) {
             case sony:
                 spider.simpleRandomWaite();
-                spider.waitFindElement(By.xpath("//*[text()='账户登记成功确认']")).click();
+                spider.waitFindElementByText("请验证您的账号",2000).click();
+//                spider.waitFindElement(By.xpath("//*[text()='账户登记成功确认']")).click();
                 spider.waitFindElement(By.linkText("立即验证")).click();
                 break;
             case nintendo:
-                WebElement titleElement = spider.waitFindElement(By.xpath("//*[contains(text(),'Nintendo Account')]"));
+
+//                WebElement titleElement = spider.waitFindElement(By.xpath("//*[contains(text(),'Nintendo Account')]"));
+                WebElement titleElement = spider.waitFindElementByText("Nintendo Account",100);
                 String str = titleElement.getText().split("]|】")[0];
                  code = str.substring(1);
                 break;

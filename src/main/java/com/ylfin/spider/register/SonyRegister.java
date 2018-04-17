@@ -358,8 +358,13 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
                 logger.info("开始登录……");
                 String url = "https://asia.playstation.com/chs-hk/account/#settings";
                 getDriver().get(url);
-                this.simpleRandomWaite(500,1000);
-                this.waitFindElementByAttr("data-id","#mdd-signin").click();
+
+                this.waitFindElementById("nav-7").click();
+                this.simpleRandomWaite(200,600);
+//                this.waitFindElementByClass("psc-btn-black").click();
+//                this.simpleRandomWaite(500,1000);
+//                this.waitFindElementByAttr("data-id","#mdd-signin").click();
+//                this.simpleRandomWaite(200,600);
                 this.waitFindElementByClass("psc-btn-blue").click();
                 this.simpleRandomWaite(500,1000);
                 this.waitFindElementById("signInInput_SignInID").sendKeys(sonyBean.getPsn());
@@ -437,8 +442,8 @@ public class SonyRegister extends BaseSpider implements Register<SonyBean> {
 //            getDriver().switchTo().defaultContent();
 //            this.waitFindElement(By.linkText("退出")).click();
             this.switch2NewWindow();
-            this.waitFindElementByText("您的电子邮件地址已确认完毕",60);//把简单等待50s的改成确认文字的1分钟
-//            this.simpleWaite(5*10000L);
+//            this.waitFindElementByText("您的电子邮件地址已确认完毕",60);//把简单等待50s的改成确认文字的1分钟
+            this.simpleWaite(5*1000L);
 
         } catch (Exception e) {
             throw new RegisterException(sonyBean + "" + SonyRegisterStep.STEP_200, e, SonyRegisterStep.STEP_200);

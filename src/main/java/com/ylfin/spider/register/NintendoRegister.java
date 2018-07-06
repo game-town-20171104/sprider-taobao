@@ -57,6 +57,7 @@ public class NintendoRegister extends BaseSpider implements Register<NintendoBea
         this.simpleRandomWaite(1);
         new Select(this.waitFindElementByAttr("name","gender")).selectByValue("male");
         new Select(this.waitFindElementById("country-field")).selectByVisibleText("日本");
+//        new Select(this.waitFindElementById("country-field")).selectByVisibleText("美国");
 
          this.waitFindElementById("form-terms_consented").click();
         this.waitFindElementByClass("formInput-submit").click();

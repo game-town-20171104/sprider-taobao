@@ -298,6 +298,8 @@ public class BaseSpider {
             case WINDOWS:
                 tempPath = tempPath + "\\chromedriver_win32\\chromedriver.exe";
                 break;
+                default:
+                    break;
         }
         return tempPath;
     }

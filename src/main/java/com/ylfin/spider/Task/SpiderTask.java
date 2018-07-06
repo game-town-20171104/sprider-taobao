@@ -4,6 +4,7 @@ import com.ylfin.spider.cateprice.service.CatePriceService;
 import com.ylfin.spider.cateprice.vo.bean.CatePrice;
 import com.ylfin.spider.eshop.EshopSpider;
 import com.ylfin.spider.register.RegisterFactory;
+import com.ylfin.spider.register.enums.RegisterType;
 import com.ylfin.spider.register.service.MailService;
 import com.ylfin.spider.register.service.NintendoService;
 import com.ylfin.spider.register.service.SonyService;
@@ -66,6 +67,8 @@ public class SpiderTask implements ApplicationRunner {
 
     @Autowired
     NintendoService nintendoService;
+
+
 
     @Value("${page.size}")
     private int page;
@@ -192,7 +195,7 @@ public class SpiderTask implements ApplicationRunner {
             return;
         }
         mails.forEach(mailQueue::add);
-        Mail163Thread searchThread = new Mail163Thread(mailQueue, registerFactory);
+        ReOpenThread<MailBean> searchThread = new ReOpenThread(mailQueue, registerFactory.getRegister(RegisterType.mail163));
         es.submit(searchThread);
     }
 

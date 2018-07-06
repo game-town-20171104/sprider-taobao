@@ -6,14 +6,13 @@ import com.ylfin.spider.register.vo.bean.MailBean;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-public class ProtonMailChecker extends Checker {
+public class ProtonMailChecker implements Checker {
 
     private static final String checkPath = "";
     private static final String loginPath = "https://mail.protonmail.com/login";
     private BaseSpider spider;
 
     public ProtonMailChecker(BaseSpider baseSpider) {
-        super(baseSpider);
         this.spider =baseSpider;
     }
 

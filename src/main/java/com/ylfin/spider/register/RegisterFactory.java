@@ -29,6 +29,7 @@ public class RegisterFactory {
     @Autowired
     private EshopService eshopService;
 
+
     @Value("${chrome-driver-path}")
     private String driverPath;
 

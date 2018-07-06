@@ -9,6 +9,7 @@ import com.ylfin.spider.register.service.MailService;
 import com.ylfin.spider.register.service.NintendoService;
 import com.ylfin.spider.register.vo.bean.MailBean;
 import com.ylfin.spider.register.vo.bean.NintendoBean;
+import com.ylfin.spider.service.impl.CheckService;
 import com.ylfin.spider.utils.PasswordUtils;
 import com.ylfin.spider.utils.SpiderUtils;
 import org.openqa.selenium.WebElement;
@@ -64,6 +65,7 @@ public class NintendoRegister extends BaseSpider implements Register<NintendoBea
         codeElement.clear();
         codeElement.sendKeys(code);
         this.waitFindElementByClass("formInput-submit").click();
+        this.waitFindElementByText("已建立",2);
         nintendoBean.setSuccess(true);
         nitendoService.update(nintendoBean);
 
@@ -73,10 +75,12 @@ public class NintendoRegister extends BaseSpider implements Register<NintendoBea
 
     private String getCheckCode(NintendoBean nintendoBean) {
         //TODO find password
-        this.simpleRandomWaite(1000,2000);
+        this.simpleRandomWaite(2000,3000);
       MailBean mailBean= mailService.findByEmail(nintendoBean.getEmail());
-        Checker  checker = new ProtonMailChecker(this);
-        String code =checker.getCheckCode(mailBean, RegisterType.nintendo);
+        String code = CheckService.getCheckCode(mailBean, RegisterType.nintendo,this);
+        if(code==null){
+            throw new RuntimeException("未获取到验证码");
+        }
         return code;
     }
 

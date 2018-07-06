@@ -85,6 +85,19 @@
             <artifactId>spring-boot-starter-jdbc</artifactId>
             <version>RELEASE</version>
         </dependency>
+        <!-- ganymed-ssh2 -->
+        <dependency>
+            <groupId>ch.ethz.ganymed</groupId>
+            <artifactId>ganymed-ssh2</artifactId>
+            <version>262</version>
+        </dependency>
+        <!-- javax.mail/mail -->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.7</version>
+        </dependency>
+
 
         <!-- mybatis-plus begin -->
         <dependency>

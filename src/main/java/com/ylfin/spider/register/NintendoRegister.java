@@ -41,7 +41,7 @@ public class NintendoRegister extends BaseSpider implements Register<NintendoBea
         String url ="https://accounts.nintendo.com/login";
         getDriver().get(url);
         this.scrollSlow2end();
-        this.waitFindElementByClass("btn-primaryInverse").click();
+        this.waitFindElementByClass("btn-secondary").click();
         this.waitFindElementsByClass("AuthorizeAgeGate_box_item_image").get(1).click();
         this.waitFindElementByAttr("name","nickname").sendKeys(nintendoBean.getNickname());
         this.waitFindElementById("email").sendKeys(nintendoBean.getEmail());
@@ -59,7 +59,8 @@ public class NintendoRegister extends BaseSpider implements Register<NintendoBea
         new Select(this.waitFindElementById("country-field")).selectByVisibleText("日本");
 //        new Select(this.waitFindElementById("country-field")).selectByVisibleText("美国");
 
-         this.waitFindElementById("form-terms_consented").click();
+//         this.waitFindElementById("form-terms_consented").click();
+        this.waitFindElementByClass("js-terms-check").click();
         this.waitFindElementByClass("formInput-submit").click();
          String code =this.getCheckCode(nintendoBean);
         WebElement codeElement = this.waitFindElementByClass("formInput-large");

@@ -7,8 +7,10 @@ import com.ylfin.spider.register.RegisterFactory;
 import com.ylfin.spider.register.enums.RegisterType;
 import com.ylfin.spider.register.service.MailService;
 import com.ylfin.spider.register.service.NintendoService;
+import com.ylfin.spider.register.service.NitendoPwdService;
 import com.ylfin.spider.register.service.SonyService;
 import com.ylfin.spider.register.service.impl.NintendoServiceImpl;
+import com.ylfin.spider.register.vo.NintendoPwdVO;
 import com.ylfin.spider.register.vo.bean.MailBean;
 import com.ylfin.spider.register.vo.bean.NintendoBean;
 import com.ylfin.spider.register.vo.bean.SonyBean;
@@ -68,7 +70,8 @@ public class SpiderTask implements ApplicationRunner {
     @Autowired
     NintendoService nintendoService;
 
-
+    @Autowired
+    NitendoPwdService nitendoPwdService;
 
     @Value("${page.size}")
     private int page;
@@ -76,7 +79,8 @@ public class SpiderTask implements ApplicationRunner {
     private int threadSize;
     @Value("${spider.model}")
     private int model;
-
+    @Value("${nintendo.excel}")
+    private String excelPath;
     @Autowired
     EshopTask eshopTask;
 
@@ -106,6 +110,8 @@ public class SpiderTask implements ApplicationRunner {
             return;
         }else if (model == 9) {
             submitAoi(es);
+        }else if (model == 10) {
+            submitNintendoPwd(es);
         }
 
 //        es.shutdown();
@@ -271,6 +277,24 @@ public class SpiderTask implements ApplicationRunner {
         es.submit(nintendoThread);
     }
 
+
+    /**
+     * 任天堂修改密码注册
+     *
+     * @param es
+     */
+    private void submitNintendoPwd(ExecutorService es) {
+        logger.info("sony nitendo pwd start");
+        SpiderQueue<NintendoPwdVO> queue = new SpiderQueue<>();
+        List<NintendoPwdVO> mails = nitendoPwdService.getExcelList(excelPath);
+        if (CollectionUtils.isEmpty(mails)) {
+            logger.info("配置为空！");
+            return;
+        }
+        mails.forEach(queue::add);
+        NintendoPwdThread nintendoThread = new NintendoPwdThread(queue, registerFactory);
+        es.submit(nintendoThread);
+    }
 
 
 

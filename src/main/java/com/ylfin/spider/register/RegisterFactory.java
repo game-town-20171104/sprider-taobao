@@ -7,6 +7,7 @@ import com.ylfin.spider.eshop.service.EshopService;
 import com.ylfin.spider.register.enums.RegisterType;
 import com.ylfin.spider.register.service.MailService;
 import com.ylfin.spider.register.service.NintendoService;
+import com.ylfin.spider.register.service.NitendoPwdService;
 import com.ylfin.spider.register.service.SonyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,7 +30,8 @@ public class RegisterFactory {
     @Autowired
     private EshopService eshopService;
 
-
+    @Autowired
+    private NitendoPwdService nitendoPwdService;
     @Value("${chrome-driver-path}")
     private String driverPath;
 
@@ -45,11 +47,17 @@ public class RegisterFactory {
                 return buildNintendRegister();
             case mailProto:
                 return buildProtoRegister();
+            case nintendoPwd:
+                return  buildNitentdoPwd();
             default:
                 break;
         }
 
         return null;
+    }
+
+    private Register buildNitentdoPwd() {
+        return new NintendoPwdChecker(nitendoPwdService);
     }
 
     private CatePriceSpider buildCatePrice() {

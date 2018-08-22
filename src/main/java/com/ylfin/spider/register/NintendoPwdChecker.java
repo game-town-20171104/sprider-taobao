@@ -67,8 +67,8 @@ public class NintendoPwdChecker extends BaseSpider implements Register<NintendoP
         this.switch2Window(this.getInitWindow());
         this.waitFindElementByAttr("data-l10n","ACCOUNT_NAVIGATION_LOGIN_AND_SECURITY").click();
         this.waitFindElementByAttr("href","/password/edit?show_nav=1").click();
-        this.waitFindElementByName("subject_password").sendKeys(nintendoBean.getPassword());
-        this.waitFindElementByClass("formInput-submit").click();
+//        this.waitFindElementByName("subject_password").sendKeys(nintendoBean.getPassword());
+//        this.waitFindElementByClass("formInput-submit").click();
         String password = PasswordUtils.generatePassword();
         System.out.println("生成新的密码"+password+" for "+nintendoBean);
         this.waitFindElementByName("password").sendKeys(password);

@@ -1,4 +1,28 @@
 --liquibase formatted sql
+
+-- changeset godslhand:init
+CREATE TABLE `keywords` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) DEFAULT NULL COMMENT '关键词',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `taobao_result` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `keywords_id` bigint(20) DEFAULT NULL COMMENT '外键',
+  `comment_count` int(255) DEFAULT NULL COMMENT '评论数',
+  `data_str` varchar(255) DEFAULT NULL COMMENT '抓取时间',
+  `detail_url` text COMMENT '店铺URL',
+  `price` double DEFAULT NULL COMMENT '价格',
+  `shop_name` varchar(255) DEFAULT NULL COMMENT '店铺名',
+  `num` varchar(255) DEFAULT '0' COMMENT '销量',
+  `title` varchar(255) DEFAULT NULL COMMENT '标题',
+  `location` varchar(255) DEFAULT NULL COMMENT '地区',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=254 DEFAULT CHARSET=utf8;
+
+
 -- changeset godslhand:20171116
 ALTER  TABLE  keywords add COLUMN   `active` tinyint(1) DEFAULT '1' COMMENT '是否开启' ;
 
@@ -144,3 +168,20 @@ CREATE  TABLE  `tb_eshop` (
 `spider_time` datetime(6)  DEFAULT NULL COMMENT '爬取时间',
   PRIMARY KEY (`id`)
 )ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT 'eshop价格表';
+
+
+-- changeset godslhand:20190211
+CREATE  TABLE  `check_mission` (
+`id` bigint(20) NOT NULL AUTO_INCREMENT,
+`tag` varchar(255) DEFAULT NULL COMMENT '任务类型- PWD 修改密码，BACK 账号规划',
+`account` varchar(255) DEFAULT NULL COMMENT '账户',
+`password` varchar(255) DEFAULT NULL COMMENT '密码',
+`type` int(11) DEFAULT NULL COMMENT '账号类型 1-未租，2 副租，3主租，4 都租',
+`strategy`  int(11) DEFAULT NULL COMMENT '账号验证方案 1，2，3',
+`new_password` varchar(255) DEFAULT NULL COMMENT '修改后的密码',
+`result` int(11) DEFAULT NULL COMMENT '结果',
+`bright` tinyint(1) DEFAULT NULL COMMENT '是否点亮，0 未点亮，1 点亮',
+`error` varchar(255) DEFAULT NULL COMMENT '错误信息',
+`active` tinyint(1) DEFAULT '1' COMMENT '是否开启 1开启',
+  PRIMARY KEY (`id`)
+)ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT '任天堂账号任务表';

@@ -26,7 +26,7 @@ public class NintendoPwdChecker extends BaseSpider implements Register<NintendoP
     @Override
     public void initRegister() {
         super.setHeadless(false);
-        super.init();
+        super.initWithProfile();
     }
 
     @Override

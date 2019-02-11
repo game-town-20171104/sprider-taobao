@@ -1,5 +1,7 @@
 package com.ylfin.spider.Task;
 
+import com.ylfin.spider.account.service.CheckMissionService;
+import com.ylfin.spider.account.vo.bean.CheckMission;
 import com.ylfin.spider.cateprice.service.CatePriceService;
 import com.ylfin.spider.cateprice.vo.bean.CatePrice;
 import com.ylfin.spider.eshop.EshopSpider;
@@ -28,6 +30,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -73,6 +76,9 @@ public class SpiderTask implements ApplicationRunner {
     @Autowired
     NitendoPwdService nitendoPwdService;
 
+    @Autowired
+    CheckMissionService checkMissionService;
+
     @Value("${page.size}")
     private int page;
     @Value("${thread.size}")
@@ -112,6 +118,8 @@ public class SpiderTask implements ApplicationRunner {
             submitAoi(es);
         }else if (model == 10) {
             submitNintendoPwd(es);
+        }else if (model == 11) {
+            submitMission(es);
         }
 
 //        es.shutdown();
@@ -296,6 +304,18 @@ public class SpiderTask implements ApplicationRunner {
         es.submit(nintendoThread);
     }
 
+    private void submitMission(ExecutorService es) {
+        logger.info("sony nitendo chekmission start");
+        SpiderQueue<CheckMission> queue = new SpiderQueue<>();
+        List<CheckMission> mails = new ArrayList<>();
+        if (CollectionUtils.isEmpty(mails)) {
+            logger.info("任务为空！");
+            return;
+        }
+        mails.forEach(queue::add);
+        CheckMissionTask nintendoThread = new CheckMissionTask(queue, registerFactory);
+        es.submit(nintendoThread);
+    }
 
 
 }

@@ -25,9 +25,9 @@ thread:
 # 1,爬关键词，2 爬店铺，3 关键词搜索，4 邮箱注册，5 游戏注册，6 分类价格爬取，7 任天堂，8 switch价格爬取（eshop）
 #9, proto 邮箱注册 10, proto 任天堂密码修改
 spider:
-  model: 10
+  model: 7
 
-nintendo.excel: "D:/xxx.xls"
+nintendo.excel: "/Users/clz/Downloads/Switch游戏账号列表.xlsx"
 
 #mybatis
 mybatis-plus:

@@ -61,13 +61,16 @@ public class NintendoRegister extends BaseSpider implements Register<NintendoBea
 
 //         this.waitFindElementById("form-terms_consented").click();
         this.waitFindElementByClass("js-terms-check").click();
-        this.waitFindElementByClass("formInput-submit").click();
+//        this.waitFindElementByClass("formInput-submit").click();
+        this.waitFindElementByClass("js-submit").click();
          String code =this.getCheckCode(nintendoBean);
-        WebElement codeElement = this.waitFindElementByClass("formInput-large");
+//        WebElement codeElement = this.waitFindElementByClass("formInput-large");
+        WebElement codeElement = this.waitFindElementByClass("RegisterPincodeForm_input");
         codeElement.clear();
         codeElement.sendKeys(code);
-        this.waitFindElementByClass("formInput-submit").click();
-        this.waitFindElementByText("已建立",2);
+//        this.waitFindElementByClass("formInput-submit").click();
+        this.waitFindElementByClass("c-btn c-btn-primary c-btn-medium").click();
+        this.waitFindElementByText("已建立Nintendo Account。",2);
         nintendoBean.setSuccess(true);
         nitendoService.update(nintendoBean);
 

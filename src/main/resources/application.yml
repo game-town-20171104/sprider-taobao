@@ -29,6 +29,7 @@ spider:
 
 nintendo.excel: "D:/xxx.xls"
 
+
 #mybatis
 mybatis-plus:
   mapper-locations: classpath:/mapper/*Mapper.xml
@@ -61,7 +62,9 @@ mybatis-plus:
 
 chrome-driver-path: classpath:/driver
 
-shell:
-  host:
-  username:
-  password:
+logging:
+  file: /data/logs/spider-tabao/spider.log
+  level:
+    # logger_name: level 的形式
+    com.ylfin:  DEBUG
+hibernate.show_sql : true

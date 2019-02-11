@@ -179,7 +179,7 @@ CREATE  TABLE  `check_mission` (
 `type` int(11) DEFAULT NULL COMMENT '账号类型 1-未租，2 副租，3主租，4 都租',
 `strategy`  int(11) DEFAULT NULL COMMENT '账号验证方案 1，2，3',
 `new_password` varchar(255) DEFAULT NULL COMMENT '修改后的密码',
-`result` int(11) DEFAULT NULL COMMENT '结果',
+`result` int(11) DEFAULT -1  COMMENT '结果 -1初始化，0失败，1成功',
 `bright` tinyint(1) DEFAULT NULL COMMENT '是否点亮，0 未点亮，1 点亮',
 `error` varchar(255) DEFAULT NULL COMMENT '错误信息',
 `active` tinyint(1) DEFAULT '1' COMMENT '是否开启 1开启',

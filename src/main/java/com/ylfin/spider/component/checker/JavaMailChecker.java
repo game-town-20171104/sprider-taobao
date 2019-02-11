@@ -38,7 +38,10 @@ public class JavaMailChecker implements Checker {
                 break;
             case nintendoPwdModify:
                 String url = content.getContent();
-                code = StringUtils.substringBefore(StringUtils.substringAfter(StringUtils.substringAfter(url,"URL:"),"\n"),"\n");
+                if(StringUtils.isBlank(url)){
+                    throw new RuntimeException("邮件内容读取失败");
+                }
+                code = "https"+StringUtils.substringBefore(StringUtils.substringAfter(url,"https"),"\n");
                 break;
             case sony:
                 throw new RuntimeException("暂未实现");

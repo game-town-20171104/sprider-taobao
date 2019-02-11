@@ -9,6 +9,8 @@ import com.ylfin.spider.register.enums.RegisterType;
 import com.ylfin.spider.register.service.MailService;
 import com.ylfin.spider.register.vo.bean.MailBean;
 import com.ylfin.spider.service.impl.CheckService;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -21,6 +23,7 @@ import java.util.List;
  * @date: 2019/2/11
  * @description:
  */
+@Slf4j
 public class CheckMissionSpider extends BaseSpider implements Register<CheckMission> {
 
     @Autowired
@@ -40,7 +43,7 @@ public class CheckMissionSpider extends BaseSpider implements Register<CheckMiss
     @Override
     public void initRegister() {
         super.setHeadless(false);
-        super.initWithProfile();
+        super.init();
     }
 
     @Override
@@ -71,11 +74,14 @@ public class CheckMissionSpider extends BaseSpider implements Register<CheckMiss
                 checkMission.setError(e.getMessage());
                 unBrightHandle(checkMission);
             }
+            checkMission.setError(null);
         } catch (Exception e) {
-            checkMission.setError(e.getMessage());
+            log.error(checkMission.getAccount()+"处理失败",e);
+            String error = StringUtils.substring(e.getMessage(),0,255);
+            checkMission.setError(error);
             checkMission.setResult(0);
         }finally {
-            checkMissionService.insert(checkMission);
+            checkMissionService.updateById(checkMission);
         }
     }
 
@@ -86,7 +92,6 @@ public class CheckMissionSpider extends BaseSpider implements Register<CheckMiss
             backPwd(checkMission);
         }
         if(2 ==checkMission.getStrategy().intValue()){
-            System.out.println("操作完成");
             checkMission.setResult(1);
             checkMission.setActive(false);
         }
@@ -129,6 +134,7 @@ public class CheckMissionSpider extends BaseSpider implements Register<CheckMiss
             System.out.println("提交密码修改");
             this.waiteCondition(By.className("StateComplete_text"),1*60);
         } catch (Exception e) {
+
             throw new RuntimeException("密码还原失败"+e.getMessage(),e);
         }
     }
@@ -137,14 +143,18 @@ public class CheckMissionSpider extends BaseSpider implements Register<CheckMiss
         try {
             String loginUrl = "https://accounts.nintendo.com/login";
             getDriver().get(loginUrl);
-            this.waitFindElementByAttr("data-l10n", "LOGIN_FORM_FORGOT_PASSWORD");
+            this.waitFindElementByAttr("data-l10n", "LOGIN_FORM_FORGOT_PASSWORD").click();
             this.waitFindElementById("address").sendKeys(checkMission.getAccount());
             this.waitFindElementByAttr("type", "submit").click();
-            this.simpleWaite(1000L);
+            this.simpleWaite(2000L);
             MailBean mailBean = mailService.findByEmail(checkMission.getAccount());
             String url = CheckService.getCheckCode(mailBean, RegisterType.nintendoPwdModify, this);
-            this.openNewWindow(url);
-            this.switch2NewWindow();
+            if(!url.startsWith("https://accounts.nintendo.com/password/reset/authenticate")){
+                this.simpleWaite(2*1000L);
+                url = CheckService.getCheckCode(mailBean, RegisterType.nintendoPwdModify, this);
+            }
+
+            this.getDriver().get(url);
             new Select(this.waitFindElementByName("birth_month")).selectByVisibleText("2");
             new Select(this.waitFindElementByName("birth_day")).selectByVisibleText("16");
             new Select(this.waitFindElementByName("birth_year")).selectByVisibleText("1985");

@@ -307,7 +307,7 @@ public class SpiderTask implements ApplicationRunner {
     private void submitMission(ExecutorService es) {
         logger.info("sony nitendo chekmission start");
         SpiderQueue<CheckMission> queue = new SpiderQueue<>();
-        List<CheckMission> mails = new ArrayList<>();
+        List<CheckMission> mails = checkMissionService.findActiveAndUnSuccess();
         if (CollectionUtils.isEmpty(mails)) {
             logger.info("任务为空！");
             return;

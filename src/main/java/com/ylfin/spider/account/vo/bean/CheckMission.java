@@ -15,7 +15,6 @@ public class CheckMission {
     public static String tag_pwd_modify = "PWD";
     public static String tag_account_return = "BACK";
 
-
     @TableId
     private Long id;
     private String tag ;

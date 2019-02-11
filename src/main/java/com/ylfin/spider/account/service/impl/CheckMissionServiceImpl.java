@@ -20,6 +20,6 @@ import java.util.List;
 public class CheckMissionServiceImpl extends ServiceImpl<CheckMissionDao, CheckMission> implements CheckMissionService {
     @Override
     public List<CheckMission> findActiveAndUnSuccess() {
-        return   baseMapper.selectList(  new EntityWrapper<CheckMission>().eq("active",true).eq("result",1));
+        return   baseMapper.selectList(  new EntityWrapper<CheckMission>().eq("active",true).ne("result",1));
     }
 }

@@ -50,6 +50,7 @@ public class CheckMissionSpider extends BaseSpider implements Register<CheckMiss
     public void handle(CheckMission checkMission) {
         try {
             resetPwd(checkMission);
+
             this.waitFindElementByAttr("data-l10n","ACCOUNT_NAVIGATION_SHOP").click();
             this.switch2NewWindow();
 //      List<WebElement> elementList = this.waitFindElementsByClass("o_c-list-simplex__body");
@@ -74,7 +75,8 @@ public class CheckMissionSpider extends BaseSpider implements Register<CheckMiss
                 checkMission.setError(e.getMessage());
                 unBrightHandle(checkMission);
             }
-            checkMission.setError(null);
+            checkMission.setError("成功");
+            System.out.println(checkMission.getAccount()+"操作完成");
         } catch (Exception e) {
             log.error(checkMission.getAccount()+"处理失败",e);
             String error = StringUtils.substring(e.getMessage(),0,255);

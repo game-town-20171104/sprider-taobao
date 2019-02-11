@@ -6,6 +6,7 @@ import com.ylfin.spider.register.enums.RegisterType;
 import com.ylfin.spider.register.vo.bean.MailBean;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -34,6 +35,13 @@ public class JavaMailChecker implements Checker {
             case nintendo:
                 String str = content.getSubject().split("]|】")[0];
                 code = str.substring(1);
+                break;
+            case nintendoPwdModify:
+                String url = content.getContent();
+                if(StringUtils.isBlank(url)){
+                    throw new RuntimeException("邮件内容读取失败");
+                }
+                code = "https"+StringUtils.substringBefore(StringUtils.substringAfter(url,"https"),"\n");
                 break;
             case sony:
                 throw new RuntimeException("暂未实现");
@@ -215,11 +223,11 @@ public class JavaMailChecker implements Checker {
 
     public static void main(String[] args) {
         MailBean mailBean = new MailBean();
-        mailBean.setEmail("songfl5@gamesheaven.tech");
-        mailBean.setPassword("asd123");
+        mailBean.setEmail("sd00456@gamesheaven.tech");
+        mailBean.setPassword("A2y730d1");
 
 
         Checker mailChecker = new JavaMailChecker();
-        System.out.println(mailChecker.getCheckCode(mailBean, RegisterType.nintendo));
+        System.out.println(mailChecker.getCheckCode(mailBean, RegisterType.nintendoPwdModify));
     }
 }

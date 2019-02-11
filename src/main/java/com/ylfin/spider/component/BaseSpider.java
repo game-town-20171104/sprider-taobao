@@ -56,8 +56,8 @@ public class BaseSpider {
         }
         //设置用户配置文件夹
         String fileSplit = System.getProperty("file.separator");
-//        String path = System.getProperty("user.home") + fileSplit + "AppData" + fileSplit + "Local" + fileSplit + "Google" + fileSplit + "Chrome" + fileSplit + "mobile";
-//        chromeOptions.addArguments("--user-data-dir=" + path);
+        String path = System.getProperty("user.home") + fileSplit + "AppData" + fileSplit + "Local" + fileSplit + "Google" + fileSplit + "Chrome" + fileSplit + "User Data";
+        chromeOptions.addArguments("--user-data-dir=" + path);
         chromeOptions.addArguments("--window-size=1920,1080");
         DesiredCapabilities capabilities = DesiredCapabilities.chrome();
 

@@ -1,6 +1,9 @@
 package com.ylfin.spider.register;
 
 
+import com.ylfin.spider.account.CheckMissionSpider;
+import com.ylfin.spider.account.service.CheckMissionService;
+import com.ylfin.spider.account.vo.bean.CheckMission;
 import com.ylfin.spider.cateprice.CatePriceSpider;
 import com.ylfin.spider.cateprice.service.CatePriceService;
 import com.ylfin.spider.eshop.service.EshopService;
@@ -32,6 +35,11 @@ public class RegisterFactory {
 
     @Autowired
     private NitendoPwdService nitendoPwdService;
+
+    @Autowired
+    private CheckMissionService checkMissionService;
+
+
     @Value("${chrome-driver-path}")
     private String driverPath;
 
@@ -49,11 +57,21 @@ public class RegisterFactory {
                 return buildProtoRegister();
             case nintendoPwd:
                 return  buildNitentdoPwd();
+            case nintendoPwdModify:
+                return  buildNitentdoPwdModify();
             default:
                 break;
         }
 
         return null;
+    }
+
+    private Register buildNitentdoPwdModify() {
+        CheckMissionSpider spider = new CheckMissionSpider();
+        spider.setMailService(mailService);
+        spider.setCheckMissionService(checkMissionService);
+        spider.setBasePath(driverPath);
+        return spider;
     }
 
     private Register buildNitentdoPwd() {

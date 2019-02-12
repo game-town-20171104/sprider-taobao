@@ -128,13 +128,17 @@ public class CheckMissionSpider extends BaseSpider implements Register<CheckMiss
             this.getDriver().get(url);
             this.waitFindElementByAttr("data-l10n","ACCOUNT_NAVIGATION_LOGIN_AND_SECURITY").click();
             this.waitFindElementByAttr("href","/password/edit?show_nav=1").click();
-            this.waitFindElementByName("subject_password").sendKeys(checkMission.getPassword());
-            this.waitFindElementByAttr("type", "submit").click();
+            try {
+                this.waitFindElementByName("subject_password").sendKeys(checkMission.getPassword());
+                this.waitFindElementByAttr("type", "submit").click();
+            } catch (Exception e) {
+                System.out.println("跳过再次输入密码");
+            }
             this.waitFindElementByName("password").sendKeys(checkMission.getPassword());
             this.waitFindElementByName("password_for_confirmation").sendKeys(checkMission.getPassword());
             this.waitFindElementByAttr("type", "submit").click();
             System.out.println("提交密码修改");
-            this.waiteCondition(By.className("StateComplete_text"),1*60);
+            this.waiteCondition(By.className("c-stateComplete_text"),1*60);
         } catch (Exception e) {
 
             throw new RuntimeException("密码还原失败"+e.getMessage(),e);

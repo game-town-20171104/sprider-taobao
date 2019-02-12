@@ -25,11 +25,7 @@ thread:
 # 1,爬关键词，2 爬店铺，3 关键词搜索，4 邮箱注册，5 游戏注册，6 分类价格爬取，7 任天堂，8 switch价格爬取（eshop）
 #9, proto 邮箱注册 10, proto 任天堂密码修改,11 修改密码2和账号验证服务
 spider:
-<<<<<<< HEAD
-  model: 7
-=======
   model: 11
->>>>>>> origin/master
 
 nintendo.excel: "/Users/clz/Downloads/Switch游戏账号列表.xlsx"
 
@@ -67,7 +63,7 @@ mybatis-plus:
 chrome-driver-path: classpath:/driver
 
 logging:
-  file: /data/logs/spider-tabao/spider.log
+  file: ~/spider-tabao/spider.log
   level:
     # logger_name: level 的形式
     com.ylfin:  DEBUG

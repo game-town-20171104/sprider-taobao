@@ -2,21 +2,16 @@ package com.ylfin.spider.component.checker;
 
 import com.sun.mail.imap.IMAPFolder;
 import com.sun.mail.imap.SortTerm;
+import com.ylfin.spider.mail.vo.MailContent;
+import com.ylfin.spider.mail.service.MailReader;
 import com.ylfin.spider.register.enums.RegisterType;
 import com.ylfin.spider.register.vo.bean.MailBean;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeUtility;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.Date;
 import java.util.Properties;
-import java.util.concurrent.Callable;
+import java.util.function.Predicate;
 
 @Slf4j
 public class JavaMailChecker implements Checker {
@@ -89,7 +84,8 @@ public class JavaMailChecker implements Checker {
                 System.out.println("新邮件数：" + imapFolder.getNewMessageCount());
                 SortTerm[] term = new SortTerm[1];
                 term[0] = SortTerm.DATE;
-                this.parseMessages(imapFolder.getMessages(start,size), content);
+//                this.parseMessages(imapFolder.getMessages(start,size), content);
+                MailReader.parseMessages(imapFolder.getMessages(start,size), content,new Condition());
             }
 
 
@@ -98,7 +94,9 @@ public class JavaMailChecker implements Checker {
             e.printStackTrace();
         } finally {
             try {
-                folder.close(false);
+                if(folder!=null){
+                    folder.close(false);
+                }
                 store.close();
             } catch (MessagingException e) {
                 e.printStackTrace();
@@ -108,118 +106,22 @@ public class JavaMailChecker implements Checker {
         return content;
     }
 
-    private boolean condition(String subject) {
-        if (subject.contains(NINTENDO_CODE)) {
-            return true;
-        }
-        if (subject.contains(SONY_CODE)) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * 解析邮件
-     *
-     * @param messages
-     * @param content
-     * @throws MessagingException
-     * @throws IOException
-     */
-    public MailContent parseMessages(Message[] messages, MailContent content) throws MessagingException, IOException {
-        if (messages.length < 1 || messages == null) {
-            System.out.println("没有邮件");
-        } else {
-            for (int i = messages.length-1; i >=0; i--) {
-                MimeMessage each = (MimeMessage) messages[i];
-                System.out.println("------------------解析第" + each.getMessageNumber() + "封邮件-------------------- ");
-                String subject = getSubject(each);
-                content.setSubject(subject);
-                content.setSender(getFrom(each));
-                StringBuffer sb = new StringBuffer(30);
-                getMailTextContent(each, sb);
-                content.setContent(sb.toString());
-                if (condition(subject)) {
-                    System.out.println("------------------解析第" + each.getMessageNumber() + "封邮件【"+subject+"】完成-------------------- ");
-                    return content;
-                }
-                System.out.println("------------------解析第" + each.getMessageNumber() + "封邮件【"+subject+"】完成,未命中-------------------- ");
-
+    class Condition implements Predicate<MailContent> {
+        @Override
+        public boolean test(MailContent content) {
+            String subject = content.getSubject();
+            if (subject.contains(NINTENDO_CODE)) {
+                return true;
             }
-        }
-        return null;
-    }
-
-
-    /**
-     * 解析邮件内容
-     *
-     * @param part
-     * @param content
-     * @throws MessagingException
-     * @throws IOException
-     */
-    private void getMailTextContent(Part part, StringBuffer content)
-            throws MessagingException, IOException {
-        // 如果是文本类型的附件，通过getContent方法可以取到文本内容，但这不是我们需要的结果，所以在这里要做判断
-        boolean isContainTextAttach = part.getContentType().indexOf("name") > 0;
-        if (part.isMimeType("text/*") && !isContainTextAttach) {
-            content.append(part.getContent().toString());
-        } else if (part.isMimeType("message/rfc822")) {
-            getMailTextContent((Part) part.getContent(), content);
-        } else if (part.isMimeType("multipart/*")) {
-            Multipart multipart = (Multipart) part.getContent();
-            int partCount = multipart.getCount();
-            for (int i = 0; i < partCount; i++) {
-                BodyPart bodyPart = multipart.getBodyPart(i);
-                getMailTextContent(bodyPart, content);
+            if (subject.contains(SONY_CODE)) {
+                return true;
             }
+            return false;
         }
     }
 
 
-    /**
-     * 获取发件人
-     *
-     * @param msg 邮件
-     * @return 姓名 <邮箱地址>
-     * @throws MessagingException
-     * @throws UnsupportedEncodingException
-     */
-    private String getFrom(MimeMessage msg) throws MessagingException, UnsupportedEncodingException {
-        Address[] froms = msg.getFrom();
-        StringBuilder from = new StringBuilder("");
-        if (froms.length < 1) {
-            from.append("没有收件人");
-        } else {
-            InternetAddress address = (InternetAddress) froms[0];
-            from.append((address.getPersonal() == null) ? "" : MimeUtility.decodeText(address.getPersonal()));
-            from.append(" <").append(address.getAddress()).append(">");
-        }
 
-        return from.toString();
-    }
-
-    /**
-     * 获得邮件主题
-     *
-     * @param msg 邮件
-     * @return 解码后的邮件主题
-     * @throws UnsupportedEncodingException
-     * @throws MessagingException
-     */
-    private String getSubject(MimeMessage msg) throws UnsupportedEncodingException, MessagingException {
-        return MimeUtility.decodeText(msg.getSubject());
-    }
-
-    @Data
-    class MailContent {
-        private String subject;
-        private String sender;
-        private String content;
-        private Date sendDate;
-
-    }
 
     public static void main(String[] args) {
         MailBean mailBean = new MailBean();

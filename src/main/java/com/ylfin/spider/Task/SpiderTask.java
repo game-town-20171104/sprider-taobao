@@ -120,6 +120,9 @@ public class SpiderTask implements ApplicationRunner {
             submitNintendoPwd(es);
         }else if (model == 11) {
             submitMission(es);
+        }else{
+            System.out.println("暂无任务……");
+            return;
         }
 
 //        es.shutdown();

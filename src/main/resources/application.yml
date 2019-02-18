@@ -22,10 +22,10 @@ page:
   size: 9
 thread:
   size: 1
-# 1,爬关键词，2 爬店铺，3 关键词搜索，4 邮箱注册，5 游戏注册，6 分类价格爬取，7 任天堂，8 switch价格爬取（eshop）
+#  -1 不启动线程池任务,1,爬关键词，2 爬店铺，3 关键词搜索，4 邮箱注册，5 游戏注册，6 分类价格爬取，7 任天堂，8 switch价格爬取（eshop）
 #9, proto 邮箱注册 10, proto 任天堂密码修改,11 修改密码2和账号验证服务
 spider:
-  model: 11
+  model: -1
 
 nintendo.excel: "/Users/clz/Downloads/Switch游戏账号列表.xlsx"
 

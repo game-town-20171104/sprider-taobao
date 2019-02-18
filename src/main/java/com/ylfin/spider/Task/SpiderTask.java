@@ -89,11 +89,10 @@ public class SpiderTask implements ApplicationRunner {
     private String excelPath;
     @Autowired
     EshopTask eshopTask;
+    public  final ThreadPoolExecutor es = (ThreadPoolExecutor) Executors.newFixedThreadPool(1);
 
     @Override
     public void run(ApplicationArguments applicationArguments) throws Exception {
-
-        ThreadPoolExecutor es = (ThreadPoolExecutor) Executors.newFixedThreadPool(threadSize);
 
         if (model == 2) {
             submitShopSpider(es);
@@ -111,7 +110,7 @@ public class SpiderTask implements ApplicationRunner {
             submitNintendo(es);
         }else if(model ==8 ){
             //立即执行一次
-            es.shutdown();
+//            es.shutdown();
             eshopTask.dailyPriceSpider();
             return;
         }else if (model == 9) {
@@ -122,19 +121,28 @@ public class SpiderTask implements ApplicationRunner {
             submitMission(es);
         }else{
             System.out.println("暂无任务……");
-            return;
+//            return;
+            es.submit(() -> {
+                System.out.println("---任务测试开始-----");
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("---任务测试结束-----");
+            });
         }
 
 //        es.shutdown();
-        //守护线程，如果所有线程都结束，退出应用
+//        守护线程，如果所有线程都结束，退出应用
         Thread daemon = new Thread(() -> {
             while (true) {
                 try {
                     Thread.sleep(1000L);
-                    if (es.isTerminated()) {
-                        System.out.println("准备退出……");
-                        System.exit(0);
-                    }
+//                    if (es.isTerminated()) {
+//                        System.out.println("准备退出……");
+//                        System.exit(0);
+//                    }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -143,6 +151,10 @@ public class SpiderTask implements ApplicationRunner {
         daemon.setDaemon(true);
         daemon.start();
 
+    }
+
+    public void setModel(int model) {
+        this.model = model;
     }
 
     private void submitSpiderKeywords(ExecutorService es) {

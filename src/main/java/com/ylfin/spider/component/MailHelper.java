@@ -1,12 +1,8 @@
 package com.ylfin.spider.component;
 
-import com.ylfin.spider.Exception.RegisterException;
-import com.ylfin.spider.register.enums.SonyRegisterStep;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-
-import java.util.List;
 
 @Slf4j
 public class MailHelper {

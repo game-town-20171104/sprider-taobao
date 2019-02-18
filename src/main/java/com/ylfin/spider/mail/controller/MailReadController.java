@@ -29,6 +29,9 @@ public class MailReadController {
     @PostMapping("/query")
     public List<MailContent> query(@Valid @RequestBody MailQueryVo queryVo){
         MailBean mailBean = mailService.findByEmail(queryVo.getEmail());
+        if(mailBean ==null){
+            throw new RuntimeException("没有找到对应的邮箱账号");
+        }
         List<String> keywords = new ArrayList<>();
         String keyword = queryVo.getKeywords();
         keywords = Arrays.asList(StringUtils.split(keyword,","));

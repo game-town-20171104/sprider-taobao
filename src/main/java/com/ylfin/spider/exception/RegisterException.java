@@ -1,4 +1,4 @@
-package com.ylfin.spider.Exception;
+package com.ylfin.spider.exception;
 
 import com.ylfin.spider.register.enums.SonyRegisterStep;
 

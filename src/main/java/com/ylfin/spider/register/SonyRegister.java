@@ -1,6 +1,6 @@
 package com.ylfin.spider.register;
 
-import com.ylfin.spider.Exception.RegisterException;
+import com.ylfin.spider.exception.RegisterException;
 import com.ylfin.spider.component.BaseSpider;
 import com.ylfin.spider.component.checker.Checker;
 import com.ylfin.spider.component.checker.ProtonMailChecker;

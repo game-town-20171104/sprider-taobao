@@ -27,7 +27,6 @@ public class EshopSpider extends BaseSpider implements Register {
 
     @Override
     public void initRegister() {
-        super.setHeadless(false);
         super.init();
     }
 

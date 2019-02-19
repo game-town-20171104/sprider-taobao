@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <!-- import CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+</head>
+<body>
+<div id="app">
+
+    <el-form :inline="true" :model="formInline" class="demo-form-inline">
+        <el-form-item label="邮箱">
+            <el-input v-model="formInline.email" placeholder="邮箱"></el-input>
+        </el-form-item>
+        <el-form-item label="关键词">
+            <el-input v-model="formInline.keywords" placeholder="关键词,逗号分割" clearable></el-input>
+        </el-form-item>
+        <el-form-item>
+            <el-button type="primary" @click="onSubmit">查询</el-button>
+        </el-form-item>
+    </el-form>
+
+    <el-table
+            :data="tableData"
+            v-loading="loading"
+            border
+            style="width: 100%">
+
+        <el-table-column
+                prop="subject"
+                label="主题"
+                width="120">
+        </el-table-column>
+        <el-table-column
+                prop="content"
+                label="内容"
+         >
+        </el-table-column>
+        <el-table-column
+                fixed
+                prop="sendDate"
+                label="日期"
+                width="150">
+        </el-table-column>
+
+    </el-table>
+</div>
+</body>
+<!-- import Vue before Element -->
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- import JavaScript -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        methods: {
+            onSubmit() {
+                var _this = this;
+                console.log('submit!');
+                _this.loading = true;
+                axios.post('/mail/query',this.formInline)
+                    .then(function (response) {_this.tableData = response.data; _this.loading =false; console.info(_this.tableData)});
+            }
+        },
+        data: function() {
+            return { visible: false,
+                formInline: {
+                    email: '',
+                    keywords: ''
+                },
+                loading: false,
+                tableData: []
+            }
+        }
+    })
+</script>
+</html>

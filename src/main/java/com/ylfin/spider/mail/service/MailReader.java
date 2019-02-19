@@ -135,6 +135,7 @@ public class MailReader {
                 String subject = getSubject(each);
                 content.setSubject(subject);
                 content.setSender(getFrom(each));
+                content.setSendDate(each.getSentDate());
                 StringBuffer sb = new StringBuffer(30);
                 getMailTextContent(each, sb);
                 content.setContent(sb.toString());

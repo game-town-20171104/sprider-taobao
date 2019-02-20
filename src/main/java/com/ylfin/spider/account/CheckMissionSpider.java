@@ -55,6 +55,7 @@ public class CheckMissionSpider extends BaseSpider implements Register<CheckMiss
             this.switch2NewWindow();
 //      List<WebElement> elementList = this.waitFindElementsByClass("o_c-list-simplex__body");
 //      elementList.get(elementList.size()-1).click();
+            this.simpleRandomWaite(20);
             this.waitFindElementByAttr("ng-click","shop_menu_ctrl.showDeviceUnlink()").click();
             this.switch2NewWindow();
 

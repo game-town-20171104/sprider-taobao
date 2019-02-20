@@ -1,6 +1,7 @@
 package com.ylfin.spider.mail.vo;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -14,5 +15,6 @@ public class MailContent {
     private String subject;
     private String sender;
     private String content;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date sendDate;
 }

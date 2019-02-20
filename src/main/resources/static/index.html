@@ -8,15 +8,15 @@
 <body>
 <div id="app">
 
-    <el-form :inline="true" :model="formInline" class="demo-form-inline">
-        <el-form-item label="邮箱">
+    <el-form :inline="true" :model="formInline" ref ="formInline" :rules="rules" class="demo-form-inline">
+        <el-form-item label="邮箱"  prop="email">
             <el-input v-model="formInline.email" placeholder="邮箱"></el-input>
         </el-form-item>
         <el-form-item label="关键词">
             <el-input v-model="formInline.keywords" placeholder="关键词,逗号分割" clearable></el-input>
         </el-form-item>
         <el-form-item>
-            <el-button type="primary" @click="onSubmit">查询</el-button>
+            <el-button type="primary" @click="onSubmit('formInline')">查询</el-button>
         </el-form-item>
     </el-form>
 
@@ -24,29 +24,50 @@
             :data="tableData"
             v-loading="loading"
             border
-            style="width: 100%">
+            heigth="10px"
+            style="width: 100%"
+            @cell-click="cellClick"
+    >
 
         <el-table-column
+                :show-overflow-tooltip="true"
                 prop="subject"
                 label="主题"
-                width="120">
+                width="220">
         </el-table-column>
         <el-table-column
+                :show-overflow-tooltip="true"
                 prop="content"
+                :formatter="getSubContent"
                 label="内容"
          >
         </el-table-column>
         <el-table-column
                 fixed
                 prop="sendDate"
+                :formatter="dateFormat"
                 label="日期"
                 width="150">
         </el-table-column>
 
     </el-table>
+
+    <el-dialog
+            title="邮件内容"
+            :visible.sync="dialogFrameVisible"
+            width="80%"
+           >
+        <div style="text-align: center ;font-weight: bold">{{title}}</div>
+        <div style="text-align: center ;font-size: small "> {{from}}  {{sendDate}}</div>
+        <pre><div v-html="html"></div></pre>
+        <span slot="footer" class="dialog-footer">
+  </span>
+    </el-dialog>
+
 </div>
 </body>
 <!-- import Vue before Element -->
+<script src="/js/spider.js"></script>
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
 <!-- import JavaScript -->
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
@@ -55,13 +76,46 @@
     new Vue({
         el: '#app',
         methods: {
-            onSubmit() {
+            onSubmit(formName) {
                 var _this = this;
-                console.log('submit!');
-                _this.loading = true;
-                axios.post('/mail/query',this.formInline)
-                    .then(function (response) {_this.tableData = response.data; _this.loading =false; console.info(_this.tableData)});
+                this.$refs[formName].validate(function (valid) {
+                    if(valid){
+                        console.log('submit!');
+                        _this.loading = true;
+                        axios.post('/mail/query',_this.formInline)
+                            .then(function (response) {
+                                _this.loading =false;
+                                _this.tableData= response.data;
+
+                            })
+                            .catch(function (error) { console.log(error); _this.loading =false;});
+                    }else {
+                        return false;
+                    }
+                })
+
+            },getSubContent(row){
+                return row.content.substr(0,200);
+            },dateFormat: function (row,index) {
+                return new Date(row.sendDate).Format("yyyy-MM-dd hh:mm:ss");
+            },cellClick:function (row, column, cell, event) {
+                console.info(row+","+column);
+                console.info(cell);
+                var prop= column.property;
+                this.title = row["subject"];
+                this.from = row["sender"];
+                this.sendDate = new Date(row.sendDate).Format("yyyy-MM-dd hh:mm:ss");
+                if(prop=="content"){
+                    this.dialogFrameVisible =true;
+                        // this.html=row[prop].replace(/\n/g,"<br/>");
+                        this.html=row[prop];
+
+                }
             }
+        },
+        computed: {
+            // 计算属性的 getter
+
         },
         data: function() {
             return { visible: false,
@@ -69,7 +123,18 @@
                     email: '',
                     keywords: ''
                 },
+                dialogFrameVisible:false,
                 loading: false,
+                rules: {
+                    email: [
+                        { required: true, message: '请输入查询邮箱', trigger: 'blur' },
+                        { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change']}
+                    ]
+                },
+                title:"",
+                html:"",
+                from:"",
+                sendDate:"",
                 tableData: []
             }
         }

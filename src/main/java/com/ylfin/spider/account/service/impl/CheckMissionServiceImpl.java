@@ -22,4 +22,8 @@ public class CheckMissionServiceImpl extends ServiceImpl<CheckMissionDao, CheckM
     public List<CheckMission> findActiveAndUnSuccess() {
         return   baseMapper.selectList(  new EntityWrapper<CheckMission>().eq("active",true).ne("result",1));
     }
+
+
+    public  void getMissionPage(){
+    }
 }

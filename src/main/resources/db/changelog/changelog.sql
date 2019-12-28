@@ -161,3 +161,7 @@ CREATE  TABLE  `check_mission` (
 `active` tinyint(1) DEFAULT '1' COMMENT '是否开启 1开启',
   PRIMARY KEY (`id`)
 )ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT '任天堂账号任务表';
+
+-- changset godslhand:20191228
+ALTER table reg_mail add UNIQUE KEY `uniq_email` (`email`)
+

@@ -15,7 +15,7 @@ import java.util.function.Predicate;
 
 @Slf4j
 public class JavaMailChecker implements Checker {
-    public static final String HOST = "imap.gamesheaven.tech";//服务器地址
+    public static final String HOST = "imap.";//服务器地址
     public static final String PROTOCOL = "imap";//协议
     public static final String PORT = "143";//pop默认端口为110
 
@@ -52,10 +52,12 @@ public class JavaMailChecker implements Checker {
 
     private MailContent readMail(MailBean mailBean) {
 
+        String hostAddress = HOST+ subDomain(mailBean.getEmail());
+
         MailContent content = new MailContent();
         Properties props = new Properties();
         props.setProperty("mail.store.protocol", PROTOCOL);
-        props.setProperty("mail.imap.host", HOST);
+        props.setProperty("mail.imap.host", hostAddress);
         props.setProperty("mail.imap.port", PORT);
 
         Session session = Session.getDefaultInstance(props);
@@ -120,6 +122,12 @@ public class JavaMailChecker implements Checker {
         }
     }
 
+    private static String subDomain(String mail){
+        if(mail.indexOf("@")<1){
+            throw new RuntimeException("邮件格式不正确");
+        }
+        return mail.split("@")[1];
+    }
 
 
 
